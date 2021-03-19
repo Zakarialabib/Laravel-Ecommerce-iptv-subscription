@@ -69,7 +69,7 @@
                                             <i class="fas fa-edit"></i>
                                             {{ __('Edit Keyword') }}
                                             </a>
-                                            <a class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{route('admin.language.edit', $language->id)}}">
+                                            <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline text-white bg-indigo-600 hover:bg-indigo-700 py-1 px-2 hover:bg-indigo-700 px-2 leading-tight text-xs" href="{{route('admin.language.edit', $language->id)}}">
                                                 <i class="fas fa-pencil-alt"></i>{{ __('Edit') }}
                                             </a>
                                             <form class="deleteform inline-block" action="{{route('admin.language.delete', $language->id)}}" method="post">

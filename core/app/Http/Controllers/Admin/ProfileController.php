@@ -15,7 +15,7 @@ class ProfileController extends Controller
 
     public function index()
     {            
-        $profils = Admin::where('is_active', true)->get();
+        $profils = Admin::all();
         return view('admin.profile.index',compact('profils'));
     }
 
@@ -135,5 +135,20 @@ class ProfileController extends Controller
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
+      }
+
+      public function active(Request $request, $id) {
+        Admin::where('is_active', 1)->update(['is_active' => 0]);
+        $profil = Admin::find($id);
+        $profil->is_active = 1;
+        $profil->save();
+  
+        $notification = array(
+          'messege' => 'profil is deactivated.',
+          'alert' => 'success'
+        );
+  
+        return redirect()->route('admin.profil.index')->with('notification', $notification);
+  
       }
 }

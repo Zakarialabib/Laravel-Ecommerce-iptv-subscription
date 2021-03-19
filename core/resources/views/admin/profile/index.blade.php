@@ -29,6 +29,8 @@
                                     <th>{{ __('name') }}</th>
                                     <th>{{ __('username') }}</th>
                                     <th>{{ __('Email') }}</th>
+                                    <th>Status</th>
+                                    <th>Status</th>
                                     <th>{{ __('action') }}</th>
                                 </tr>
                             </thead>
@@ -41,6 +43,19 @@
                                         <td>{{ $profil->name }}</td>
                                         <td>{{ $profil->username }}</td>
                                         <td>{{ $profil->email }}</td>
+                                        <td>
+                                            @if ($profil->is_default == 1)
+                                            <strong class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-green-500 text-white hover:bg-green-600 btn-xs">Active</strong>                                                
+                                            @else
+                                            <strong class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-green-500 text-white hover:bg-green-600 btn-xs">Deactivated</strong>                                                
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <form class="inline-block" action="{{route('admin.profile.active', $profil->id)}}" method="post">
+                                                @csrf
+                                                <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600 btn-xs" type="submit" name="button" >Active</button>
+                                            </form>
+                                        </td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle"

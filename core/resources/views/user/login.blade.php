@@ -46,10 +46,10 @@
                             @if(Session::has('error'))
                             <p class="m-1 text-red-600">{{ Session::get('error') }}</p>
                             @endif
-                            <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" type="email"
+                            <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full" type="email"
                                 value="{{ old('email') }}" name="email" placeholder="{{ __('Enter Email') }}" />
                             <label class="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
-                            <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                            <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
                                 type="password" name="password" placeholder="{{ __('Enter Password') }}" />
                             @if($errors->has('password'))
                             <p class="m-1 text-red-600">{{ $errors->first('password') }}</p>

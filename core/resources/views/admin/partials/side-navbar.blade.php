@@ -40,19 +40,14 @@
                        class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
                        @if(request()->routeIs('admin.tickets.index')) active
                        @endif">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            {{ __('Gestion Tickets') }}
-                        </p>
+                        <i class="nav-icon fas fa-tachometer-alt"></i><p>{{ __('Gestion Tickets') }}</p>
                     </a>
                 </li>
                 <li class="">
                     <a href=""
                        class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            {{ __('Rapport') }}
-                        </p>
+                        <p> {{ __('Gestion Interne') }}</p>
                     </a>
                 </li>
                 <li class="nav-item has-treeview 
@@ -330,6 +325,13 @@
                       </li>
                     </ul>
                   </li>
+                  <li class="">
+                    <a href=""
+                       class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>{{ __('Rapport') }}</p>
+                    </a>
+                </li>
                   <li class="nav-item has-treeview
                   @if(request()->path() == 'admin/slider') menu-open
                   @elseif(request()->path() == 'admin/slider/add') menu-open

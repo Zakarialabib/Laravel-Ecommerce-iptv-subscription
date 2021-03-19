@@ -148,6 +148,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('/profile/update', 'Admin\ProfileController@updateProfile')->name('admin.updateProfile');
     Route::get('/profile/password/edit', 'Admin\ProfileController@editPassword')->name('admin.editPassword');
     Route::post('/profile/password/update', 'Admin\ProfileController@updatePassword')->name('admin.updatePassword');
+    Route::post('/profile/{id}/active', 'Admin\ProfileController@active')->name('admin.profile.active');
 
     // Admin Ticket Route
     Route::get('/tickets', 'Admin\TicketsController@index')->name('admin.tickets.index');

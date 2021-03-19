@@ -10,7 +10,7 @@
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap ">
 				<div class="lg:w-full pr-4 pl-4">
-					<h1 class="pagetitle">
+					<h1 class="pagetitle relative">
 						{{ $service->name }}
 					</h1>
 					<ul class="pages">

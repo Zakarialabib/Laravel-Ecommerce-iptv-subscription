@@ -165,11 +165,6 @@
 									href="{{ route('front.blogs') }}">{{ __('Blog') }}
 									</a>
 								</li>
-								@if($commonsetting->is_speed_test)
-								<li class="nav-item">
-									<a class="nav-link @if(request()->path() == 'speed-test') active  @endif" href="{{ route('front.speed.test') }}">{{ __('Speed Test') }}</a>
-								</li>
-								@endif
 								@if($commonsetting->is_contact_page)
 								<li class="nav-item">
 									<a class="nav-link @if(request()->path() == 'contact') active  @endif" href="{{ route('front.contact') }}">{{ __('Contact') }}</a>
