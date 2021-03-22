@@ -40,7 +40,7 @@
 			</div>
 			<div class="lg:w-3/4 pr-4 pl-4">
                 <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                    <h5 class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">{{ __('Bill Pay') }}</h5>
+                    <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ __('Bill Pay') }}</h5>
                     <div class="flex-auto p-6">
                         <div class="flex flex-wrap ">
                             <div class="lg:w-full pr-4 pl-4 mt-3 block w-full overflow-auto scrolling-touch">
@@ -73,7 +73,7 @@
                                                 {{ $bill->fulldate }}
                                             </td>
                                             <td>
-                                                <a href="#" data-id="{{ $bill->id }}" class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 billpay_view" data-toggle="modal" data-target="#billpay_view"><i class="fas fa-eye mr-0"></i></a>
+                                                <a href="#" data-id="{{ $bill->id }}" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple billpay_view" data-toggle="modal" data-target="#billpay_view"><i class="fas fa-eye mr-0"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

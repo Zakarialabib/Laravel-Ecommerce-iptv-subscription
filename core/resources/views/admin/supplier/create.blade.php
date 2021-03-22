@@ -1,6 +1,20 @@
 @extends('admin.layout')
 @section('content')
 
+<div class="p-0 -mb-5">
+    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+        <div class="flex flex-wrap ">
+        <div class="sm:w-1/2 pr-4 pl-4">
+        </div><!-- /.col -->
+        <div class="sm:w-1/2 pr-4 pl-4">
+            <ol class="flex flex-wrap list-reset sm:float-right py-4 px-4 mb-2 m-0">
+            <li class="inline-block px-2 py-2 text-gray-700"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>{{ __('Home') }}</a></li>
+            <li class="inline-block px-2 py-2 text-gray-700">{{ __('Add Supplier') }}</li>
+            </ol>
+        </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
 <section class="forms">
     <div class="container-fluid">
         <div class="row">
@@ -15,7 +29,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{__('name')}} *</strong> </label>
+                                    <label>{{__('Name')}} *</strong> </label>
                                     <input type="text" name="name" required class="form-control">
                                 </div>
                             </div>

@@ -2,14 +2,14 @@
 
 @section('content')
 
-<div class="content-header">
+<div class="p-0 -mb-5">
     <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
         <div class="flex flex-wrap ">
             <div class="sm:w-1/2 pr-4 pl-4">
-                <h1 class="flex flex-wrap pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 m-0 text-gray-900">{{ __('Social Links') }}</h1>
+                <h1 class="flex flex-wrap text-lg capitalize text-bold pt-3 pb-3 py-4 px-4 mb-2 m-0 text-gray-900">{{ __('Social Links') }}</h1>
             </div><!-- /.col -->
             <div class="sm:w-1/2 pr-4 pl-4">
-                <ol class="flex flex-wrap list-reset pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 rounded sm:float-right">
+                <ol class="flex flex-wrap list-reset sm:float-right py-4 px-4 mb-2 m-0">
                     <li class="inline-block px-2 py-2 text-gray-700"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>{{ __('Home') }}</a></li>
                     <li class="inline-block px-2 py-2 text-gray-700">{{ __('Social Links') }}</li>
                 </ol>
@@ -23,8 +23,8 @@
         <div class="flex flex-wrap ">
             <div class="md:w-full pr-4 pl-4">
                 <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                    <div class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">
-                        <h3 class="mt-1 w-1/2">{{ __('Update Social Link') }} </h3>
+                    <div class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                        <h3 class="px-4 mt-1 w-1/2">{{ __('Update Social Link') }} </h3>
                         <div class="flex w-1/2 justify-end">
                             <a href="{{ route('admin.slinks') }}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-green-500 text-white hover:bg-green-600 py-1 px-2 leading-tight text-xs ">
                                 <i class="fas fa-angle-double-left"></i> {{ __('Back') }}

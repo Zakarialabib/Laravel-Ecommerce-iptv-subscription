@@ -79,7 +79,7 @@
                         <td>{{ Helper::showCurrency() }}{{ $item['price'] }} <span class="fas fa-times"></span> {{ $item['qty'] }}</td>
                         <td> {{ Helper::showCurrency() }}<span class="cart_price">{{ $item['price'] * $item['qty'] }}</td></span>
                         <td>
-                          <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-red-600 text-white hover:bg-red-700 py-1 px-2 leading-tight text-xs  item-remove" rel="{{$pid}}" data-href="{{route('cart.item.remove',$pid)}}"><i class="fas fa-trash"></i></button>
+                          <button class="inline-block align-middle text-center select-none px-2 py-1.5 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple item-remove" rel="{{$pid}}" data-href="{{route('cart.item.remove',$pid)}}"><i class="fas fa-trash"></i></button>
                         </td>
                       </tr>
                     @endforeach
