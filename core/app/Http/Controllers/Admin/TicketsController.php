@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Ticket;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -28,20 +27,8 @@ class TicketsController extends Controller
     {
         $tickets = Ticket::paginate(10);
         $categories = Category::all();
-        return view('admin.tickets.index', compact('tickets','categories'));
-        }
 
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function adminTickets()
-    {
-        $tickets = Ticket::paginate(10);
-        $categories = Category::all();
-        $users = User::all();
-        return view('admin.tickets.index', compact('tickets','categories','users'));
+        return view('admin.tickets.index', compact('tickets','categories'));
     }
 
     /**
@@ -50,6 +37,11 @@ class TicketsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    {
+        $categories = Category::all();
+        return view('admin.tickets.create', compact('categories'));
+    }
+    public function creation()
     {
         $categories = Category::all();
         return view('user.tickets.create', compact('categories'));
@@ -95,24 +87,33 @@ class TicketsController extends Controller
         $mailer->sendTicketInformation(Auth::user(), $ticket);
         return redirect()->back()->with("status", "A ticket with ID: #$ticket->ticket_id has been opened.");
     }
-    public function showAdmin($ticket_id)
-    {
-        $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
-        return view('admin.tickets.show', compact('ticket'));
-    }
 
     public function show($ticket_id)
     {
         $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
-        return view('user.tickets.show', compact('ticket'));
+        $comments = $ticket->comments;
+
+        $category = $ticket->category;
+
+        return view('admin.tickets.show', compact('ticket', 'category', 'comments'));
+    }
+    
+    public function affiche($ticket_id)
+    {
+        $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
+        $comments = $ticket->comments;
+
+        $category = $ticket->category;
+
+        return view('user.tickets.show', compact('ticket', 'category', 'comments'));
     }
     public function close($ticket_id, AppMailer $mailer)
     {
         $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
         $ticket->status = "Closed";
         $ticket->save();
-        $user = User::find('id');
-        $mailer->sendTicketStatusNotification($user, $ticket);
+        $ticketOwner = $ticket->user;
+        $mailer->sendTicketStatusNotification($ticketOwner, $ticket);
         return redirect()->back()->with("status", "The ticket has been closed.");
     }
 }

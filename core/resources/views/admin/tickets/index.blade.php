@@ -3,85 +3,91 @@
 @section('title', 'All Tickets')
 
 @section('content')
-<div class="content-header">
-    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
-        <div class="flex flex-wrap ">
-        <div class="sm:w-1/2 pr-4 pl-4">
-            <h1 class="flex flex-wrap pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 m-0 text-gray-900">{{ __('Tickets') }}</h1>
-        </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<section class="content">
-    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
-        <div class="flex flex-wrap ">
-            <div class="lg:w-full pr-4 pl-4">
-	        	<div class="panel-heading">
-	        		<i class="fa fa-ticket"> </i>
-	        	</div>
-
-	        	<div class="panel-body">
-	        		@if ($tickets->isEmpty())
-						<p>{{ __('There are currently no tickets') }}.</p>
+	<div class="overflow-x-auto">
+        <div class="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+            <div class="w-full lg:w-5/6">
+                <div class="bg-white shadow-md rounded my-6">
+				@if ($tickets->isEmpty())
+						<p>There are currently no tickets.</p>
 	        		@else
-		        		<table class="table">
-		        			<thead>
-		        				<tr>
-		        					<th>{{ __('Category') }}</th>
-		        					<th>{{ __('Title') }}</th>
-									<th>{{ __('User') }}</th>
-		        					<th>{{ __('Status') }}</th>
-		        					<th>{{ __('Last Updated') }}</th>
-		        					<th style="text-align:center" colspan="2">{{ __('Actions') }}</th>
-		        				</tr>
-		        			</thead>
-		        			<tbody>
-		        			@foreach ($tickets as $ticket)
-								<tr>
-		        					<td>
-		        					@foreach ($categories as $category)
-		        						@if ($category->id === $ticket->category_id)
-											{{ $category->name }}
-		        						@endif
-		        					@endforeach
-		        					</td>
-		        					<td>
-		        						<a href="{{ url('tickets/'. $ticket->ticket_id) }}">
-		        							#{{ $ticket->ticket_id }} - {{ $ticket->title }}
-		        						</a>
-		        					</td>
-									<td>
-		        						<a href="">
-										{{ $ticket->user_id }}
-		        						</a>
-		        					</td>
-		        					<td>
-		        					@if ($ticket->status === 'Open')
-		        						<span class="label label-success">{{ $ticket->status }}</span>
-		        					@else
-		        						<span class="label label-danger">{{ $ticket->status }}</span>
-		        					@endif
-		        					</td>
-		        					<td>{{ $ticket->updated_at }}</td>
-		        					<td>
-		        						<a href="{{ url('/tickets/show/'. $ticket->ticket_id) }}" class="btn btn-primary">{{ __('Comment') }}</a>
-									</td>
-		        					<td>
-		        						<form action="{{ url('admin/close_ticket/' . $ticket->ticket_id) }}" method="POST">
-		        							{!! csrf_field() !!}
-		        							<button type="submit" class="btn btn-danger">{{ __('Close') }}</button>
-		        						</form>
-		        					</td>
-		        				</tr>
-		        			@endforeach
-		        			</tbody>
-		        		</table>
+                    <table class="min-w-max w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Categorie</th>
+                                <th class="py-3 px-6 text-left">N° ticket</th>
+                                <th class="py-3 px-6 text-left">Titre</th>
+                                <th class="py-3 px-6 text-center">Utilsateur</th>
+                                <th class="py-3 px-6 text-center">Date</th>
+                                <th class="py-3 px-6 text-center">Status</th>
+                                <th class="py-3 px-6 text-right">Actions</th>
+                                <th class="py-3 px-6 text-center"></th>
 
-		        		{{ $tickets->render() }}
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+						@foreach ($tickets as $ticket)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <span class="font-medium">	
+										@foreach ($categories as $category)
+		        							@if ($category->id === $ticket->category_id)
+												{{ $category->name }}
+		        							@endif
+		        						@endforeach
+										</span>
+                                    </div>
+                                </td>
+								<td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>
+										<a href="{{ url('tickets/'. $ticket->ticket_id) }}">
+		        							#{{ $ticket->ticket_id }} 
+		        						</a></span>
+                                    </div>
+                                </td>
+
+                                <td class="py-3 px-6 text-left">
+                                    <div class="flex items-center">
+                                        <span>
+										<a href="{{ url('admin/tickets/'. $ticket->ticket_id) }}">
+		        							{{ $ticket->title }}
+		        						</a></span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-center">
+                                    <div class="flex items-center justify-center">
+                                        <img class="w-6 h-6 rounded-full border-gray-200 border transform hover:scale-125" src="https://randomuser.me/api/portraits/men/1.jpg"/>
+                                    </div>
+                                </td>
+								<td class="py-3 px-6 text-center">
+								{{ $ticket->updated_at }}
+								</td>
+                                <td class="py-3 px-6 text-center">
+								@if ($ticket->status === 'Open')
+		        						<span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $ticket->status }}</span>
+		        				@else
+		        						<span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">{{ $ticket->status }}</span>
+		        				@endif
+
+                                </td>
+								<td class="py-3 px-1 text-center">
+		        					<a href="{{ url('admin/tickets/' . $ticket->ticket_id) }}" class="btn btn-primary">Comment</a>
+		        				</td>
+								<td class="py-3 px-1 text-center" style="background-color:white;">
+										<form action="{{ url('admin/close_ticket/' . $ticket->ticket_id) }}" method="POST">
+		        							{!! csrf_field() !!}
+		        							<button type="submit" class="btn btn-danger">Close</button>
+		        						</form>
+		        				</td>
+                            </tr>
+							@endforeach
+                        </tbody>
+                    </table>
+					{{ $tickets->render() }}
 		        	@endif
-	        	</div>
-	        </div>
-			</div>
-	    </div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

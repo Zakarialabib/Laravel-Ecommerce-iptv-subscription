@@ -65,11 +65,6 @@ Route::group(['middleware' => 'setlang'], function () {
     Route::get('/package/paypal/notify', 'Payment\Package\PaypalController@notify')->name('package.payment.notify');
     Route::post('/package/stripe/submit', 'Payment\Package\StripeController@store')->name('package.stripe.submit');
   
-     // Ticket Route
-    Route::get('new-ticket', 'Admin\TicketsController@create')->name('user.tickets.create');
-    Route::post('new-ticket', 'Admin\TicketsController@store')->name('user.tickets.store');
-    Route::get('my_tickets', 'Admin\TicketsController@userTickets')->name('user.tickets.index');
-    Route::post('comment', 'Admin\CommentsController@postComment');
 
     // Pay bil payment gateway route
     Route::post('/paybill/paypal/submit', 'Payment\Paybill\PaypalController@store')->name('paybill.paypal.submit');
@@ -150,11 +145,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('/profile/password/update', 'Admin\ProfileController@updatePassword')->name('admin.updatePassword');
     Route::post('/profile/{id}/active', 'Admin\ProfileController@active')->name('admin.profile.active');
 
-    // Admin Ticket Route
-    Route::get('/tickets', 'Admin\TicketsController@index')->name('admin.tickets.index');
-    Route::get('/tickets/show', 'Admin\TicketsController@showAdmin');
-    Route::post('/comment', 'Admin\CommentsController@respondComment');
-    Route::post('/close_ticket/{ticket_id}', 'Admin\TicketsController@close');
 
     // Basic Information Route
     Route::get('/basicinfo', 'Admin\SettingController@basicinfo')->name('admin.basicinfo');
@@ -464,6 +454,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('/backup/store', 'Admin\BackupController@store')->name('admin.backup.store');
     Route::post('/backup/{id}/delete', 'Admin\BackupController@delete')->name('admin.backup.delete');
     Route::post('/backup/download', 'Admin\BackupController@download')->name('admin.backup.download');
+    // tickets admin
+    Route::get('/tickets', 'Admin\TicketsController@index')->name('admin.tickets.index');
+    Route::get('/tickets/{ticket_id}', 'Admin\TicketsController@show')->name('admin.tickets.show');
+    Route::post('close_ticket/{ticket_id}', 'Admin\TicketsController@close');
+    Route::post('tickets/comment','Admin\CommentsController@postComment');
+
 });
 
 
