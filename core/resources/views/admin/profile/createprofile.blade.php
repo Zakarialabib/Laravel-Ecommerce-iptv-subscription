@@ -98,7 +98,7 @@
                             </div>
                             <div class="mb-4 flex flex-wrap ">
                                     <div class="sm:mx-1/5 sm:w-4/5 pr-4 pl-4">
-                                        <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">{{ __('Create') }}</button>
+                                        <button type="submit" class="inline-block align-middle select-none border whitespace-no-wrap py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">{{ __('Create') }}</button>
                                     </div>
                                 </div>
                         </form>

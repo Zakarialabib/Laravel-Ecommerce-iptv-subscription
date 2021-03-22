@@ -1,5 +1,5 @@
 <section class="text-gray-700 body-font">
-    <div class="container px-8 pt-24 pb-24 mx-auto lg:px-4">
+    <div class="px-5 py-3 mx-auto lg:px-4">
     <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Add reply</div><br>
                     <div class="relative ">
 

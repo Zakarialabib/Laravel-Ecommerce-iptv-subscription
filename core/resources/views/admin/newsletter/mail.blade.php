@@ -45,7 +45,7 @@
                                               <p class="text-red-600 mb-0">{{$errors->first('message')}}</p>
                                             @endif
                                           </div>
-                                          <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">
+                                          <button type="submit" class="inline-block align-middle select-none border whitespace-no-wrap py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                                             Send Mail <i class="far fa-paper-plane"></i>
                                         </button>
                                     </div>

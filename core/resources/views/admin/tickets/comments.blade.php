@@ -1,4 +1,4 @@
-<div class="comments">
+<div class="comments px-5 py-3">
     @foreach($ticket->comments as $comment)
     <div class="panel panel-@if($ticket->user->id === $comment->user_id){{"default"}}@else{{"success"}}@endif">
     <div class="flex relative mt-6" style=" margin-left:10px;">

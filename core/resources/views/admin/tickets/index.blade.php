@@ -9,6 +9,12 @@
         <div class="sm:w-1/2 pr-4 pl-4">
             <h1 class="flex flex-wrap text-lg capitalize text-bold pt-3 pb-3 py-4 px-4 mb-2 m-0 text-gray-900">{{ __('Tickets') }}</h1>
         </div><!-- /.col -->
+        <div class="sm:w-1/2 pr-4 pl-4">
+            <ol class="flex flex-wrap list-reset sm:float-right py-4 px-4 mb-2 m-0">
+            <li class="inline-block px-2 py-2 text-gray-700"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>{{ __('Home') }}</a></li>
+            <li class="inline-block px-2 py-2 text-gray-700">{{ __('Tickets') }}</li>
+            </ol>
+        </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
@@ -16,6 +22,7 @@
     <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
         <div class="flex flex-wrap ">
             <div class="lg:w-full pr-4 pl-4">
+               <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-primary card-outline">
 	        	<div class="panel-heading">
 	        		<i class="fa fa-ticket"> </i>
 	        	</div>
@@ -27,21 +34,21 @@
                     <table class="min-w-max w-full table-auto">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                <th class="py-3 px-6 text-left">Categorie</th>
-                                <th class="py-3 px-6 text-left">N° ticket</th>
-                                <th class="py-3 px-6 text-left">Titre</th>
-                                <th class="py-3 px-6 text-center">Utilsateur</th>
-                                <th class="py-3 px-6 text-center">Date</th>
-                                <th class="py-3 px-6 text-center">Status</th>
-                                <th class="py-3 px-6 text-right">Actions</th>
-                                <th class="py-3 px-6 text-center"></th>
+                                <th class="py-2 px-3 text-left">Categorie</th>
+                                <th class="py-2 px-3 text-left">N° ticket</th>
+                                <th class="py-2 px-3 text-left">Titre</th>
+                                <th class="py-2 px-3 text-center">Utilsateur</th>
+                                <th class="py-2 px-3 text-center">Date</th>
+                                <th class="py-2 px-3 text-center">Status</th>
+                                <th class="py-2 px-3 text-right">Actions</th>
+                                <th class="py-2 px-3 text-center"></th>
 
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
 						@foreach ($tickets as $ticket)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <td class="py-2 px-3 text-left whitespace-nowrap">
                                     <div class="flex items-center">
                                         <span class="font-medium">	
 										@foreach ($categories as $category)
@@ -52,7 +59,7 @@
 										</span>
                                     </div>
                                 </td>
-								<td class="py-3 px-6 text-left">
+								<td class="py-2 px-3 text-left">
                                     <div class="flex items-center">
                                         <span>
 										<a href="{{ url('tickets/'. $ticket->ticket_id) }}">
@@ -61,7 +68,7 @@
                                     </div>
                                 </td>
 
-                                <td class="py-3 px-6 text-left">
+                                <td class="py-2 px-3 text-left">
                                     <div class="flex items-center">
                                         <span>
 										<a href="{{ url('admin/tickets/'. $ticket->ticket_id) }}">
@@ -69,15 +76,15 @@
 		        						</a></span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 text-center">
+                                <td class="py-2 px-3 text-center">
                                     <div class="flex items-center justify-center">
                                         <img class="w-6 h-6 rounded-full border-gray-200 border transform hover:scale-125" src="https://randomuser.me/api/portraits/men/1.jpg"/>
                                     </div>
                                 </td>
-								<td class="py-3 px-6 text-center">
+								<td class="py-2 px-3 text-center">
 								{{ $ticket->updated_at }}
 								</td>
-                                <td class="py-3 px-6 text-center">
+                                <td class="py-2 px-3 text-center">
 								@if ($ticket->status === 'Open')
 		        						<span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $ticket->status }}</span>
 		        				@else
@@ -103,5 +110,7 @@
                 </div>
             </div>
         </div>
-    </div>
+     </div>
+  </div>
+</section>
 @endsection

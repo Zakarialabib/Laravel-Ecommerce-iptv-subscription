@@ -172,7 +172,7 @@
 								@endif
 								@if(auth()->check())
 								<li class="nav-item">
-									<a class="nav-link @if(request()->path() == 'tickets') active  @endif" href="{{ route('user.tickets.index') }}">{{ __('Tickets') }}</a>
+									<a class="nav-link @if(request()->path() == 'tickets') active  @endif" href="{{-- route('user.tickets.index') --}}">{{ __('Tickets') }}</a>
 								</li>
 							
 								<li class="nav-item">
