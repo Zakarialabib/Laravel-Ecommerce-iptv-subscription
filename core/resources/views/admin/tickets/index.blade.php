@@ -82,7 +82,7 @@
                                     </div>
                                 </td>
 								<td class="py-2 px-3 text-center">
-								{{ $ticket->updated_at }}
+								{{ $ticket->updated_at->format('Y-m-d H:m') }}
 								</td>
                                 <td class="py-2 px-3 text-center">
 								@if ($ticket->status === 'Open')

@@ -4,7 +4,7 @@
     <div class="flex relative mt-6" style=" margin-left:10px;">
         <i class="fas fa-user text-grey-dark"></i> 
         <div class=" ml-2 "> 
-          <p class="font-medium text-sm text-grey-darkest font-semibold">{{ $comment->created_at->format('Y-m-d') }}</p>
+          <p class="font-medium text-sm text-grey-darkest font-semibold">{{ $comment->created_at->format('Y-m-d H:m') }}</p>
           <small class="text-grey-dark text-xs ">{{ $comment->comment }}</small>
         </div>
         <hr>
