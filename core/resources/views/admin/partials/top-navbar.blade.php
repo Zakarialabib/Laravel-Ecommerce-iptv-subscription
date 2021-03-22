@@ -9,12 +9,12 @@
     <!-- Right navbar links -->
     <ul class="flex flex-wrap list-reset pl-0 mb-0 ml-auto">
       <!-- Notifications Dropdown Menu -->
-      <li class="dropdown relative">
+      <li class="dropdown nav-item">
         <a class="nav-link inline-block py-2 px-4 no-underline pt-0 pr-3 " data-toggle="dropdown" href="#">
             <img class="user-image w-40 img-circle shadow" src="{{ asset('assets/front/img/'.$adminprofile->image) }}"  alt="User Image">
         </a>
         
-        <div class=" absolute left-0 z-50 float-left hidden list-reset	 py-2 mt-1 text-base bg-white border border-gray-300 rounded dropdown-menu-lg dropdown-menu-right border-none">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right border-none">
               <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-widget widget-user-2 mb-0 shadow-none">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-blue-600">

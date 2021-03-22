@@ -18,7 +18,7 @@ body.modal-open {
   font-weight: 400;
   padding: 8px 30px;
   display: inline-block;
-  color: #fff;
+  color: #1a385b;
   background: #983ce9;
   border: 1px solid #983ce9;
   cursor: pointer;
@@ -29,7 +29,7 @@ body.modal-open {
 
 .mybtn1:hover {
   color: #983ce9;
-  background: #fff;
+  background: #1a385b;
 }
 
 .mybtn2 {
@@ -722,7 +722,7 @@ body {
 }
 
 .mainmenu-area {
-  background: #fff;
+  background: #1a385b;
   top: 0px;
   position: absolute;
   left: 0px;
@@ -1511,7 +1511,7 @@ Counter Area End
 ---------------------------*/
 
 .auth {
-  padding: 80px 0px 80px;
+  padding: 120px 0px 120px;
 }
 
 .auth .sign-form {
@@ -1588,7 +1588,7 @@ Counter Area End
   overflow: hidden;
   position: relative;
   padding: 70px 0px 0px;
-  background-color: #172433;
+  background-color: #1a385b;
 }
 
 .footer .footer-logo {
@@ -2816,8 +2816,7 @@ Counter Area End
 button.cookie-consent__agree {
   padding: 12px 20px;
   border: none;
-  background-color: blue;
-  color: #fff;
+  color: #1a385b;
   cursor: pointer;
   border-radius: 3px;
 }

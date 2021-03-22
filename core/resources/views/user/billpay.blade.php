@@ -96,7 +96,7 @@
 	  </section>
     <!-- User Dashboard End -->
 <!-- Billpay view modal -->
-<div class="modal opacity-0" id="billpay_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
+<div class="modal" id="billpay_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

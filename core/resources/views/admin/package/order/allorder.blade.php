@@ -96,7 +96,7 @@
     <!-- /.row -->
 </section>
 <!-- Package order view modal -->
-<div class="modal opacity-0" id="package_order_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
+<div class="modal" id="package_order_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -187,7 +187,7 @@
     </div>
 </div>
 <!-- package_order_status  modal -->
-<div class="modal opacity-0" id="package_order_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
+<div class="modal" id="package_order_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
     <div class="modal-dialog " role="document">
       <div class="modal-content">
         <div class="modal-header">

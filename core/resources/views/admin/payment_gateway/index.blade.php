@@ -75,7 +75,7 @@
         </div>
     </div>
     <!-- /.row -->
-    <div class="modal opacity-0 deleteModel" tabindex="-1" role="dialog"
+    <div class="modal deleteModel" tabindex="-1" role="dialog"
     aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

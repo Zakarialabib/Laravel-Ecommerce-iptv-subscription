@@ -83,7 +83,7 @@
                                 <td class="px-1 py-2">{{ $key }}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">#{{$order->order_number}}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">{{$order->method}}</td>
-                                <td class="px-1 py-2 border-b border-gray-200 text-sm">{{  Helper::showCurrency() }}{{round($order->total,2)}}</td>
+                                <td class="px-1 py-2 border-b border-gray-200 text-sm">{{round($order->total,2)}}{{  Helper::showCurrency() }}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">
                                     <form id="statusForm{{$order->id}}" class="inline-block" action="{{route('admin.product.orders.status')}}" method="post">
                                         @csrf
@@ -107,11 +107,11 @@
                                       </form>
                                 </td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">
-                                    <div class="relative">
+                                    <div class="dropdown relative">
                                         <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded no-underline bg-indigo-600 text-white hover:bg-teal-600 py-2 px-4 leading-tight text-xs align border-b-0 border-t-1 border-r-1 border-l-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           {{ __('Actions') }}
                                         </button>
-                                        <div class=" absolute left-0 z-50 float-left hidden list-reset	 py-2 mt-1 text-base bg-white border border-gray-300 rounded" aria-labelledby="dropdownMenuButton">
+                                        <div class="dropdown-menu edit-options dropdown-menu-right dropdown-default" aria-labelledby="dropdownMenuButton">
                                           <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">Details</a>
                                           <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">Invoice</a>
                                           <form  id="deleteform" class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" action="{{ route('admin.product.order.delete') }}" method="post">

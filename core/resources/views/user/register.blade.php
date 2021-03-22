@@ -45,6 +45,12 @@
                                     {{ __('Register your account to continue.') }}
                                 </p>
                             </div>
+                            @if(Session::has('error'))
+                            <p class="m-1 text-red-600">{{ Session::get('error') }}</p>
+                            @endif
+                            @if(Session::has('success'))
+                            <p class="m-1 text-green-500">{{ Session::get('success') }}</p>
+                            @endif
                             <form class="mb-4 mb-0 flex flex-wrap " action="{{ route('user.register.submit') }}" method="POST">
                                 @csrf
                                 <input class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full" type="text" value="{{ old('name') }}" name="name" placeholder="{{ __('Full Name') }}">

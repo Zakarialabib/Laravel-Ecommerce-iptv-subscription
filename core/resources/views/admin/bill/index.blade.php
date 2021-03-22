@@ -90,7 +90,7 @@
     <!-- /.row -->
 </section>
 <!-- Billpay view modal -->
-<div class="modal opacity-0" id="billpay_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
+<div class="modal" id="billpay_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLaravel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">

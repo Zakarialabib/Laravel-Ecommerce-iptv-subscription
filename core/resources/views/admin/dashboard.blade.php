@@ -146,11 +146,11 @@
                               {{ $package->name }}
                           </td>
                           <td class="px-1 py-2 border-b border-gray-200 bg-white text-sm">
-                              {{  Helper::showCurrency() }}{{ $package->price }}
+                              {{ $package->price }}{{  Helper::showCurrency() }}
                           </td>
                           <td class="px-1 py-2 border-b border-gray-200 bg-white text-sm">
                               @if($package->discount_price)
-                              {{  Helper::showCurrency() }}{{ $package->discount_price }}
+                              {{ $package->discount_price }}{{  Helper::showCurrency() }}
                               @else 
                               <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-indigo-600 text-white hover:bg-teal-600">{{ __('No Discount') }}</span>
                               @endif

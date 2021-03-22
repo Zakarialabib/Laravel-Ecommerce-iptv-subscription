@@ -64,11 +64,11 @@
                                 </tr>
                                 <tr>
                                     <th>{{__('Paid amount')}} :</th>
-                                    <td>{{  Helper::showCurrency() }}{{$order->total}}</td>
+                                    <td>{{$order->total}}{{  Helper::showCurrency() }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{__('Shipping Charge')}} :</th>
-                                    <td>{{  Helper::showCurrency() }}{{$order->shipping_charge}}</td>
+                                    <td>{{$order->shipping_charge}}{{  Helper::showCurrency() }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{__('Payment Method')}} :</th>
@@ -222,8 +222,8 @@
                                        <td>
                                           <b>{{__('Quantity')}}:</b> <span>{{$item->qty}}</span><br>
                                        </td>
-                                       <td>{{  Helper::showCurrency() }}{{$item->price}}</td>
-                                       <td>{{  Helper::showCurrency() }}{{$item->price * $item->qty}}</td>
+                                       <td>{{$item->price}}{{  Helper::showCurrency() }}</td>
+                                       <td>{{$item->price * $item->qty}}{{  Helper::showCurrency() }}</td>
                                     </tr>
                                     @endforeach
                                  </tbody>
