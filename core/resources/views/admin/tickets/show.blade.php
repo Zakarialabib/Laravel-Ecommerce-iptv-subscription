@@ -21,9 +21,9 @@
         <p><b>Category:</b> {{ $ticket->category->name }}</p>
         <p>
           @if ($ticket->status === 'Open')
-          <b>Status:</b> <span class="label label-success">{{ $ticket->status }}</span>
+          <b>Status:</b> <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $ticket->status }}</span>
           @else
-          <b>Status:</b> <span class="label label-danger">{{ $ticket->status }}</span>
+          <b>Status:</b> <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">{{ $ticket->status }}</span>
           @endif
         </p>
         <p><b>Created on:</b> {{ $ticket->created_at->diffForHumans() }}</p>
