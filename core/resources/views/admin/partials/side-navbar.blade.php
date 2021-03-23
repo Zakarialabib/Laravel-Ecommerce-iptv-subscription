@@ -24,14 +24,61 @@
                         </p>
                     </a>
                 </li>
-                <li class="">
+                <li class="nav-item has-treeview">
                     <a href=""
-                       class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500">
+                       class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
+                        @if(request()->routeIs('admin.sales.products.index')) active
+                        @elseif(request()->routeIs('admin.sales.packages.index')) active
+                        @elseif(request()->routeIs('admin.purchases.index')) active
+                        @endif
+                       ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             {{ __('Gestion commercial') }}
                         </p>
                     </a>
+                    <ul class="flex flex-wrap list-none pl-0 mb-0 nav-treeview">
+                        <li class="nav-item has-treeview">
+                          <a href="" class="nav-link
+                            @if(request()->routeIs('admin.sales.products.index')) active
+                            @elseif(request()->routeIs('admin.sales.packages.index')) active
+                            @endif
+                          ">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>{{ __('Sales') }}</p>
+                          </a>
+                          <ul class="flex flex-wrap list-none pl-0 mb-0 nav-treeview">
+                            <li class="">
+                                <a href="{{ route('admin.sales.products.index')}}" class="nav-link
+                                @if(request()->routeIs('admin.sales.products.index')) active
+                                @endif
+                                ">
+                                  <i class="far nav-icon"></i>
+                                  <p>{{ __('Products') }}</p>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('admin.sales.packages.index') }}" class="nav-link
+                                @if(request()->routeIs('admin.sales.packages.index')) active @endif
+                                ">
+                                  <i class="far nav-icon"></i>
+                                  <p>{{ __("Packages") }}</p>
+                                </a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="">
+                          <a href="{{ route('admin.purchases.index') }}" class="nav-link
+                          @if(request()->routeIs('admin.purchases.index')) active 
+                          @elseif(request()->routeIs('admin.purchases.show')) active
+                          @elseif(request()->routeIs('admin.purchases.edit')) active
+                          @endif
+                          ">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>{{ __("Purchases") }}</p>
+                          </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item 
                 @if(request()->routeIs('admin.tickets.index')) menu-open
