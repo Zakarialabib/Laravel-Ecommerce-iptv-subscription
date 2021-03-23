@@ -483,6 +483,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     // Supplier
     Route::get('/suppliers/search', 'Admin\SupplierController@search');
 
+    // Product Sales
+    Route::get('/sales/products', 'Admin\SaleController@products')->name('admin.sales.products.index');
+    Route::get('/sales/products/create', 'Admin\SaleController@productCreate')->name('admin.sales.products.create');
+    Route::get('/sales/products/{id}', 'Admin\SaleController@productShow')->name('admin.sales.products.show');
+    Route::post('/sales/products/store', 'Admin\SaleController@productStore')->name('admin.sales.products.store');
+    Route::get('/sales/products/edit/{id}', 'Admin\SaleController@productEdit')->name('admin.sales.products.edit');
+    Route::put('/sales/products/{id}', 'Admin\SaleController@productUpdate')->name('admin.sales.products.update');
+    Route::delete('/sales/products/{id}', 'Admin\SaleController@productDelete')->name('admin.sales.products.delete');
+    Route::delete('/sales/products/file/{id}', 'Admin\SaleController@deleteSaleFile')->name('admin.sales.products.file.delete');
+
      // Admin Suppliers
     Route::post('importsupplier', 'Admin\SupplierController@importSupplier')->name('supplier.import');
     Route::post('supplier/deletebyselection', 'Admin\SupplierController@deleteBySelection');
