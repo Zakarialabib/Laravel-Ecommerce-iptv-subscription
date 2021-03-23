@@ -72,3 +72,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### webpack
+mix.setPublicPath(`../assets/`)
+.js('resources/js/app.js', 'admin/js')
+.js('resources/js/sales.js', 'admin/js')
+.js('resources/js/purchases.js', 'admin/js')
+.sass('resources/sass/style.scss', 'front/css');
+/* .sass('resources/sass/tailwind.scss', 'admin/css')
+.options({
+    processCssUrls: false,
+    postCss: [ tailwindcss('./tailwind.config.js') ],
+}); */
+
+if (mix.inProduction()) {
+    mix.version();
+}
