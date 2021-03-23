@@ -540,11 +540,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     // Supplier
     Route::get('/suppliers/search', 'Admin\SupplierController@search');
 
-     // Admin Suppliers
-    Route::post('importsupplier', 'Admin\SupplierController@importSupplier')->name('supplier.import');
-    Route::post('supplier/deletebyselection', 'Admin\SupplierController@deleteBySelection');
-    Route::get('supplier/lims_supplier_search', 'Admin\SupplierController@limsSupplierSearch')->name('supplier.search');
-    Route::resource('supplier', 'Admin\SupplierController');
     // Product Sales
     Route::get('/sales/products', 'Admin\SaleController@products')->name('admin.sales.products.index');
     Route::get('/sales/products/create', 'Admin\SaleController@productCreate')->name('admin.sales.products.create');
@@ -554,6 +549,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::put('/sales/products/{id}', 'Admin\SaleController@productUpdate')->name('admin.sales.products.update');
     Route::delete('/sales/products/{id}', 'Admin\SaleController@productDelete')->name('admin.sales.products.delete');
     Route::delete('/sales/products/file/{id}', 'Admin\SaleController@deleteSaleFile')->name('admin.sales.products.file.delete');
+
+     // Admin Suppliers
+    Route::post('importsupplier', 'Admin\SupplierController@importSupplier')->name('supplier.import');
+    Route::post('supplier/deletebyselection', 'Admin\SupplierController@deleteBySelection');
+    Route::get('supplier/lims_supplier_search', 'Admin\SupplierController@limsSupplierSearch')->name('supplier.search');
+    Route::resource('supplier', 'Admin\SupplierController');
 
 });
 
