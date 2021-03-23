@@ -136,7 +136,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'], function () {
     Route::post('/login', 'Admin\LoginController@authenticate')->name('admin.auth');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
 
     //Admin Logout Route
     Route::get('/logout', 'Admin\LoginController@logout')->name('admin.logout');
@@ -152,7 +152,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::post('/profile/password/update', 'Admin\ProfileController@updatePassword')->name('admin.updatePassword');
     Route::post('/profile/{id}/active', 'Admin\ProfileController@active')->name('admin.profile.active');
 
-    Route::group(['middleware' => 'checkpermission:General Setting'], function() {
+
     // Basic Information Route
     Route::get('/basicinfo', 'Admin\SettingController@basicinfo')->name('admin.basicinfo');
     Route::post('/basicinfo/update/{id}', 'Admin\SettingController@updateBasicinfo')->name('admin.setting.updateBasicinfo');
@@ -214,9 +214,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::get('/about/contact-info', 'Admin\AboutController@contact_info')->name('admin.contact_info');
     Route::post('/about/contact-info/update', 'Admin\AboutController@contact_info_update')->name('admin.contact_info_update');
 
-    }); 
-    Route::group(['middleware' => 'checkpermission:Home'], function() {
-
     // Slider Route
     Route::get('/slider', 'Admin\SliderController@slider')->name('admin.slider');
     Route::get('/slider/add', 'Admin\SliderController@add')->name('admin.slider.add');
@@ -224,6 +221,24 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::post('/slider/delete/{id}/', 'Admin\SliderController@delete')->name('admin.slider.delete');
     Route::get('/slider/edit/{id}/', 'Admin\SliderController@edit')->name('admin.slider.edit');
     Route::post('/slider/update/{id}/', 'Admin\SliderController@update')->name('admin.slider.update');
+
+    // About Route
+    Route::get('/about', 'Admin\AboutController@about')->name('admin.about');
+    Route::get('/about/add', 'Admin\AboutController@add')->name('admin.about.add');
+    Route::post('/about/store', 'Admin\AboutController@store')->name('admin.about.store');
+    Route::post('/about/delete/{id}/', 'Admin\AboutController@delete')->name('admin.about.delete');
+    Route::get('/about/edit/{id}/', 'Admin\AboutController@edit')->name('admin.about.edit');
+    Route::post('/about/update/{id}/', 'Admin\AboutController@update')->name('admin.about.update');
+    Route::post('/about/aboutcontent/{id}/', 'Admin\AboutController@aboutcontent')->name('admin.aboutcontent.update');
+
+    // Package Route
+    Route::get('/package', 'Admin\PackagController@package')->name('admin.package');
+    Route::get('/package/add', 'Admin\PackagController@add')->name('admin.package.add');
+    Route::post('/package/store', 'Admin\PackagController@store')->name('admin.package.store');
+    Route::post('/package/delete/{id}/', 'Admin\PackagController@delete')->name('admin.package.delete');
+    Route::get('/package/edit/{id}/', 'Admin\PackagController@edit')->name('admin.package.edit');
+    Route::post('/package/update/{id}/', 'Admin\PackagController@update')->name('admin.package.update');
+    Route::post('/package/plancontent/{id}/', 'Admin\PackagController@plancontent')->name('admin.plancontent.update');
 
     // Offer Route
     Route::get('/offer', 'Admin\OfferController@offer')->name('admin.offer');
@@ -233,6 +248,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::get('/offer/edit/{id}/', 'Admin\OfferController@edit')->name('admin.offer.edit');
     Route::post('/offer/update/{id}/', 'Admin\OfferController@update')->name('admin.offer.update');
     Route::post('/offer/offercontent/{id}/', 'Admin\OfferController@offercontent')->name('admin.offercontent.update');
+
+    // Service Route
+    Route::get('/service', 'Admin\ServiceController@service')->name('admin.service');
+    Route::get('/service/add', 'Admin\ServiceController@add')->name('admin.service.add');
+    Route::post('/service/store', 'Admin\ServiceController@store')->name('admin.service.store');
+    Route::post('/service/delete/{id}/', 'Admin\ServiceController@delete')->name('admin.service.delete');
+    Route::get('/service/edit/{id}/', 'Admin\ServiceController@edit')->name('admin.service.edit');
+    Route::post('/service/update/{id}/', 'Admin\ServiceController@update')->name('admin.service.update');
+    Route::post('/service/servicecontent/{id}/', 'Admin\ServiceController@servicecontent')->name('admin.servicecontent.update');
 
     // Testimonial Route
     Route::get('/testimonial', 'Admin\TestimonialController@testimonial')->name('admin.testimonial');
@@ -294,50 +318,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::get('/faq/edit/{id}/', 'Admin\FaqController@edit')->name('admin.faq.edit');
     Route::post('/faq/update/{id}/', 'Admin\FaqController@update')->name('admin.faq.update');
 
-    });
-
-    Route::group(['middleware' => 'checkpermission:About'], function() {
-
-    // About Route
-    Route::get('/about', 'Admin\AboutController@about')->name('admin.about');
-    Route::get('/about/add', 'Admin\AboutController@add')->name('admin.about.add');
-    Route::post('/about/store', 'Admin\AboutController@store')->name('admin.about.store');
-    Route::post('/about/delete/{id}/', 'Admin\AboutController@delete')->name('admin.about.delete');
-    Route::get('/about/edit/{id}/', 'Admin\AboutController@edit')->name('admin.about.edit');
-    Route::post('/about/update/{id}/', 'Admin\AboutController@update')->name('admin.about.update');
-    Route::post('/about/aboutcontent/{id}/', 'Admin\AboutController@aboutcontent')->name('admin.aboutcontent.update');
-
-    });
-
-    Route::group(['middleware' => 'checkpermission:Package'], function() {
-
-    // Package Route
-    Route::get('/package', 'Admin\PackagController@package')->name('admin.package');
-    Route::get('/package/add', 'Admin\PackagController@add')->name('admin.package.add');
-    Route::post('/package/store', 'Admin\PackagController@store')->name('admin.package.store');
-    Route::post('/package/delete/{id}/', 'Admin\PackagController@delete')->name('admin.package.delete');
-    Route::get('/package/edit/{id}/', 'Admin\PackagController@edit')->name('admin.package.edit');
-    Route::post('/package/update/{id}/', 'Admin\PackagController@update')->name('admin.package.update');
-    Route::post('/package/plancontent/{id}/', 'Admin\PackagController@plancontent')->name('admin.plancontent.update');
-
-     });
-
-    
-
-    Route::group(['middleware' => 'checkpermission:Service'], function() {
-    // Service Route
-    Route::get('/service', 'Admin\ServiceController@service')->name('admin.service');
-    Route::get('/service/add', 'Admin\ServiceController@add')->name('admin.service.add');
-    Route::post('/service/store', 'Admin\ServiceController@store')->name('admin.service.store');
-    Route::post('/service/delete/{id}/', 'Admin\ServiceController@delete')->name('admin.service.delete');
-    Route::get('/service/edit/{id}/', 'Admin\ServiceController@edit')->name('admin.service.edit');
-    Route::post('/service/update/{id}/', 'Admin\ServiceController@update')->name('admin.service.update');
-    Route::post('/service/servicecontent/{id}/', 'Admin\ServiceController@servicecontent')->name('admin.servicecontent.update');
-    });
-
-
-    Route::group(['middleware' => 'checkpermission:Blog'], function() {
-
     // Blog Category Route
     Route::get('/blog/blog-category', 'Admin\BcategoryController@bcategory')->name('admin.bcategory');
     Route::get('/blog/blog-category/add', 'Admin\BcategoryController@add')->name('admin.bcategory.add');
@@ -356,10 +336,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::post('/blog/blogcontent/{id}/', 'Admin\BlogController@blogcontent')->name('admin.blogcontent.update');
     Route::get('blog/get/categoty/{id}', 'Admin\BlogController@blog_get_category')->name('admin.blog.blog_get_category');
 
-    });
-
-    Route::group(['middleware' => 'checkpermission:Dynamic Page'], function() {
-
     // Dynamic Page  Route
     Route::get('/dynamic-page', 'Admin\DynamicpageController@dynamic_page')->name('admin.dynamic_page');
     Route::get('/dynamic-page/add', 'Admin\DynamicpageController@add')->name('admin.dynamic_page.add');
@@ -367,10 +343,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::post('/dynamic-page/delete/{id}/', 'Admin\DynamicpageController@delete')->name('admin.dynamic_page.delete');
     Route::get('/dynamic-page/edit/{id}/', 'Admin\DynamicpageController@edit')->name('admin.dynamic_page.edit');
     Route::post('/dynamic-page/update/{id}/', 'Admin\DynamicpageController@update')->name('admin.dynamic_page.update');
-
-    });
-
-    Route::group(['middleware' => 'checkpermission:Subscribers'], function() {
 
     // Newsletter Route
     Route::get('/subscriber', 'Admin\NewsletterController@newsletter')->name('admin.newsletter');
@@ -383,37 +355,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::get('/subscriber/edit/{id}/', 'Admin\NewsletterController@edit')->name('admin.newsletter.edit');
     Route::post('/subscriber/update/{id}/', 'Admin\NewsletterController@update')->name('admin.newsletter.update');
 
-    });
-
-    Route::group(['middleware' => 'checkpermission:Role Management'], function() {
-        // Admin Roles Routes
-        Route::get('/roles', 'Admin\RoleController@index')->name('admin.role.index');
-        Route::get('/role/add', 'Admin\RoleController@add')->name('admin.role.add');
-        Route::post('/role/store', 'Admin\RoleController@store')->name('admin.role.store');
-        Route::get('/role/edit/{id}', 'Admin\RoleController@edit')->name('admin.role.edit');
-        Route::post('/role/update/{id}', 'Admin\RoleController@update')->name('admin.role.update');
-        Route::post('/role/{id}/delete', 'Admin\RoleController@delete')->name('admin.role.delete');
-        Route::get('role/{id}/permissions/manage', 'Admin\RoleController@managePermissions')->name('admin.role.permissions.manage');
-        Route::post('role/{id}/permissions/update', 'Admin\RoleController@updatePermissions')->name('admin.role.permissions.update');
-
-
-        // Admin Users Routes
-        Route::get('/users', 'Admin\UserController@index')->name('admin.user.index');
-        Route::get('/user/add', 'Admin\UserController@add')->name('admin.user.add');
-        Route::post('/user/store', 'Admin\UserController@store')->name('admin.user.store');
-        Route::get('/user/{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
-        Route::post('/user/update/{id}', 'Admin\UserController@update')->name('admin.user.update');
-        Route::post('/user/delete/{id}', 'Admin\UserController@delete')->name('admin.user.delete');
-    });
-
-
-    Route::group(['middleware' => 'checkpermission:Footer'], function() {
 
     // Admin Footer Logo Text Routes
     Route::get('/footer', 'Admin\FooterController@index')->name('admin.footer.index');
     Route::post('/footer/update/{id}', 'Admin\FooterController@update')->name('admin.footer.update');
 
-    });
 
     // Currency  Route
     Route::get('/currency', 'Admin\CurrencyController@currency')->name('admin.currency');
@@ -450,8 +396,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::get('/groupemail', 'Admin\EmailController@groupemail')->name('admin.group.show');
     Route::post('/groupemailpost', 'Admin\EmailController@groupemailpost')->name('admin.group.submit');
 
-    Route::group(['middleware' => 'checkpermission:Language'], function() {
-
     // Admin Language Routes
     Route::get('/languages', 'Admin\LanguageController@index')->name('admin.language.index');
     Route::get('/language/add', 'Admin\LanguageController@add')->name('admin.language.add');
@@ -468,7 +412,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::post('/language/{id}/update', 'Admin\LanguageController@update')->name('admin.language.update');
     Route::post('/language/{id}/update/keyword', 'Admin\LanguageController@updateKeyword')->name('admin.language.updateKeyword');
 
-    });
 
     // Order Manage Route
     Route::get('/package/all-order', 'Admin\OrderController@package_allorder')->name('admin.package.allorder');
@@ -547,7 +490,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     Route::resource('supplier', 'Admin\SupplierController');
 
 });
-
 
 
 Route::group(['middleware' => 'setlang'], function () {
