@@ -5,35 +5,29 @@
 @section('content')
 
 
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    #{{ $ticket->ticket_id }} - {{ $ticket->title }}
-                </div>
-
-                <div class="panel-body">
-                    @if (session('status'))
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="md:flex">
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"> #{{ $ticket->ticket_id }} - {{ $ticket->title }}</div>
+      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{{ $ticket->message }}</a>
+      <p class="mt-2 text-gray-500"> 
+      @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
-                    @endif
-
-                    <div class="ticket-info">
-                        <p>{{ $ticket->message }}</p>
-                        <p>Category: {{ $ticket->category->name }}</p>
-                        <p>
+      @endif
+	  </p>
+      <p><b>Category:</b>  {{ $ticket->category->name }}</p>
+	  <p>
                             @if ($ticket->status === 'Open')
-                                Status: <span class="label label-success">{{ $ticket->status }}</span>
+                                <b>Status:</b> <span class="label label-success">{{ $ticket->status }}</span>
                             @else
-                                Status: <span class="label label-danger">{{ $ticket->status }}</span>
+                                <b>Status:</b> <span class="label label-danger">{{ $ticket->status }}</span>
                             @endif
-                        </p>
-                        <p>Created on: {{ $ticket->created_at->diffForHumans() }}</p>
-                    </div>
-
-                </div>
-            </div>
+      </p>
+      <p><b>Created on:</b> {{ $ticket->created_at->diffForHumans() }}</p>
+    </div>
+  </div>
 
             <hr>
 
