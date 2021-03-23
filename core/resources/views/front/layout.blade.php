@@ -86,19 +86,6 @@
 					<div class="col-lg-6 align-self-center">
 						<div class="right-content">
 							<ul>
-
-								@if(auth()->check())
-									<li>
-										<a href="{{ route('user.dashboard') }}"><i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
-									</li>
-								@else
-									<li>
-										<a href="{{ route('user.login') }}">{{ __('Login') }}</a>
-									</li>
-									<li>
-										<a href="{{ route('user.register') }}">{{ __('Register') }}</a>
-									</li>
-								@endif
 								@if (count($langs) > 0)
 								<li class="language-change">
 									<p class="name"><i class="fas fa-globe"></i>{{ $currentLang->name }}</p>

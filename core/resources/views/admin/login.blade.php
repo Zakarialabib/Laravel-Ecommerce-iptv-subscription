@@ -10,9 +10,9 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('assets/admin/css/tailwind.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/admin/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/css/tailwind.css') }}">
 </head>
 
 <body class="hold-transition login-page">

@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="p-0 -mb-5">
-    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+    <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
         <div class="sm:w-1/2 pr-4 pl-4">
         </div><!-- /.col -->

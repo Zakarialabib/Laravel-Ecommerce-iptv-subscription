@@ -4,7 +4,7 @@
    <!-- Content Header (Page header) -->
 
    <div class="p-0 -mb-5">
-      <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+      <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
           <div class="w-full pr-4 pl-4">
             <div class="flex flex-wrap text-lg capitalize text-bold pt-3 pb-3 py-4 px-4 mb-2 m-0 text-gray-900">
@@ -17,9 +17,9 @@
 
     <!-- Main content -->
     <div class="content">
-      <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+      <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-info">
                   <span class="info-box-icon"><i class="fas fa-user"></i></span>
 
@@ -31,7 +31,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-success">
                   <span class="info-box-icon"><i class="fas fa-box-open"></i></span>
 
@@ -43,7 +43,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-warning">
                   <span class="info-box-icon"><i class="fas fa-briefcase"></i></span>
 
@@ -55,7 +55,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-danger">
                   <span class="info-box-icon"><i class="fas fa-code-branch"></i></span>
 
@@ -67,7 +67,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-primary">
                   <span class="info-box-icon"><i class="fab fa-blogger-b"></i></span>
 
@@ -79,7 +79,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-danger">
                   <span class="info-box-icon"><i class="fas fa-star"></i></span>
 
@@ -91,7 +91,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-info">
                   <span class="info-box-icon"><i class="fas fa-users"></i></span>
 
@@ -103,7 +103,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 pr-4 pl-4 w-full">
+              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
                 <div class="info-box bg-gradient-success">
                   <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
 

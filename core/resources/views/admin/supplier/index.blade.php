@@ -7,7 +7,7 @@
         session()->get('message') !!}</div>
 @endif
 <div class="p-0 -mb-5">
-    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+    <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
         <div class="sm:w-1/2 pr-4 pl-4">
             <h1 class="flex flex-wrap text-lg capitalize text-bold pt-3 pb-3 py-4 px-4 mb-2 m-0 text-gray-900">{{ __('Supplier') }} </h1>
@@ -22,7 +22,7 @@
     </div><!-- /.container-fluid -->
 </div>
 <section>
-    <div class="container mx-auto sm:px-4 max-w-full mx-auto sm:px-4">
+    <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
             <div class="md:w-full pr-4 pl-4">
                 <div
