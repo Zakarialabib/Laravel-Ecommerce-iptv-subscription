@@ -114,6 +114,13 @@ Route::group(['middleware' => 'setlang'], function () {
 
         Route::get('/product-orders', 'User\UserController@product_order')->name('user.product.order');
         Route::get('/product-order/{id}', 'User\UserController@product_order_details')->name('user.product.orderDetails');
+
+        Route::get('/new_ticket', 'Admin\TicketsController@creation')->name('user.tickets.create');
+        Route::post('/new_ticket/store', 'Admin\TicketsController@storing')->name('user.tickets.store');
+        Route::get('/my_tickets', 'Admin\TicketsController@userTickets')->name('user.tickets.user_tickets');
+        Route::get('/my_tickets/{ticket_id}', 'Admin\TicketsController@affiche')->name('user.tickets.show');
+        Route::post('my_tickets/comment','Admin\CommentsController@postComment');
+
     });
 
 
