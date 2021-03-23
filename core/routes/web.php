@@ -467,6 +467,28 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('close_ticket/{ticket_id}', 'Admin\TicketsController@close');
     Route::post('tickets/comment','Admin\CommentsController@postComment');
 
+    // Package Sales
+    Route::get('/sales/packages', 'Admin\SaleController@packages')->name('admin.sales.packages.index');
+    Route::get('/sales/packages/create', 'Admin\SaleController@packageCreate')->name('admin.sales.packages.create');
+    Route::get('/sales/packages/{id}', 'Admin\SaleController@packageShow')->name('admin.sales.packages.show');
+
+    // Purchases
+    Route::get('/purchases', 'Admin\PurchaseController@index')->name('admin.purchases.index');
+    Route::get('/purchases/create', 'Admin\PurchaseController@create')->name('admin.purchases.create');
+    Route::post('/purchases', 'Admin\PurchaseController@store')->name('admin.purchases.store');
+    Route::get('/purchases/show/{id}', 'Admin\PurchaseController@show')->name('admin.purchases.show');
+    Route::get('/purchases/edit/{id}', 'Admin\PurchaseController@edit')->name('admin.purchases.edit');
+    Route::put('/purchases/{id}', 'Admin\PurchaseController@update')->name('admin.purchases.update');
+
+    // Supplier
+    Route::get('/suppliers/search', 'Admin\SupplierController@search');
+
+     // Admin Suppliers
+    Route::post('importsupplier', 'Admin\SupplierController@importSupplier')->name('supplier.import');
+    Route::post('supplier/deletebyselection', 'Admin\SupplierController@deleteBySelection');
+    Route::get('supplier/lims_supplier_search', 'Admin\SupplierController@limsSupplierSearch')->name('supplier.search');
+    Route::resource('supplier', 'Admin\SupplierController');
+
 });
 
 

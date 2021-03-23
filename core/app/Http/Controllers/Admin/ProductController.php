@@ -28,6 +28,15 @@ class ProductController extends Controller
         return view('admin.product.index',$data);
     }
 
+    public function listProducts(Request $request) {
+        try {
+            //code...
+            $products = Product::all();
+            return response(['products' => $products], 200);
+        } catch (\Throwable $th) {
+            return response(['products' => null], 500);
+        }
+    }
 
     public function add(){
         return view('admin.product.add');

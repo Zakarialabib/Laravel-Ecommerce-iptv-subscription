@@ -33,18 +33,18 @@ class PackagController extends Controller
 
     // Store slider Category
     public function store(Request $request){
-
-        $request->validate([
+        
+        $data = $request->validate([
             'name' => 'required|max:150',
             'language_id' => 'required',
-            'speed' => 'required|numeric',
-            'time' => 'required|max:150',
+            'plan' => 'required|max:150',
             'feature' => 'required',
             'price' => 'required|numeric',
             'status' => 'required|max:150',
         ]);
 
-        Package::create($request->all());
+
+        Package::create($data);
 
         $notification = array(
             'messege' => 'Package Added successfully!',

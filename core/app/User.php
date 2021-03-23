@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'password', 'packageid', 'phone','address','country' ,'city' ,'document','token','password'
+        'name', 'email', 'password', 'packageid',
     ];
 
     /**
@@ -54,10 +52,8 @@ class User extends Authenticatable
         return $this->hasMany('App\ProductOrder');
     }
 
-
-public function setpasswordAttribute($value)
-{
-    $this->attributes['password'] = Hash::make(Str::random(10));
-}
-
+    public function payments()
+    {
+        return $this->hasMany('App\Payment', 'payment_id');
+    }
 }

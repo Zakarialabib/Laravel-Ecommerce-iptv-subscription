@@ -19,4 +19,20 @@ class Admin extends Authenticatable
         'username', 'password',
     ];
 
+
+    public function sales()
+    {
+        return $this->hasMany('App\Sale');
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany('App\Purchase');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
 }

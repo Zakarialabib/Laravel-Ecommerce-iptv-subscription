@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Supplier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Supplier;
 
 class SupplierController extends Controller
 {
+    public function search(Request $request)
+    {
+        try {
+            //code...
+            $suppliers = Supplier::where('company_name', 'LIKE', '%'.$request->keyword.'%')->get();
+            return response(['suppliers' => $suppliers], 200);
+        } catch (\Throwable $th) {
+            return response(['suppliers' => null], 500);
+        }
+    }
+    
     public function index()
     {
             $suppliers = Supplier::where('is_active', true)->get();
