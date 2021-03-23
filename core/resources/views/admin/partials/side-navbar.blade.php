@@ -1,11 +1,5 @@
 @php
-$lang_code = $currentLang->code;
-
-$admin = Auth::guard('admin')->user();
-  if (!empty($admin->role)) {
-    $permissions = $admin->role->permissions;
-    $permissions = json_decode($permissions, true);
-}
+    $lang_code = $currentLang->code;
 @endphp
 
 <aside class="main-sidebar elevation-4 main-sidebar elevation-4 sidebar-dark-primary">
@@ -56,7 +50,6 @@ $admin = Auth::guard('admin')->user();
                         <p> {{ __('Gestion Interne') }}</p>
                     </a>
                 </li>
-                @if (empty($admin->role) || (!empty($permissions) && in_array('Accounts', $permissions)))
                 <li class="nav-item has-treeview 
                 @if(request()->routeIs('admin.supplier.index')) menu-open
                 @elseif(request()->routeIs('admin.register.user')) menu-open
@@ -90,6 +83,14 @@ $admin = Auth::guard('admin')->user();
                         <i class="far fa-circle nav-icon"></i>
                         {{ __('Supplier List') }}
                     </a>
+                    </li>
+                    <li class="">
+                    <a href="{{ route('admin.profil.index') }}" class="nav-link
+                        @if(request()->routeIs('admin.profil.index')) active @endif
+                        " >
+                        <i class="far fa-circle nav-icon"></i>
+                        {{ __('Admin List') }}
+                      </a>
                     </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -137,7 +138,6 @@ $admin = Auth::guard('admin')->user();
                   </li>
                   </ul>
                   </li>
-                  @endif
                 <li class="nav-item has-treeview
               @if(request()->path() == 'admin/package/all-order') menu-open
               @elseif(request()->path() == 'admin/package/pending-order') menu-open
@@ -566,60 +566,7 @@ $admin = Auth::guard('admin')->user();
                         </li>
                     </ul>
                 </li>
-                @if (empty($admin->role) || (!empty($permissions) && in_array('Role Management', $permissions)))
-                <li class="nav-item
-                    @if(request()->path() == 'admin/roles') menu-open 
-                    @elseif(request()->path() == 'admin/role/add') menu-open
-                    @elseif(request()->path() == 'admin/users') menu-open
-                    @elseif(request()->path() == 'admin/user/add') menu-open
-                    @elseif(request()->is('admin/user/*/edit')) menu-open
-                    @elseif(request()->is('admin/role/edit/*')) menu-open
-                    @elseif(request()->is('admin/role/*/permissions/manage')) menu-open
-                    @endif
-                    ">
-                    <a href="#" class="nav-link
-                        @if(request()->path() == 'admin/roles') active
-                        @elseif(request()->path() == 'admin/role/add') active
-                        @elseif(request()->path() == 'admin/users') active
-                        @elseif(request()->path() == 'admin/user/add') active
-                        @elseif(request()->is('admin/user/*/edit')) active
-                        @elseif(request()->is('admin/role/edit/*')) active
-                        @elseif(request()->is('admin/role/*/permissions/manage')) active
-                        @endif
-                        ">
-                    <i class="nav-icon fas fa-unlock-alt"></i>
-                    <p>
-                        {{ __('Role Management') }}
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.role.index') }}" class="nav-link
-                            @if(request()->path() == 'admin/roles') active
-                            @elseif(request()->path() == 'admin/role/add') active
-                            @elseif(request()->is('admin/role/edit/*')) active
-                            @elseif(request()->is('admin/role/*/permissions/manage')) active
-                            @endif
-                            ">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __("Role Permission") }}</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.user.index') }}" class="nav-link
-                            @if(request()->path() == 'admin/users') active
-                            @elseif(request()->path() == 'admin/user/add') active
-                            @elseif(request()->is('admin/user/*/edit')) active
-                            @endif
-                            ">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('User Role') }}</p>
-                        </a>
-                    </li>
-                    </ul>
-                </li>
-            @endif
+              
                 <li class="nav-item has-treeview
               @if(request()->path() == 'admin/blog') menu-open
               @elseif(request()->path() == 'admin/blog/blog-category') menu-open
