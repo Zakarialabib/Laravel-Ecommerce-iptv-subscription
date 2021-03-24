@@ -720,7 +720,7 @@
                       @elseif(request()->is('admin/role/*/permissions/manage')) menu-open
                       @endif
                       ">
-                      <a href="#" class="nav-link
+                      <a href="#" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
                           @if(request()->path() == 'admin/roles') active
                           @elseif(request()->path() == 'admin/role/add') active
                           @elseif(request()->path() == 'admin/users') active
