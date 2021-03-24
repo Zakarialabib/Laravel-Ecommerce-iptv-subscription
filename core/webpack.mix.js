@@ -18,13 +18,12 @@ mix.setPublicPath(`../assets/`)
 .js('resources/js/app.js', 'admin/js')
 .js('resources/js/sales.js', 'admin/js')
 .js('resources/js/purchases.js', 'admin/js')
-.sass('resources/sass/style.scss', 'front/css');
-
-mix.sass('resources/sass/tailwind.scss', '../../assets/admin/css')
-  .options({
-      processCssUrls: false,
-      postCss: [ tailwindcss('./tailwind.config.js') ],
-  });
+.sass('resources/sass/style.scss', 'front/css')
+.sass('resources/sass/tailwind.scss', 'admin/css')
+.options({
+    processCssUrls: false,
+    postCss: [ tailwindcss('./tailwind.config.js') ],
+});
 
 if (mix.inProduction()) {
     mix.version();
