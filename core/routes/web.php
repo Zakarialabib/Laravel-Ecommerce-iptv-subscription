@@ -440,6 +440,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('/product/delete/{id}/', 'Admin\ProductController@delete')->name('admin.product.delete');
     Route::get('/product/edit/{id}/', 'Admin\ProductController@edit')->name('admin.product.edit');
     Route::post('/product/update/{id}/', 'Admin\ProductController@update')->name('admin.product.update');
+    Route::get('/products/list', 'Admin\ProductController@listProducts');
 
     // Product Order
     Route::get('/product/all/orders', 'Admin\ProductOrderController@all')->name('admin.all.product.orders');
@@ -451,6 +452,29 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::get('/product/orders/detais/{id}', 'Admin\ProductOrderController@details')->name('admin.product.details');
     Route::post('/product/order/delete', 'Admin\ProductOrderController@orderDelete')->name('admin.product.order.delete');
     Route::post('/product/order/bulk-delete', 'Admin\ProductOrderController@bulkOrderDelete')->name('admin.product.order.bulk.delete');
+
+
+    Route::group(['middleware' => 'checkpermission:Role Management'], function() {
+        // Admin Roles Routes
+        Route::get('/roles', 'Admin\RoleController@index')->name('admin.role.index');
+        Route::get('/role/add', 'Admin\RoleController@add')->name('admin.role.add');
+        Route::post('/role/store', 'Admin\RoleController@store')->name('admin.role.store');
+        Route::get('/role/edit/{id}', 'Admin\RoleController@edit')->name('admin.role.edit');
+        Route::post('/role/update/{id}', 'Admin\RoleController@update')->name('admin.role.update');
+        Route::post('/role/{id}/delete', 'Admin\RoleController@delete')->name('admin.role.delete');
+        Route::get('role/{id}/permissions/manage', 'Admin\RoleController@managePermissions')->name('admin.role.permissions.manage');
+        Route::post('role/{id}/permissions/update', 'Admin\RoleController@updatePermissions')->name('admin.role.permissions.update');
+
+
+        // Admin Users Routes
+        Route::get('/users', 'Admin\UserController@index')->name('admin.user.index');
+        Route::get('/user/add', 'Admin\UserController@add')->name('admin.user.add');
+        Route::post('/user/store', 'Admin\UserController@store')->name('admin.user.store');
+        Route::get('/user/{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
+        Route::post('/user/update/{id}', 'Admin\UserController@update')->name('admin.user.update');
+        Route::post('/user/delete/{id}', 'Admin\UserController@delete')->name('admin.user.delete');
+    });
+
 
 
     // Admin Cache Clear Routes
