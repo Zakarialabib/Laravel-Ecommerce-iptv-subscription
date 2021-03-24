@@ -44,10 +44,10 @@
                     <div class="flex-auto p-6">
                         <div class="flex flex-wrap ">
                             <div class="lg:w-full pr-4 pl-4 mt-3 block w-full overflow-auto scrolling-touch">
-                                <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered">
+                                <table class="table-auto mb-4 bg-transparent table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="px-1 py-2">{{ __('#') }}</th>
+                                            <th>{{ __('#') }}</th>
                                             <th>{{ __('Package Name') }}</th>
                                             <th>{{ __('Price') }}</th>
                                             <th>{{ __('Method') }}</th>
@@ -108,7 +108,7 @@
         <div class="modal-body">
             <div class="flex flex-wrap ">
                 <div class="lg:w-full pr-4 pl-4">
-                    <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                    <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             <tr>
                                 <th scope="row">{{ __('Billpay Date') }}</th>

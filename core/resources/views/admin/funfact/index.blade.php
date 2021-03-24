@@ -89,10 +89,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6 block w-full overflow-auto scrolling-touch">
-                    <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Icon') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Name') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Value') }}</th>
@@ -103,7 +103,7 @@
                         
                         @foreach ($funfacts as $id=>$funfact)
                         <tr>
-                            <td class="px-1 py-2">{{ ++$id }}</td>
+                            <td>{{ ++$id }}</td>
                             <td class="px-1 py-2 border-b border-gray-200 text-sm">
                                 <img  class="w-60" src="{{ asset('assets/front/img/'.$funfact->icon) }}" alt="">
                             </td>

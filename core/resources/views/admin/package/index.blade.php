@@ -110,10 +110,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6">
-                    <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Name') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Price') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Discount Price') }}</th>
@@ -126,7 +126,7 @@
 
                             @foreach ($packages as $id=>$package)
                             <tr>
-                                <td class="px-1 py-2">
+                                <td>
                                     {{ $id }}
                                 </td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">

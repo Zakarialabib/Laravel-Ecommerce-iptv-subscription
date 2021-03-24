@@ -27,10 +27,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6">
-                    <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Package Name') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('User Name') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Price') }}</th>
@@ -44,7 +44,7 @@
 
                             @foreach ($bills as $id=>$bill)
                             <tr>
-                                <td class="px-1 py-2">
+                                <td>
                                     {{ $id }}
                                 </td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">
@@ -103,7 +103,7 @@
             <div class="flex flex-wrap ">
                 <div class="lg:w-1/2 pr-4 pl-4">
                     <h6 class="mb-3"><strong>{{ __('Customar Info :') }}</strong></h6>
-                    <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                    <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             <tr>
                                 <th scope="row">{{ __('Full Name') }}</th>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="lg:w-1/2 pr-4 pl-4">
                     <h6 class="mb-3"><strong>{{ __('Billpay Info :') }}</strong></h6>
-                    <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                    <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             
                             <tr>

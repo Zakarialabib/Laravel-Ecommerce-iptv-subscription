@@ -45,7 +45,7 @@
                         <div class="flex flex-wrap ">
                             <div class="lg:w-full pr-4 pl-4 mt-3">
                                 @if($order)
-                                <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                                <table class="table-auto mb-4 bg-transparent border table-striped">
                                     <tbody>
                                         <tr>
                                             <th scope="row">{{ __('Package Name') }}</th>

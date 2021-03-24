@@ -27,10 +27,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6">
-                    <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th>{{ __('Package Name') }}</th>
                                 <th>{{ __('User Name') }}</th>
                                 <th>{{ __('Price') }}</th>
@@ -108,7 +108,7 @@
             <div class="flex flex-wrap ">
                 <div class="lg:w-1/2 pr-4 pl-4">
                     <h6 class="mb-3"><strong>{{ __('Customar Info :') }}</strong></h6>
-                    <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                    <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             <tr>
                                 <th scope="row">{{ __('Full Name') }}</th>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="lg:w-1/2 pr-4 pl-4">
                     <h6 class="mb-3"><strong>{{ __('Order Info :') }}</strong></h6>
-                    <table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+                    <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             <tr>
                                 <th scope="row">{{ __('Package Name') }}</th>

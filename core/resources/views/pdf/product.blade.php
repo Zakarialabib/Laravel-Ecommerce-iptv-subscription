@@ -32,7 +32,7 @@
                             <div>
                                 <h3><strong>Order Details</strong></h3>
                             </div>
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                            <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
                                     <th scope="row">Order Number:</th>
@@ -70,7 +70,7 @@
                                 <div>
                                     <h3><strong>Billing Details</strong></h3>
                                 </div>
-                                <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                                <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
                                             <th scope="row">Billing Name:</th>
@@ -103,7 +103,7 @@
                                 <div>
                                     <h3><strong>Shipping Details</strong></h3>
                                 </div>
-                                <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                                <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
                                             <th scope="row">Shipping Name:</th>
@@ -137,7 +137,7 @@
                                 <div>
                                     <h3><strong>Billing Details</strong></h3>
                                 </div>
-                                <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                                <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
                                             <th scope="row">Billing Name:</th>
@@ -172,7 +172,7 @@
                         <div>
                             <h3><strong>Ordered Products</strong></h3>
                         </div>
-                        <table class="w-full max-w-full mb-4 bg-transparent table-striped" style="margin-bottom:100px">
+                        <table class="table-auto mb-4 bg-transparent table-striped" style="margin-bottom:100px">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>

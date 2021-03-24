@@ -36,10 +36,10 @@
                             @if (count($languages) == 0)
                                 <h3 class="text-center">NO LANGUAGE FOUND</h3>
                             @else
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                            <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                                 <thead>
                                     <tr>
-                                        <th class="px-1 py-2">{{ __('#') }}</th>
+                                        <th>{{ __('#') }}</th>
                                         <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Name') }}</th>
                                         <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Code') }}</th>
                                         <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Direction') }}</th>
@@ -50,7 +50,7 @@
                                 <tbody>
                                     @foreach ($languages as $id=>$language)
                                     <tr>
-                                        <td class="px-1 py-2">{{ ++$id }}</td>
+                                        <td>{{ ++$id }}</td>
                                         <td class="px-1 py-2 border-b border-gray-200 text-sm">{{$language->name}}</td>
                                         <td class="px-1 py-2 border-b border-gray-200 text-sm">{{$language->code}}</td>
                                         <td class="uppercase">{{$language->direction}}</td>
@@ -69,7 +69,7 @@
                                             <i class="fas fa-edit"></i>
                                             {{ __('Edit Keyword') }}
                                             </a>
-                                            <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline text-white bg-indigo-600 hover:bg-indigo-700 py-1 px-2 hover:bg-indigo-700 px-2 leading-tight text-xs" href="{{route('admin.language.edit', $language->id)}}">
+                                            <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline text-white bg-indigo-600 hover:bg-indigo-700 py-1 px-2 leading-tight text-xs" href="{{route('admin.language.edit', $language->id)}}">
                                                 <i class="fas fa-pencil-alt"></i>{{ __('Edit') }}
                                             </a>
                                             <form class="deleteform inline-block" action="{{route('admin.language.delete', $language->id)}}" method="post">
