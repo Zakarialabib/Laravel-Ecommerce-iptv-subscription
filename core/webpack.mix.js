@@ -13,7 +13,12 @@ const mix = require('laravel-mix');
 
 const tailwindcss = require('tailwindcss');
 
-mix.sass('resources/sass/style.scss', '../../assets/front/css');
+
+mix.setPublicPath(`../assets/`)
+.js('resources/js/app.js', 'admin/js')
+.js('resources/js/sales.js', 'admin/js')
+.js('resources/js/purchases.js', 'admin/js')
+.sass('resources/sass/style.scss', 'front/css');
 
 mix.sass('resources/sass/tailwind.scss', '../../assets/admin/css')
   .options({
