@@ -106,7 +106,7 @@ var purchases = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/chawad/core/resources/js/purchases.js */"./resources/js/purchases.js");
+module.exports = __webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\js\purchases.js */"./resources/js/purchases.js");
 
 
 /***/ })

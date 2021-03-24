@@ -62,14 +62,14 @@
                                   <p>{{ __('Products') }}</p>
                                 </a>
                             </li>
-                            <li class="">
+                            <!--     <li class="">
                                 <a href="{{ route('admin.sales.packages.index') }}" class="nav-link
                                 @if(request()->routeIs('admin.sales.packages.index')) active @endif
                                 ">
                                   <i class="far nav-icon"></i>
                                   <p>{{ __("Packages") }}</p>
                                 </a>
-                            </li>
+                            </li>-->
                           </ul>
                         </li>
                         <li class="">
@@ -105,7 +105,6 @@
                 <li class="nav-item has-treeview 
                 @if(request()->routeIs('admin.supplier.index')) menu-open
                 @elseif(request()->routeIs('admin.register.user')) menu-open
-                @elseif(request()->routeIs('admin.profil.index'))  menu-open 
                 @elseif(request()->routeIs('admin.register.create')) menu-open
                 @elseif(request()->routeIs('register.user.view')) menu-open
                 @elseif(request()->routeIs('register.user.package_buy')) menu-open
@@ -119,7 +118,6 @@
                        @elseif(request()->routeIs('register.user.view')) active
                        @elseif(request()->routeIs('register.user.package_buy')) active
                        @elseif(request()->routeIs('register.user.package_not_buy')) active
-                       @elseif(request()->routeIs('admin.profil.index')) active 
                        @endif">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -136,14 +134,7 @@
                         {{ __('Supplier List') }}
                     </a>
                     </li>
-                    <li class="">
-                    <a href="{{ route('admin.profil.index') }}" class="nav-link
-                        @if(request()->routeIs('admin.profil.index')) active @endif
-                        " >
-                        <i class="far fa-circle nav-icon"></i>
-                        {{ __('Admin List') }}
-                      </a>
-                    </li>
+     
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>

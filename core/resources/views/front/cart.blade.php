@@ -38,10 +38,10 @@
         <div class="lg:w-full pr-4 pl-4">
           <div class="cart-table">
             <div class="block w-full overflow-auto scrolling-touch table-remove">
-              <table class="w-full max-w-full mb-4 bg-transparent table-bordered cart-table">
+              <table class="table-auto mb-4 bg-transparent table-bordered cart-table">
                 <thead>
                   <tr>
-                    <th class="px-1 py-2">{{ __('#') }}</th>
+                    <th>{{ __('#') }}</th>
                     <th>{{ __('Image') }}</th>
                     <th>{{ __('Product Name') }}</th>
                     <th class="t-qty">{{ __('Quantity') }}</th>
@@ -112,7 +112,7 @@
             <h4 class="title">
               {{ __('Cart Summery :') }}
             </h4>
-            <table class="w-full max-w-full mb-4 bg-transparent table-bordered">
+            <table class="table-auto mb-4 bg-transparent table-bordered">
               <tr>
                 <th>{{ __('Total Item') }}</th>
                 <td class="cart-item-view"> {{ $countitem }}</td>

@@ -110,10 +110,10 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6 no-padding">
-                    <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Image') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Name') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Position') }}</th>
@@ -125,7 +125,7 @@
                         
                         @foreach ($testimonials as $id=>$testimonial)
                         <tr>
-                            <td class="px-1 py-2">{{ ++$id }}</td>
+                            <td>{{ ++$id }}</td>
                             <td class="px-1 py-2 border-b border-gray-200 text-sm">
                                 <img class="w-80" src="{{ asset('assets/front/img/'.$testimonial->image) }}" alt="">
                             </td>

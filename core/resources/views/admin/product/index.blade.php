@@ -43,7 +43,7 @@
                     <table  class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th>{{ __('Image') }}</th>
                                 <th>{{ __('Title') }}</th>
                                 <th>{{ __('Price') }}</th>
@@ -55,7 +55,7 @@
 
                             @foreach ($products as $id=>$product)
                             <tr>
-                                <td class="px-1 py-2">
+                                <td>
                                     {{ $id }}
                                 </td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">

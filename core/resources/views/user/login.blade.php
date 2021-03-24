@@ -53,7 +53,7 @@
                             @if($errors->has('email'))
                             <p class="m-1 text-red-600">{{ $errors->first('email') }}</p>
                             @endif
-                            <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
+                            <input class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
                                 type="password" name="password" placeholder="{{ __('Enter Password') }}" />
                             @if($errors->has('password'))
                             <p class="m-1 text-red-600">{{ $errors->first('password') }}</p>

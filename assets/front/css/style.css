@@ -201,7 +201,7 @@ body.modal-open {
 }
 
 .navbar-light .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, .7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(255, 255, 255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -792,7 +792,7 @@ body {
   display: block;
   font-size: 14px;
   line-height: 24px;
-  color: #fff;
+  color: #1a385b;
 }
 
 .mainmenu-area .top-header .right-content ul li.language-change {
@@ -922,7 +922,7 @@ body {
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-link {
   line-height: 24px;
   font-size: 16px;
-  color: #222;
+  color: #fff;
   line-height: 26px;
   font-weight: 600;
   position: relative;
@@ -1132,7 +1132,7 @@ body {
 
 .about-section .list li p:hover {
   background: #983ce9;
-  color: #fff;
+  color: #1a385b;
 }
 
 .about-section .list li p::before {
@@ -1192,7 +1192,7 @@ body {
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-  color: #fff;
+  color: #1a385b;
 }
 
 .pricingPlan-section .single-price .mbps {
@@ -1385,7 +1385,7 @@ body {
 }
 
 .offer-section .offer-list li .content:hover p {
-  color: #fff !important;
+  color: #1a385b !important;
 }
 
 .offer-section .offer-list li .content:hover::before {
