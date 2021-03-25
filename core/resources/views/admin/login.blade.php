@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css') }}">
 </head>
 
-<body class="hold-transition login-page">
+<body class="h-screen flex items-center justify-center bg-blue-800">
 
 <div class="login-box">
     <div class="login-logo">
@@ -49,7 +49,7 @@
           <div class="flex flex-wrap ">
             <!-- /.col -->
             <div class="w-full">
-              <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">{{ __('LOGIN') }}</button>
+              <button type="submit" class="w-full text-white bg-blue-500 py-2 hover:bg-blue-700 block btn-signin">{{ __('LOGIN') }}</button>
             </div>
             <!-- /.col -->
           </div>
@@ -67,7 +67,6 @@
     <script src="{{ asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- AdminLTE App -->
-    <script src="{{ asset('assets/admin/js/adminlte.min.js') }}"></script>
 
     </body>
 </html>

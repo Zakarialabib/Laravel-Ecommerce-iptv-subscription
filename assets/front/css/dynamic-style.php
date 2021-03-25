@@ -55,7 +55,7 @@ background: <?php echo $color; ?>;
 .latest-post-widget .post-list li .post .post-details:hover a,
 .testimonial .testimonial-slider .owl-controls .owl-nav div,
 .checkout-area .cart-product .add-shiping-methods table tbody tr td p span,
-.shop-section .single-product .content .price,
+.shop-section .single-product .content,
 .shop-section .single-product .content .name a:hover,
 .latest-post-widget .post-list li .post .post-details,
 .progress-steps li.active .icon

@@ -2,18 +2,18 @@
   <div class="container px-3">
     <div class="flex flex-col">
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr class="border-b border-gray-200 hover:bg-gray-100">
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input
                   type="hidden"
                   name="order_id"
@@ -27,22 +27,21 @@
                 />
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none bg-white-100"
+                  class="rounded-sm px-2 py-2 focus:outline-none bg-white-100"
                   name="reference"
                   placeholder="Reference"
                   v-model="sale.reference"
                 />
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input type="hidden" name="user_id" v-model="sale.user.id" />
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none"
+                  class="rounded-sm px-2 py-2 focus:outline-none"
                   name="user"
                   placeholder="Customer"
                   v-model="sale.user.name"
-                  v-on:change="searchCustomer(sale.user.name)"
-                  v-on:click="() => (showCustomers = !showCustomers)"
+                  v-on:input="debounceInput()"
                   autocomplete="off"
                 />
                 <div v-if="showCustomers" class="menu">
@@ -57,25 +56,25 @@
                   </div>
                 </div>
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input type="hidden" name="admin_id" v-model="user.id" />
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none"
+                  class="rounded-sm px-2 py-2 focus:outline-none"
                   name="admin"
                   placeholder="User"
                   v-model="user.username"
                   readonly
                 />
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <div v-if="!sale.document">
                   <input type="file" name="document" />
                 </div>
                 <div v-if="sale.document" class="flex">
-                  <div class=" bg-gray-300">{{ sale.document }}</div>
+                  <div class="py-2 px-3 bg-gray-300">{{ sale.document }}</div>
                   <button
-                    class="rounded-sm  focus:outline-none text-white font-bold bg-red-300"
+                    class="rounded-sm px-3 py-2 focus:outline-none text-white font-bold bg-red-300"
                     v-on:click.prevent="deleteFile"
                   >
                     X
@@ -90,7 +89,7 @@
       <products-component v-if="category === 'products'" :order_items="sale.orderitems" @changeSubTotal="changeSubTotal($event)"></products-component>
       <packages-component v-else :order_items="sale.orderitems" @changeSubTotal="changeSubTotal($event)"></packages-component>
       <div class="w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
@@ -103,7 +102,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="number"
-                  class="rounded-sm  focus:outline-none bg-white-100 w-full mr-2"
+                  class="rounded-sm px-3 py-2 focus:outline-none bg-white-100 w-full mr-2"
                   name="subtotal"
                   placeholder="Subtotal"
                   v-model="subTotal"
@@ -113,7 +112,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="number"
-                  class="rounded-sm  focus:outline-none w-full mr-2"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full mr-2"
                   name="tax"
                   placeholder="Tax"
                   v-model="tax"
@@ -122,7 +121,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="text"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   name="total"
                   placeholder="Total"
                   v-model="total"
@@ -134,7 +133,7 @@
         </table>
       </div>
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment status</th>
@@ -148,7 +147,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <select
                   name="payment_status"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="sale.payment.status === 1">
                     DUE
@@ -167,7 +166,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <select
                   name="payment_method"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="sale.payment.method === 1">
                     CASH
@@ -185,7 +184,7 @@
                   type="number"
                   name="paid_amount"
                   v-model="sale.payment.paid_amount"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 />
               </td>
               <td class="px-3 py-4 whitespace-nowrap text-left">
@@ -193,7 +192,7 @@
                   type="number"
                   name="due"
                   v-model="due"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   readonly
                 />
               </td>
@@ -203,14 +202,14 @@
       </div>
       <div class="w-full flex justify-between mb-4">
         <textarea
-          class="rounded-sm  focus:outline-none w-full mr-2"
+          class="rounded-sm px-3 py-2 focus:outline-none w-full mr-2"
           name="note"
           cols="30"
           rows="10"
           v-model="sale.note"
         ></textarea>
         <textarea
-          class="rounded-sm  focus:outline-none w-full"
+          class="rounded-sm px-3 py-2 focus:outline-none w-full"
           name="payment_note"
           id=""
           cols="30"
@@ -221,7 +220,7 @@
       <div class="flex">
         <button
           type="submit"
-          class="rounded outline-none  bg-blue-600 hover:bg-blue-400 text-white font-semibold"
+          class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold"
         >
           save
         </button>
@@ -262,12 +261,15 @@ export default {
       return (this.subTotal * this.tax) / 100 + this.subTotal;
     },
     due() {
-      return this.total - this.sale.payment.paid_amount;
+      return (this.total - this.sale.payment.paid_amount).toFixed(2);
     },
   },
   methods: {
+    debounceInput: _.debounce(function () {
+      this.searchCustomer(this.sale.user.name)
+    }, 500),
     changeSubTotal(subTotal) {
-      this.subTotal = subTotal;
+      this.subTotal = subTotal.toFixed(2);
     },
     searchCustomer(keyword) {
       axios
@@ -275,6 +277,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.customersList = response.data.customers;
+            this.showCustomers = true;
           }
         });
     },

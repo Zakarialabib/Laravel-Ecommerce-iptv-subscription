@@ -117,7 +117,7 @@
             />
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-center">
-            {{ item.price * item.qty }}
+            {{ (item.price * item.qty).toFixed(2) }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap flex justify-center">
             <button v-on:click.prevent="handleDeleteItem(item)">

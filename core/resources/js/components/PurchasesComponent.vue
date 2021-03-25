@@ -2,36 +2,35 @@
   <div class="container px-3">
     <div class="flex flex-col">
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-              <th class=" text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr class="border-b border-gray-200 hover:bg-gray-100">
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none bg-white-100"
+                  class="rounded-sm px-2 py-2 focus:outline-none bg-white-100"
                   name="reference"
                   placeholder="Reference"
                   v-model="purchase.reference"
                 />
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input type="hidden" name="supplier_id" v-model="purchase.supplier.id" />
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none"
+                  class="rounded-sm px-2 py-2 focus:outline-none"
                   name="supplier"
                   placeholder="Supplier"
                   v-model="purchase.supplier.company_name"
-                  v-on:change="searchSuppliers(purchase.supplier.company_name)"
-                  v-on:click="() => (showSuppliers = !showSuppliers)"
+                  v-on:input="debounceInput()"
                   autocomplete="off"
                 />
                 <div v-if="showSuppliers" class="menu">
@@ -39,32 +38,30 @@
                     class="menu-item"
                     v-for="(supplier, index) in suppliersList"
                     v-bind:key="index"
-                    v-on:click="selectSupplier(supplier)"
                   >
-                    <span v-if="suppliersList.length === 0">Loading...</span>
-                    <span v-if="suppliersList.length !== 0">{{ supplier.name }}</span>
+                    <span v-on:click="selectSupplier(supplier)" v-if="suppliersList.length !== 0">{{ supplier.name }}</span>
                   </div>
                 </div>
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <input type="hidden" name="admin_id" v-model="user.id" />
                 <input
                   type="text"
-                  class="rounded-sm focus:outline-none"
+                  class="rounded-sm px-2 py-2 focus:outline-none"
                   name="admin"
                   placeholder="Agent"
                   v-model="user.username"
                   readonly
                 />
               </td>
-              <td class="whitespace-nowrap text-left">
+              <td class="px-6 py-4 whitespace-nowrap text-left">
                 <div v-if="!purchase.document">
                   <input type="file" name="document" />
                 </div>
                 <div v-if="purchase.document" class="flex">
-                  <div class="bg-gray-300">{{ purchase.document }}</div>
+                  <div class="py-2 px-3 bg-gray-300">{{ purchase.document }}</div>
                   <button
-                    class="rounded-sm  focus:outline-none text-white font-bold bg-red-300"
+                    class="rounded-sm px-3 py-2 focus:outline-none text-white font-bold bg-red-300"
                     v-on:click.prevent="deleteFile"
                   >
                     X
@@ -79,7 +76,7 @@
       <div
         class="w-full overflow-hidden mb-2 border border-gray-200 sm:rounded-lg"
       >
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr
               class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
@@ -128,7 +125,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input type="hidden" name="purchase_item_id[]" v-model="item.id" />
                 <input
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   type="text"
                   name="title[]"
                   v-model="item.title"
@@ -137,7 +134,7 @@
               </td>
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   name="price[]"
                   type="number"
                   v-model="item.price"
@@ -146,17 +143,17 @@
               </td>
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   type="number"
                   name="qty[]"
                   v-model="item.qty"
                   placeholder="Quantity"
                 />
               </td>
-              <td class="whitespace-nowrap text-center">
+              <td class="px-6 py-4 whitespace-nowrap text-center">
                 {{ item.price * item.qty }}
               </td>
-              <td class="whitespace-nowrap">
+              <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex justify-center">
                   <button v-on:click.prevent="handleDeleteItem(item)">
                     <i class="fas fa-trash-alt"></i>
@@ -170,13 +167,13 @@
       <div class="flex justify-end w-full mb-4">
         <button
           v-on:click.prevent="handleAddRow()"
-          class="rounded outline-none bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize"
+          class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize"
         >
           add
         </button>
       </div>
       <div class="w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
@@ -189,7 +186,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="number"
-                  class="rounded-sm  focus:outline-none bg-white-100 w-full mr-2"
+                  class="rounded-sm px-3 py-2 focus:outline-none bg-white-100 w-full mr-2"
                   name="subtotal"
                   placeholder="Subtotal"
                   v-model="subTotal"
@@ -199,7 +196,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="number"
-                  class="rounded-sm  focus:outline-none w-full mr-2"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full mr-2"
                   name="tax"
                   placeholder="Tax"
                   v-model="tax"
@@ -208,7 +205,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <input
                   type="text"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   name="total"
                   placeholder="Total"
                   v-model="total"
@@ -220,7 +217,7 @@
         </table>
       </div>
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="table-auto divide-y  divide-gray-200">
+        <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment status</th>
@@ -234,7 +231,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <select
                   name="payment_status"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="purchase.payment.status === 1">
                     DUE
@@ -253,7 +250,7 @@
               <td class="px-3 py-4 whitespace-nowrap text-left">
                 <select
                   name="payment_method"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="purchase.payment.method === 1">
                     CASH
@@ -271,7 +268,7 @@
                   type="number"
                   name="paid_amount"
                   v-model="purchase.payment.paid_amount"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 />
               </td>
               <td class="px-3 py-4 whitespace-nowrap text-left">
@@ -279,7 +276,7 @@
                   type="number"
                   name="due"
                   v-model="due"
-                  class="rounded-sm  focus:outline-none w-full"
+                  class="rounded-sm px-3 py-2 focus:outline-none w-full"
                   readonly
                 />
               </td>
@@ -289,14 +286,14 @@
       </div>
       <div class="w-full flex justify-between mb-4">
         <textarea
-          class="rounded-sm  focus:outline-none w-full mr-2"
+          class="rounded-sm px-3 py-2 focus:outline-none w-full mr-2"
           name="note"
           cols="30"
           rows="10"
           v-model="purchase.note"
         ></textarea>
         <textarea
-          class="rounded-sm  focus:outline-none w-full"
+          class="rounded-sm px-3 py-2 focus:outline-none w-full"
           name="payment_note"
           id=""
           cols="30"
@@ -307,7 +304,7 @@
       <div class="flex">
         <button
           type="submit"
-          class="rounded outline-none bg-blue-600 hover:bg-blue-400 text-white font-semibold"
+          class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold"
         >
           save
         </button>
@@ -345,16 +342,19 @@ export default {
       this.purchaseItems.forEach((item) => {
         total += item.price * item.qty;
       });
-      return total;
+      return total.toFixed(2);
     },
     total() {
       return (this.subTotal * this.tax) / 100 + this.subTotal;
     },
     due() {
-      return this.total - this.purchase.payment.paid_amount;
+      return (this.total - this.purchase.payment.paid_amount).toFixed(2);
     },
   },
   methods: {
+    debounceInput: _.debounce(function () {
+      this.searchSuppliers(this.purchase.supplier.company_name)
+    }, 500),
     handleDeleteItem(item) {
       this.purchaseItems = this.purchaseItems.filter((i) => i.id !== item.id);
     },
@@ -374,6 +374,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.suppliersList = response.data.suppliers;
+            this.showSuppliers = true;
           }
         });
     },
