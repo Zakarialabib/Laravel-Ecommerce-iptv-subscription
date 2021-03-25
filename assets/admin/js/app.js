@@ -2635,9 +2635,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["purchase_prop", "user"],
   data: function data() {
@@ -2663,16 +2660,19 @@ __webpack_require__.r(__webpack_exports__);
       this.purchaseItems.forEach(function (item) {
         total += item.price * item.qty;
       });
-      return total;
+      return total.toFixed(2);
     },
     total: function total() {
       return this.subTotal * this.tax / 100 + this.subTotal;
     },
     due: function due() {
-      return this.total - this.purchase.payment.paid_amount;
+      return (this.total - this.purchase.payment.paid_amount).toFixed(2);
     }
   },
   methods: {
+    debounceInput: _.debounce(function () {
+      this.searchSuppliers(this.purchase.supplier.company_name);
+    }, 500),
     handleDeleteItem: function handleDeleteItem(item) {
       this.purchaseItems = this.purchaseItems.filter(function (i) {
         return i.id !== item.id;
@@ -2694,6 +2694,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/admin/suppliers/search?keyword=".concat(keyword)).then(function (response) {
         if (response.status === 200) {
           _this.suppliersList = response.data.suppliers;
+          _this.showSuppliers = true;
         }
       });
     },
@@ -2974,7 +2975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3005,12 +3005,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.subTotal * this.tax / 100 + this.subTotal;
     },
     due: function due() {
-      return this.total - this.sale.payment.paid_amount;
+      return (this.total - this.sale.payment.paid_amount).toFixed(2);
     }
   },
   methods: {
+    debounceInput: _.debounce(function () {
+      this.searchCustomer(this.sale.user.name);
+    }, 500),
     changeSubTotal: function changeSubTotal(subTotal) {
-      this.subTotal = subTotal;
+      this.subTotal = subTotal.toFixed(2);
     },
     searchCustomer: function searchCustomer(keyword) {
       var _this = this;
@@ -3018,6 +3021,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/admin/register/search/users?keyword=".concat(keyword)).then(function (response) {
         if (response.status === 200) {
           _this.customersList = response.data.customers;
+          _this.showCustomers = true;
         }
       });
     },
@@ -7567,7 +7571,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -39749,7 +39753,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\r\n            " +
-                          _vm._s(item.price * item.qty) +
+                          _vm._s((item.price * item.qty).toFixed(2)) +
                           "\r\n          "
                       )
                     ]
@@ -40112,7 +40116,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\r\n            " +
-                          _vm._s(item.price * item.qty) +
+                          _vm._s((item.price * item.qty).toFixed(2)) +
                           "\r\n          "
                       )
                     ]
@@ -40267,7 +40271,7 @@ var render = function() {
             "w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
         },
         [
-          _c("table", { staticClass: "table-auto" }, [
+          _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
             _vm._m(0),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
@@ -40275,217 +40279,240 @@ var render = function() {
                 "tr",
                 { staticClass: "border-b border-gray-200 hover:bg-gray-100" },
                 [
-                  _c("td", { staticClass: "whitespace-nowrap text-left" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.purchase.reference,
-                          expression: "purchase.reference"
-                        }
-                      ],
-                      staticClass: "rounded-sm focus:outline-none bg-white-100",
-                      attrs: {
-                        type: "text",
-                        name: "reference",
-                        placeholder: "Reference"
-                      },
-                      domProps: { value: _vm.purchase.reference },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                  _c(
+                    "td",
+                    { staticClass: "px-6 py-4 whitespace-nowrap text-left" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.purchase.reference,
+                            expression: "purchase.reference"
                           }
-                          _vm.$set(
-                            _vm.purchase,
-                            "reference",
-                            $event.target.value
-                          )
+                        ],
+                        staticClass:
+                          "rounded-sm px-2 py-2 focus:outline-none bg-white-100",
+                        attrs: {
+                          type: "text",
+                          name: "reference",
+                          placeholder: "Reference"
+                        },
+                        domProps: { value: _vm.purchase.reference },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.purchase,
+                              "reference",
+                              $event.target.value
+                            )
+                          }
                         }
-                      }
-                    })
-                  ]),
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("td", { staticClass: "whitespace-nowrap text-left" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.purchase.supplier.id,
-                          expression: "purchase.supplier.id"
-                        }
-                      ],
-                      attrs: { type: "hidden", name: "supplier_id" },
-                      domProps: { value: _vm.purchase.supplier.id },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                  _c(
+                    "td",
+                    { staticClass: "px-6 py-4 whitespace-nowrap text-left" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.purchase.supplier.id,
+                            expression: "purchase.supplier.id"
                           }
-                          _vm.$set(
-                            _vm.purchase.supplier,
-                            "id",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.purchase.supplier.company_name,
-                          expression: "purchase.supplier.company_name"
-                        }
-                      ],
-                      staticClass: "rounded-sm focus:outline-none",
-                      attrs: {
-                        type: "text",
-                        name: "supplier",
-                        placeholder: "Supplier",
-                        autocomplete: "off"
-                      },
-                      domProps: { value: _vm.purchase.supplier.company_name },
-                      on: {
-                        change: function($event) {
-                          return _vm.searchSuppliers(
-                            _vm.purchase.supplier.company_name
-                          )
-                        },
-                        click: function() {
-                          return (_vm.showSuppliers = !_vm.showSuppliers)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                        ],
+                        attrs: { type: "hidden", name: "supplier_id" },
+                        domProps: { value: _vm.purchase.supplier.id },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.purchase.supplier,
+                              "id",
+                              $event.target.value
+                            )
                           }
-                          _vm.$set(
-                            _vm.purchase.supplier,
-                            "company_name",
-                            $event.target.value
-                          )
                         }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.showSuppliers
-                      ? _c(
-                          "div",
-                          { staticClass: "menu" },
-                          _vm._l(_vm.suppliersList, function(supplier, index) {
-                            return _c(
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.purchase.supplier.company_name,
+                            expression: "purchase.supplier.company_name"
+                          }
+                        ],
+                        staticClass: "rounded-sm px-2 py-2 focus:outline-none",
+                        attrs: {
+                          type: "text",
+                          name: "supplier",
+                          placeholder: "Supplier",
+                          autocomplete: "off"
+                        },
+                        domProps: { value: _vm.purchase.supplier.company_name },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.purchase.supplier,
+                                "company_name",
+                                $event.target.value
+                              )
+                            },
+                            function($event) {
+                              return _vm.debounceInput()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.showSuppliers
+                        ? _c(
+                            "div",
+                            { staticClass: "menu" },
+                            _vm._l(_vm.suppliersList, function(
+                              supplier,
+                              index
+                            ) {
+                              return _c(
+                                "div",
+                                { key: index, staticClass: "menu-item" },
+                                [
+                                  _vm.suppliersList.length !== 0
+                                    ? _c(
+                                        "span",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.selectSupplier(
+                                                supplier
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(supplier.name))]
+                                      )
+                                    : _vm._e()
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "px-6 py-4 whitespace-nowrap text-left" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.id,
+                            expression: "user.id"
+                          }
+                        ],
+                        attrs: { type: "hidden", name: "admin_id" },
+                        domProps: { value: _vm.user.id },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "id", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.username,
+                            expression: "user.username"
+                          }
+                        ],
+                        staticClass: "rounded-sm px-2 py-2 focus:outline-none",
+                        attrs: {
+                          type: "text",
+                          name: "admin",
+                          placeholder: "Agent",
+                          readonly: ""
+                        },
+                        domProps: { value: _vm.user.username },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "username", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "px-6 py-4 whitespace-nowrap text-left" },
+                    [
+                      !_vm.purchase.document
+                        ? _c("div", [
+                            _c("input", {
+                              attrs: { type: "file", name: "document" }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.purchase.document
+                        ? _c("div", { staticClass: "flex" }, [
+                            _c(
                               "div",
+                              { staticClass: "py-2 px-3 bg-gray-300" },
+                              [_vm._v(_vm._s(_vm.purchase.document))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
                               {
-                                key: index,
-                                staticClass: "menu-item",
+                                staticClass:
+                                  "rounded-sm px-3 py-2 focus:outline-none text-white font-bold bg-red-300",
                                 on: {
                                   click: function($event) {
-                                    return _vm.selectSupplier(supplier)
+                                    $event.preventDefault()
+                                    return _vm.deleteFile($event)
                                   }
                                 }
                               },
                               [
-                                _vm.suppliersList.length === 0
-                                  ? _c("span", [_vm._v("Loading...")])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.suppliersList.length !== 0
-                                  ? _c("span", [_vm._v(_vm._s(supplier.name))])
-                                  : _vm._e()
+                                _vm._v(
+                                  "\n                  X\n                "
+                                )
                               ]
                             )
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "whitespace-nowrap text-left" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.id,
-                          expression: "user.id"
-                        }
-                      ],
-                      attrs: { type: "hidden", name: "admin_id" },
-                      domProps: { value: _vm.user.id },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "id", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.username,
-                          expression: "user.username"
-                        }
-                      ],
-                      staticClass: "rounded-sm focus:outline-none",
-                      attrs: {
-                        type: "text",
-                        name: "admin",
-                        placeholder: "Agent",
-                        readonly: ""
-                      },
-                      domProps: { value: _vm.user.username },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "username", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "whitespace-nowrap text-left" }, [
-                    !_vm.purchase.document
-                      ? _c("div", [
-                          _c("input", {
-                            attrs: { type: "file", name: "document" }
-                          })
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.purchase.document
-                      ? _c("div", { staticClass: "flex" }, [
-                          _c("div", { staticClass: "bg-gray-300" }, [
-                            _vm._v(_vm._s(_vm.purchase.document))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "rounded-sm  focus:outline-none text-white font-bold bg-red-300",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.deleteFile($event)
-                                }
-                              }
-                            },
-                            [_vm._v("\n                  X\n                ")]
-                          )
-                        ])
-                      : _vm._e()
-                  ])
+                          ])
+                        : _vm._e()
+                    ]
+                  )
                 ]
               )
             ])
@@ -40504,7 +40531,7 @@ var render = function() {
             "w-full overflow-hidden mb-2 border border-gray-200 sm:rounded-lg"
         },
         [
-          _c("table", { staticClass: "table-auto divide-y  divide-gray-200" }, [
+          _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
             _vm._m(1),
             _vm._v(" "),
             _c(
@@ -40560,7 +40587,8 @@ var render = function() {
                               expression: "item.title"
                             }
                           ],
-                          staticClass: "rounded-sm  focus:outline-none w-full",
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
                           attrs: {
                             type: "text",
                             name: "title[]",
@@ -40592,7 +40620,8 @@ var render = function() {
                               expression: "item.price"
                             }
                           ],
-                          staticClass: "rounded-sm  focus:outline-none w-full",
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
                           attrs: {
                             name: "price[]",
                             type: "number",
@@ -40624,7 +40653,8 @@ var render = function() {
                               expression: "item.qty"
                             }
                           ],
-                          staticClass: "rounded-sm  focus:outline-none w-full",
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
                           attrs: {
                             type: "number",
                             name: "qty[]",
@@ -40643,15 +40673,21 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("td", { staticClass: "whitespace-nowrap text-center" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(item.price * item.qty) +
-                          "\n            "
-                      )
-                    ]),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "px-6 py-4 whitespace-nowrap text-center"
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(item.price * item.qty) +
+                            "\n            "
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("td", { staticClass: "whitespace-nowrap" }, [
+                    _c("td", { staticClass: "px-6 py-4 whitespace-nowrap" }, [
                       _c("div", { staticClass: "flex justify-center" }, [
                         _c(
                           "button",
@@ -40681,7 +40717,7 @@ var render = function() {
           "button",
           {
             staticClass:
-              "rounded outline-none bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize",
+              "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -40700,7 +40736,7 @@ var render = function() {
             "w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
         },
         [
-          _c("table", { staticClass: "table-auto divide-y  divide-gray-200" }, [
+          _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
             _vm._m(2),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
@@ -40719,7 +40755,7 @@ var render = function() {
                         }
                       ],
                       staticClass:
-                        "rounded-sm  focus:outline-none bg-white-100 w-full mr-2",
+                        "rounded-sm px-3 py-2 focus:outline-none bg-white-100 w-full mr-2",
                       attrs: {
                         type: "number",
                         name: "subtotal",
@@ -40752,7 +40788,8 @@ var render = function() {
                           expression: "tax"
                         }
                       ],
-                      staticClass: "rounded-sm  focus:outline-none w-full mr-2",
+                      staticClass:
+                        "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
                       attrs: {
                         type: "number",
                         name: "tax",
@@ -40784,7 +40821,8 @@ var render = function() {
                           expression: "total"
                         }
                       ],
-                      staticClass: "rounded-sm  focus:outline-none w-full",
+                      staticClass:
+                        "rounded-sm px-3 py-2 focus:outline-none w-full",
                       attrs: {
                         type: "text",
                         name: "total",
@@ -40816,7 +40854,7 @@ var render = function() {
             "w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
         },
         [
-          _c("table", { staticClass: "table-auto divide-y  divide-gray-200" }, [
+          _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
             _vm._m(3),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
@@ -40828,7 +40866,8 @@ var render = function() {
                     _c(
                       "select",
                       {
-                        staticClass: "rounded-sm  focus:outline-none w-full",
+                        staticClass:
+                          "rounded-sm px-3 py-2 focus:outline-none w-full",
                         attrs: { name: "payment_status" }
                       },
                       [
@@ -40895,7 +40934,8 @@ var render = function() {
                     _c(
                       "select",
                       {
-                        staticClass: "rounded-sm  focus:outline-none w-full",
+                        staticClass:
+                          "rounded-sm px-3 py-2 focus:outline-none w-full",
                         attrs: { name: "payment_method" }
                       },
                       [
@@ -40957,7 +40997,8 @@ var render = function() {
                           expression: "purchase.payment.paid_amount"
                         }
                       ],
-                      staticClass: "rounded-sm  focus:outline-none w-full",
+                      staticClass:
+                        "rounded-sm px-3 py-2 focus:outline-none w-full",
                       attrs: { type: "number", name: "paid_amount" },
                       domProps: { value: _vm.purchase.payment.paid_amount },
                       on: {
@@ -40989,7 +41030,8 @@ var render = function() {
                           expression: "due"
                         }
                       ],
-                      staticClass: "rounded-sm  focus:outline-none w-full",
+                      staticClass:
+                        "rounded-sm px-3 py-2 focus:outline-none w-full",
                       attrs: { type: "number", name: "due", readonly: "" },
                       domProps: { value: _vm.due },
                       on: {
@@ -41019,7 +41061,7 @@ var render = function() {
               expression: "purchase.note"
             }
           ],
-          staticClass: "rounded-sm  focus:outline-none w-full mr-2",
+          staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
           attrs: { name: "note", cols: "30", rows: "10" },
           domProps: { value: _vm.purchase.note },
           on: {
@@ -41041,7 +41083,7 @@ var render = function() {
               expression: "purchase.payment.note"
             }
           ],
-          staticClass: "rounded-sm  focus:outline-none w-full",
+          staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
           attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
           domProps: { value: _vm.purchase.payment.note },
           on: {
@@ -41070,7 +41112,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Reference")]
         ),
@@ -41079,7 +41121,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Supplier")]
         ),
@@ -41088,7 +41130,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Agent")]
         ),
@@ -41097,7 +41139,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Document")]
         )
@@ -41261,7 +41303,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass:
-            "rounded outline-none bg-blue-600 hover:bg-blue-400 text-white font-semibold",
+            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
           attrs: { type: "submit" }
         },
         [_vm._v("\n        save\n      ")]
@@ -41302,143 +41344,139 @@ var render = function() {
               "w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
           },
           [
-            _c(
-              "table",
-              { staticClass: "table-auto divide-y  divide-gray-200" },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  { staticClass: "bg-white divide-y divide-gray-200" },
-                  [
-                    _c(
-                      "tr",
-                      {
-                        staticClass:
-                          "border-b border-gray-200 hover:bg-gray-100"
-                      },
-                      [
-                        _c(
-                          "td",
-                          { staticClass: "whitespace-nowrap text-left" },
-                          [
-                            _vm.sale.order
-                              ? _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.sale.order.id,
-                                      expression: "sale.order.id"
+            _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                { staticClass: "bg-white divide-y divide-gray-200" },
+                [
+                  _c(
+                    "tr",
+                    {
+                      staticClass: "border-b border-gray-200 hover:bg-gray-100"
+                    },
+                    [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "px-6 py-4 whitespace-nowrap text-left"
+                        },
+                        [
+                          _vm.sale.order
+                            ? _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.sale.order.id,
+                                    expression: "sale.order.id"
+                                  }
+                                ],
+                                attrs: { type: "hidden", name: "order_id" },
+                                domProps: { value: _vm.sale.order.id },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
                                     }
-                                  ],
-                                  attrs: { type: "hidden", name: "order_id" },
-                                  domProps: { value: _vm.sale.order.id },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.sale.order,
-                                        "id",
-                                        $event.target.value
-                                      )
-                                    }
+                                    _vm.$set(
+                                      _vm.sale.order,
+                                      "id",
+                                      $event.target.value
+                                    )
                                   }
-                                })
-                              : _c("input", {
-                                  attrs: { type: "hidden", name: "order_id" }
-                                }),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.sale.reference,
-                                  expression: "sale.reference"
                                 }
-                              ],
-                              staticClass:
-                                "rounded-sm focus:outline-none bg-white-100",
-                              attrs: {
-                                type: "text",
-                                name: "reference",
-                                placeholder: "Reference"
-                              },
-                              domProps: { value: _vm.sale.reference },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.sale,
-                                    "reference",
-                                    $event.target.value
-                                  )
-                                }
+                              })
+                            : _c("input", {
+                                attrs: { type: "hidden", name: "order_id" }
+                              }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.sale.reference,
+                                expression: "sale.reference"
                               }
-                            })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "whitespace-nowrap text-left" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.sale.user.id,
-                                  expression: "sale.user.id"
+                            ],
+                            staticClass:
+                              "rounded-sm px-2 py-2 focus:outline-none bg-white-100",
+                            attrs: {
+                              type: "text",
+                              name: "reference",
+                              placeholder: "Reference"
+                            },
+                            domProps: { value: _vm.sale.reference },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
                                 }
-                              ],
-                              attrs: { type: "hidden", name: "user_id" },
-                              domProps: { value: _vm.sale.user.id },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.sale.user,
-                                    "id",
-                                    $event.target.value
-                                  )
-                                }
+                                _vm.$set(
+                                  _vm.sale,
+                                  "reference",
+                                  $event.target.value
+                                )
                               }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.sale.user.name,
-                                  expression: "sale.user.name"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "px-6 py-4 whitespace-nowrap text-left"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.sale.user.id,
+                                expression: "sale.user.id"
+                              }
+                            ],
+                            attrs: { type: "hidden", name: "user_id" },
+                            domProps: { value: _vm.sale.user.id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
                                 }
-                              ],
-                              staticClass: "rounded-sm focus:outline-none",
-                              attrs: {
-                                type: "text",
-                                name: "user",
-                                placeholder: "Customer",
-                                autocomplete: "off"
-                              },
-                              domProps: { value: _vm.sale.user.name },
-                              on: {
-                                change: function($event) {
-                                  return _vm.searchCustomer(_vm.sale.user.name)
-                                },
-                                click: function() {
-                                  return (_vm.showCustomers = !_vm.showCustomers)
-                                },
-                                input: function($event) {
+                                _vm.$set(
+                                  _vm.sale.user,
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.sale.user.name,
+                                expression: "sale.user.name"
+                              }
+                            ],
+                            staticClass:
+                              "rounded-sm px-2 py-2 focus:outline-none",
+                            attrs: {
+                              type: "text",
+                              name: "user",
+                              placeholder: "Customer",
+                              autocomplete: "off"
+                            },
+                            domProps: { value: _vm.sale.user.name },
+                            on: {
+                              input: [
+                                function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
@@ -41447,152 +41485,162 @@ var render = function() {
                                     "name",
                                     $event.target.value
                                   )
+                                },
+                                function($event) {
+                                  return _vm.debounceInput()
                                 }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.showCustomers
-                              ? _c(
-                                  "div",
-                                  { staticClass: "menu" },
-                                  _vm._l(_vm.customersList, function(
-                                    customer,
-                                    index
-                                  ) {
-                                    return _c(
-                                      "div",
-                                      {
-                                        key: index,
-                                        staticClass: "menu-item",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.selectCustomer(customer)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm.customersList.length === 0
-                                          ? _c("span", [_vm._v("Loading...")])
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _vm.customersList.length !== 0
-                                          ? _c("span", [
-                                              _vm._v(_vm._s(customer.name))
-                                            ])
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "whitespace-nowrap text-left" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.user.id,
-                                  expression: "user.id"
-                                }
-                              ],
-                              attrs: { type: "hidden", name: "admin_id" },
-                              domProps: { value: _vm.user.id },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(_vm.user, "id", $event.target.value)
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.user.username,
-                                  expression: "user.username"
-                                }
-                              ],
-                              staticClass: "rounded-sm focus:outline-none",
-                              attrs: {
-                                type: "text",
-                                name: "admin",
-                                placeholder: "User",
-                                readonly: ""
-                              },
-                              domProps: { value: _vm.user.username },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.user,
-                                    "username",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "whitespace-nowrap text-left" },
-                          [
-                            !_vm.sale.document
-                              ? _c("div", [
-                                  _c("input", {
-                                    attrs: { type: "file", name: "document" }
-                                  })
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.sale.document
-                              ? _c("div", { staticClass: "flex" }, [
-                                  _c("div", { staticClass: " bg-gray-300" }, [
-                                    _vm._v(_vm._s(_vm.sale.document))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.showCustomers
+                            ? _c(
+                                "div",
+                                { staticClass: "menu" },
+                                _vm._l(_vm.customersList, function(
+                                  customer,
+                                  index
+                                ) {
+                                  return _c(
+                                    "div",
                                     {
-                                      staticClass:
-                                        "rounded-sm  focus:outline-none text-white font-bold bg-red-300",
+                                      key: index,
+                                      staticClass: "menu-item",
                                       on: {
                                         click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.deleteFile($event)
+                                          return _vm.selectCustomer(customer)
                                         }
                                       }
                                     },
                                     [
-                                      _vm._v(
-                                        "\n                  X\n                "
-                                      )
+                                      _vm.customersList.length === 0
+                                        ? _c("span", [_vm._v("Loading...")])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.customersList.length !== 0
+                                        ? _c("span", [
+                                            _vm._v(_vm._s(customer.name))
+                                          ])
+                                        : _vm._e()
                                     ]
                                   )
-                                ])
-                              : _vm._e()
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ]
-            )
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "px-6 py-4 whitespace-nowrap text-left"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.user.id,
+                                expression: "user.id"
+                              }
+                            ],
+                            attrs: { type: "hidden", name: "admin_id" },
+                            domProps: { value: _vm.user.id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.user, "id", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.user.username,
+                                expression: "user.username"
+                              }
+                            ],
+                            staticClass:
+                              "rounded-sm px-2 py-2 focus:outline-none",
+                            attrs: {
+                              type: "text",
+                              name: "admin",
+                              placeholder: "User",
+                              readonly: ""
+                            },
+                            domProps: { value: _vm.user.username },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.user,
+                                  "username",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "px-6 py-4 whitespace-nowrap text-left"
+                        },
+                        [
+                          !_vm.sale.document
+                            ? _c("div", [
+                                _c("input", {
+                                  attrs: { type: "file", name: "document" }
+                                })
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.sale.document
+                            ? _c("div", { staticClass: "flex" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "py-2 px-3 bg-gray-300" },
+                                  [_vm._v(_vm._s(_vm.sale.document))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "rounded-sm px-3 py-2 focus:outline-none text-white font-bold bg-red-300",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteFile($event)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  X\n                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),
@@ -41625,128 +41673,118 @@ var render = function() {
               "w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
           },
           [
-            _c(
-              "table",
-              { staticClass: "table-auto divide-y  divide-gray-200" },
-              [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  { staticClass: "bg-white divide-y divide-gray-200" },
-                  [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.subTotal,
-                                expression: "subTotal"
-                              }
-                            ],
-                            staticClass:
-                              "rounded-sm  focus:outline-none bg-white-100 w-full mr-2",
-                            attrs: {
-                              type: "number",
-                              name: "subtotal",
-                              placeholder: "Subtotal",
-                              readonly: ""
-                            },
-                            domProps: { value: _vm.subTotal },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.subTotal = $event.target.value
-                              }
+            _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                { staticClass: "bg-white divide-y divide-gray-200" },
+                [
+                  _c("tr", [
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.subTotal,
+                              expression: "subTotal"
                             }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.tax,
-                                expression: "tax"
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none bg-white-100 w-full mr-2",
+                          attrs: {
+                            type: "number",
+                            name: "subtotal",
+                            placeholder: "Subtotal",
+                            readonly: ""
+                          },
+                          domProps: { value: _vm.subTotal },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            ],
-                            staticClass:
-                              "rounded-sm  focus:outline-none w-full mr-2",
-                            attrs: {
-                              type: "number",
-                              name: "tax",
-                              placeholder: "Tax"
-                            },
-                            domProps: { value: _vm.tax },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.tax = $event.target.value
-                              }
+                              _vm.subTotal = $event.target.value
                             }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.total,
-                                expression: "total"
-                              }
-                            ],
-                            staticClass:
-                              "rounded-sm  focus:outline-none w-full",
-                            attrs: {
-                              type: "text",
-                              name: "total",
-                              placeholder: "Total",
-                              readonly: ""
-                            },
-                            domProps: { value: _vm.total },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.total = $event.target.value
-                              }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tax,
+                              expression: "tax"
                             }
-                          })
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
+                          attrs: {
+                            type: "number",
+                            name: "tax",
+                            placeholder: "Tax"
+                          },
+                          domProps: { value: _vm.tax },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.tax = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.total,
+                              expression: "total"
+                            }
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
+                          attrs: {
+                            type: "text",
+                            name: "total",
+                            placeholder: "Total",
+                            readonly: ""
+                          },
+                          domProps: { value: _vm.total },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.total = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),
@@ -41757,232 +41795,216 @@ var render = function() {
               "w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg"
           },
           [
-            _c(
-              "table",
-              { staticClass: "table-auto divide-y  divide-gray-200" },
-              [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  { staticClass: "bg-white divide-y divide-gray-200" },
-                  [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c(
-                            "select",
-                            {
-                              staticClass:
-                                "rounded-sm  focus:outline-none w-full",
-                              attrs: { name: "payment_status" }
-                            },
-                            [
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "1" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.status === 1
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  DUE\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "2" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.status === 2
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  PAID\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "3" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.status === 3
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  PENDING\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "4" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.status === 4
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  PARTIAL\n                "
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c(
-                            "select",
-                            {
-                              staticClass:
-                                "rounded-sm  focus:outline-none w-full",
-                              attrs: { name: "payment_method" }
-                            },
-                            [
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "1" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.method === 1
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  CASH\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "2" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.method === 2
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  CHECK\n                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                {
-                                  attrs: { value: "3" },
-                                  domProps: {
-                                    selected: _vm.sale.payment.method === 3
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  DEPOSIT\n                "
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.sale.payment.paid_amount,
-                                expression: "sale.payment.paid_amount"
-                              }
-                            ],
+            _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                { staticClass: "bg-white divide-y divide-gray-200" },
+                [
+                  _c("tr", [
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c(
+                          "select",
+                          {
                             staticClass:
-                              "rounded-sm  focus:outline-none w-full",
-                            attrs: { type: "number", name: "paid_amount" },
-                            domProps: { value: _vm.sale.payment.paid_amount },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                            attrs: { name: "payment_status" }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "1" },
+                                domProps: {
+                                  selected: _vm.sale.payment.status === 1
                                 }
-                                _vm.$set(
-                                  _vm.sale.payment,
-                                  "paid_amount",
-                                  $event.target.value
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  DUE\n                "
                                 )
-                              }
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "px-3 py-4 whitespace-nowrap text-left"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.due,
-                                expression: "due"
-                              }
-                            ],
-                            staticClass:
-                              "rounded-sm  focus:outline-none w-full",
-                            attrs: {
-                              type: "number",
-                              name: "due",
-                              readonly: ""
-                            },
-                            domProps: { value: _vm.due },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                attrs: { value: "2" },
+                                domProps: {
+                                  selected: _vm.sale.payment.status === 2
                                 }
-                                _vm.due = $event.target.value
-                              }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  PAID\n                "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "3" },
+                                domProps: {
+                                  selected: _vm.sale.payment.status === 3
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  PENDING\n                "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "4" },
+                                domProps: {
+                                  selected: _vm.sale.payment.status === 4
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  PARTIAL\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            staticClass:
+                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                            attrs: { name: "payment_method" }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "1" },
+                                domProps: {
+                                  selected: _vm.sale.payment.method === 1
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  CASH\n                "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "2" },
+                                domProps: {
+                                  selected: _vm.sale.payment.method === 2
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  CHECK\n                "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "3" },
+                                domProps: {
+                                  selected: _vm.sale.payment.method === 3
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  DEPOSIT\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sale.payment.paid_amount,
+                              expression: "sale.payment.paid_amount"
                             }
-                          })
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
+                          attrs: { type: "number", name: "paid_amount" },
+                          domProps: { value: _vm.sale.payment.paid_amount },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.sale.payment,
+                                "paid_amount",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.due,
+                              expression: "due"
+                            }
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
+                          attrs: { type: "number", name: "due", readonly: "" },
+                          domProps: { value: _vm.due },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.due = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),
@@ -41996,7 +42018,7 @@ var render = function() {
                 expression: "sale.note"
               }
             ],
-            staticClass: "rounded-sm  focus:outline-none w-full mr-2",
+            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
             attrs: { name: "note", cols: "30", rows: "10" },
             domProps: { value: _vm.sale.note },
             on: {
@@ -42018,7 +42040,7 @@ var render = function() {
                 expression: "sale.payment.note"
               }
             ],
-            staticClass: "rounded-sm  focus:outline-none w-full",
+            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
             attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
             domProps: { value: _vm.sale.payment.note },
             on: {
@@ -42049,7 +42071,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Reference")]
         ),
@@ -42058,7 +42080,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Customer")]
         ),
@@ -42067,7 +42089,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Agent")]
         ),
@@ -42076,7 +42098,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Document")]
         )
@@ -42171,7 +42193,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass:
-            "rounded outline-none  bg-blue-600 hover:bg-blue-400 text-white font-semibold",
+            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
           attrs: { type: "submit" }
         },
         [_vm._v("\n        save\n      ")]

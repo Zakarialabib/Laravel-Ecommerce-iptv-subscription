@@ -36,7 +36,7 @@
 <section class="auth">
     <div class="container mx-auto sm:px-4">
         <div class="min-h-52 flex flex-col justify-center">
-            <div class="p-15 xs:p-0 mx-auto md:w-full md:max-w-md">
+            <div class="p-15 xs:p-0 mx-auto md:w-full md:max-w-lg">
                 <h1 class="font-bold text-center text-2xl mb-5">{{ __('Login to your account to continue.') }}</h1>
                 <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                     @if(Session::has('error'))
@@ -58,9 +58,8 @@
                             @if($errors->has('password'))
                             <p class="m-1 text-red-600">{{ $errors->first('password') }}</p>
                             @endif
-                           
                             <button
-                                class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
+                                class="transition duration-200 bg-yellow-300 hover:bg-transparent text-blue-700 hover:text-blue-700 border hover:border-yellow-300 w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
                                 type="submit">
                                 <span class="inline-block mr-2">{{ __('Login') }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
