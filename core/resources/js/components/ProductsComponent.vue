@@ -129,6 +129,7 @@ export default {
   },
   mounted() {
     this.orderItems = this.order_items;
+    this.subTotalChanged();
   },
   computed: {
     subTotal() {
