@@ -60,15 +60,15 @@
               name="title[]"
               v-model="item.title"
               placeholder="Title"
-              @click="listProducts(item)"
+              @click="listProducts(index)"
               readonly
             />
-            <div v-if="menuId === item.id" class="menu">
+            <div v-if="menuId === index" class="menu">
               <div
                 class="menu-item"
-                v-for="(product, index) in productsList"
-                v-bind:key="index"
-                @click="selectProduct(product, item)"
+                v-for="(product, _index) in productsList"
+                v-bind:key="_index"
+                @click="selectProduct(product, index)"
               >
                 {{ product.title }}
               </div>
@@ -80,6 +80,7 @@
               name="price[]"
               type="number"
               v-model="item.price"
+              v-on:change="subTotalChanged()"
               placeholder="Price"
             />
           </td>
@@ -89,6 +90,7 @@
               type="number"
               name="qty[]"
               v-model="item.qty"
+              v-on:change="subTotalChanged()"
               placeholder="Quantity"
             />
           </td>
@@ -96,7 +98,7 @@
             {{ (item.price * item.qty).toFixed(2) }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-            <button v-on:click.prevent="handleDeleteItem(item)">
+            <button v-on:click.prevent="handleDeleteItem(index)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -123,13 +125,10 @@ export default {
       orderItems: [],
       menuId: null,
       productsList: [],
-      rowsCounter: 1,
     };
   },
   mounted() {
     this.orderItems = this.order_items;
-    console.log(this.orderItems);
-    this.$emit('changeSubTotal', this.subTotal);
   },
   computed: {
     subTotal() {
@@ -141,32 +140,33 @@ export default {
     },
   },
   methods: {
-    handleDeleteItem(item) {
-      this.orderItems = this.orderItems.filter((i) => i.id !== item.id);
+    subTotalChanged() {
       this.$emit('changeSubTotal', this.subTotal);
+    },
+    handleDeleteItem(index) {
+      this.orderItems.splice(index, 1)
+      this.subTotalChanged();
     },
     handleAddRow() {
       this.orderItems.push({
-        id: this.rowsCounter,
+        id: -1,
         product_order_id: 0,
         product_id: 0,
         title: "",
         price: "",
         qty: 0,
       });
-      this.$emit('changeSubTotal', this.subTotal);
-      this.rowsCounter++;
+      this.subTotalChanged();
     },
-    listProducts(item) {
+    listProducts(index) {
       axios.get("/admin/products/list").then((response) => {
         if (response.status === 200) {
-          this.menuId = item.id;
+          this.menuId = index;
           this.productsList = response.data.products;
         }
       });
     },
-    selectProduct(product, item) {
-      const index = this.orderItems.indexOf(item);
+    selectProduct(product, index) {
       Vue.set(this.orderItems, index, {
         id: product.id,
         product_id: product.id,
@@ -174,7 +174,8 @@ export default {
         price: product.current_price,
         qty: 1,
       });
-      this.$emit('changeSubTotal', this.subTotal);
+      this.subTotalChanged();
+      this.menuId = null
     },
   },
 };

@@ -269,7 +269,7 @@ export default {
       this.searchCustomer(this.sale.user.name)
     }, 500),
     changeSubTotal(subTotal) {
-      this.subTotal = subTotal.toFixed(2);
+      this.subTotal = subTotal;
     },
     searchCustomer(keyword) {
       axios

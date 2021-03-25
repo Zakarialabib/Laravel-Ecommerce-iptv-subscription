@@ -152,11 +152,11 @@
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-center">
-                {{ item.price * item.qty }}
+                {{ (item.price * item.qty).toFixed(2) }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex justify-center">
-                  <button v-on:click.prevent="handleDeleteItem(item)">
+                  <button v-on:click.prevent="handleDeleteItem(index)">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </div>
@@ -329,7 +329,6 @@ export default {
       menuId: null,
       suppliersList: [],
       showSuppliers: false,
-      rowsCounter: 1,
     };
   },
   mounted() {
@@ -344,7 +343,7 @@ export default {
       this.purchaseItems.forEach((item) => {
         total += item.price * item.qty;
       });
-      return total.toFixed(2);
+      return total;
     },
     total() {
       return (this.subTotal * this.tax) / 100 + this.subTotal;
@@ -357,19 +356,18 @@ export default {
     debounceInput: _.debounce(function () {
       this.searchSuppliers(this.purchase.supplier.company_name)
     }, 500),
-    handleDeleteItem(item) {
-      this.purchaseItems = this.purchaseItems.filter((i) => i.id !== item.id);
+    handleDeleteItem(index) {
+      this.purchaseItems.splice(index, 1)
     },
     handleAddRow() {
       this.purchaseItems.push({
-        id: this.rowsCounter,
+        id: 0,
         product_order_id: 0,
         product_id: 0,
         title: "",
         price: "",
         qty: 0,
       });
-      this.rowsCounter++;
     },
     searchSuppliers(keyword) {
       axios
