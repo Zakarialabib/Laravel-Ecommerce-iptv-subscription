@@ -123,6 +123,7 @@ export default {
       orderItems: [],
       menuId: null,
       productsList: [],
+      rowsCounter: 1,
     };
   },
   mounted() {
@@ -146,7 +147,7 @@ export default {
     },
     handleAddRow() {
       this.orderItems.push({
-        id: 0,
+        id: this.rowsCounter,
         product_order_id: 0,
         product_id: 0,
         title: "",
@@ -154,6 +155,7 @@ export default {
         qty: 0,
       });
       this.$emit('changeSubTotal', this.subTotal);
+      this.rowsCounter++;
     },
     listProducts(item) {
       axios.get("/admin/products/list").then((response) => {
@@ -166,7 +168,7 @@ export default {
     selectProduct(product, item) {
       const index = this.orderItems.indexOf(item);
       Vue.set(this.orderItems, index, {
-        id: -1,
+        id: product.id,
         product_id: product.id,
         title: product.title,
         price: product.current_price,

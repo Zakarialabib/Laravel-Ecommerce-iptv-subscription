@@ -130,6 +130,7 @@
                   name="title[]"
                   v-model="item.title"
                   placeholder="Title"
+                  autocomplete="off"
                 />
               </td>
               <td class="px-3 py-4 whitespace-nowrap text-left">
@@ -328,6 +329,7 @@ export default {
       menuId: null,
       suppliersList: [],
       showSuppliers: false,
+      rowsCounter: 1,
     };
   },
   mounted() {
@@ -360,13 +362,14 @@ export default {
     },
     handleAddRow() {
       this.purchaseItems.push({
-        id: 0,
+        id: this.rowsCounter,
         product_order_id: 0,
         product_id: 0,
         title: "",
         price: "",
         qty: 0,
       });
+      this.rowsCounter++;
     },
     searchSuppliers(keyword) {
       axios

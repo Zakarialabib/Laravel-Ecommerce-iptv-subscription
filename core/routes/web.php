@@ -189,7 +189,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
     });
 
     // Register User start
-    Route::get('register/users/','Admin\RegisterUserController@index')->name('admin.register.user');
+    Route::get('register/search/users','Admin\RegisterUserController@searchCustomers');
+    Route::get('register/users','Admin\RegisterUserController@index')->name('admin.register.user');
     Route::get('register/users/create','Admin\RegisterUserController@createProfile')->name('register.user.create');
     Route::post('register/users/store','Admin\RegisterUserController@storeProfile')->name('register.user.store');
     Route::get('register/users/edit','Admin\RegisterUserController@editProfile')->name('register.user.edit');

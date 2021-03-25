@@ -17,6 +17,17 @@ use App\Emailsetting;
 
 class RegisterUserController extends Controller
 {
+    public function searchCustomers(Request $request)
+    {
+        try {
+            //code...
+            $customers = User::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+            return response(['customers' => $customers], 200);
+        } catch (\Throwable $th) {
+            return response(['customers' => null], 500);
+        }
+    }
+    
     public function index()
     {
         $users = User::paginate(10);
