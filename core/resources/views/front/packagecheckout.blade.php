@@ -47,7 +47,7 @@
 						@endif
 					</strong>
 				</h4>
-				<table class="w-full max-w-full mb-4 bg-transparent border table-striped">
+				<table class="table-auto mb-4 bg-transparent border table-striped">
 					<tbody>
 						<tr>
 							<th scope="row">{{ __('Name') }}</th>
@@ -110,9 +110,9 @@
 													<div class="input-date">
 														<label for="expiredMonth" class="text-right block">{{ __('Expires') }}</label>
 														<div class="flex flex-wrap  content-date-input justify-end animate__animated animate__duration-2s animate__bounce">
-															<input type="text" disabled class="cardHolder w-1/3 block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="expiredMonth">
+															<input type="text" disabled class="cardHolder w-1/3 block appearance-none py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="expiredMonth">
 															<h4 class="mt-1 p-2 slash-text"> / </h4>
-															<input type="text" disabled class="cardHolder w-1/3 block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="expiredYear">
+															<input type="text" disabled class="cardHolder w-1/3 block appearance-none py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="expiredYear">
 														</div>
 													</div>
 												</div>

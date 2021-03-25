@@ -28,10 +28,10 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="flex-auto p-6">
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                            <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                                 <thead>
                                     <tr>
-                                        <th class="px-1 py-2">{{ __('#') }}</th>
+                                        <th>{{ __('#') }}</th>
                                         <th>{{ __('Image') }}</th>
                                         <th>{{ __('Username') }}</th>
                                         <th>{{ __('Email') }}</th>

@@ -19,7 +19,7 @@
     <div class="content">
       <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-info">
                   <span class="info-box-icon"><i class="fas fa-user"></i></span>
 
@@ -31,7 +31,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-success">
                   <span class="info-box-icon"><i class="fas fa-box-open"></i></span>
 
@@ -43,7 +43,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-warning">
                   <span class="info-box-icon"><i class="fas fa-briefcase"></i></span>
 
@@ -55,7 +55,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-danger">
                   <span class="info-box-icon"><i class="fas fa-code-branch"></i></span>
 
@@ -67,7 +67,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-primary">
                   <span class="info-box-icon"><i class="fab fa-blogger-b"></i></span>
 
@@ -79,7 +79,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-danger">
                   <span class="info-box-icon"><i class="fas fa-star"></i></span>
 
@@ -91,7 +91,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-info">
                   <span class="info-box-icon"><i class="fas fa-users"></i></span>
 
@@ -103,7 +103,7 @@
                 </div>
                 <!-- /.info-box -->
               </div>
-              <div class="md:w-1/4 pr-4 pl-4 sm:w-1/2 w-full">
+              <div class="px-2 lg:w1/4 md:w-1/4 sm:w-1/2">
                 <div class="info-box bg-gradient-success">
                   <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
 
@@ -117,18 +117,18 @@
               </div>
         </div>
         <div class="flex flex-wrap ">
-          <div class="md:w-1/2 pr-4 pl-4">
+          <div class="md:w-1/2 sm:w-full px-2">
             <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-primary  card-outline">
               <div class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">
-                <h3 class="px-4 mt-1 w-1/2">{{ __('Latest 10 Package :') }}</h3>
+                <h3 class="px-4 mt-1">{{ __('Latest 10 Package :') }}</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="flex-auto p-6">
-                <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered">
+                <table class="table-auto mb-4 bg-transparent table-striped table-bordered">
                   <thead>
                       <tr>
-                          <th class="px-1 py-2">{{ __('#') }}</th>
+                          <th>{{ __('#') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Name') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Price') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Discount Price') }}</th>
@@ -140,7 +140,7 @@
 
                       @foreach ($latestpackages as $id=>$package)
                       <tr>
-                          <td class="px-1 py-2">
+                          <td>
                               {{ $id }}
                           </td>
                           <td class="px-1 py-2 border-b border-gray-200 text-sm">
@@ -176,10 +176,10 @@
               <!-- /.card-body -->
             </div>
           </div>
-          <div class="md:w-1/2 pr-4 pl-4">
+          <div class="md:w-1/2 sm:w-full px-2">
             <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-primary  card-outline">
               <div class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">
-                <h3 class="px-4 mt-1 w-1/2">{{ __('Latest 10 Blog Post :') }}</h3>
+                <h3 class="px-4 mt-1">{{ __('Latest 10 Blog Post :') }}</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
@@ -187,7 +187,7 @@
                 <table id="idtable" class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped">
                   <thead>
                       <tr>
-                          <th class="px-1 py-2">{{ __('#') }}</th>
+                          <th>{{ __('#') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Image') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Title') }}</th>
                           <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Category') }}</th>
@@ -198,7 +198,7 @@
                       
                       @foreach ($latestblogs as $id=>$blog)
                       <tr>
-                          <td class="px-1 py-2">{{ ++$id }}</td>
+                          <td>{{ ++$id }}</td>
                           <td class="px-1 py-2 border-b border-gray-200 text-sm">
                               <img class="w-80" src="{{ asset('assets/front/img/'.$blog->main_image) }}" alt="">
                           </td>

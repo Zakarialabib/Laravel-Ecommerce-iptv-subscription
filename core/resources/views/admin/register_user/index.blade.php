@@ -34,7 +34,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="flex-auto p-6">
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                            <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                                 <thead>
                                     <tr>
                                         <th>{{ __('#') }}</th>

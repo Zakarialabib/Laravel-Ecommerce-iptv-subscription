@@ -186,7 +186,7 @@
 				</div>
 				<div class="lg:w-1/2 pr-4 pl-4 self-center">
 					<div class="offer-image">
-						<img class="w-80" src="{{ asset('assets/front/img/'.$sectionInfo->offer_image) }}" alt="">
+						<img class="w-1/2" src="{{ asset('assets/front/img/'.$sectionInfo->offer_image) }}" alt="">
 					</div>
 				</div>
 			</div>
@@ -244,10 +244,10 @@
 			</div>
 			<div class="flex flex-wrap ">
 				@foreach($services as $key => $service)
-				<div class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+				<div class="lg:w-1/3 pr-4 pl-4 md:w-1/2">
 					<a href="{{ route('front.service.details', $service->slug) }}" class="single-service">
 						<div class="left-area">
-							<img class="w-80" src="{{ asset('assets/front/img/'.$service->icon) }}" alt="">
+							<img class="w-1/2" src="{{ asset('assets/front/img/'.$service->icon) }}" alt="">
 						</div>
 						<div class="right-area">
 							<h4 class="title">

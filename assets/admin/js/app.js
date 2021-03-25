@@ -7510,7 +7510,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-a395b096] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a395b096] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a395b096]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".menu[data-v-a395b096] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a395b096] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a395b096]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -7529,7 +7529,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-5ecce49e] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-5ecce49e] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-5ecce49e]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".menu[data-v-5ecce49e] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-5ecce49e] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-5ecce49e]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -7548,7 +7548,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-1a2ab1b6] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-1a2ab1b6] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-1a2ab1b6]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".menu[data-v-1a2ab1b6] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-1a2ab1b6] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-1a2ab1b6]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -7567,7 +7567,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -39596,9 +39596,9 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                " +
+                                    "\r\n                " +
                                       _vm._s(product.title) +
-                                      "\n              "
+                                      "\r\n              "
                                   )
                                 ]
                               )
@@ -39629,7 +39629,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                MONTHLY_PLAN\n              "
+                                "\r\n                MONTHLY_PLAN\r\n              "
                               )
                             ]
                           ),
@@ -39642,7 +39642,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                QUARTER_PLAN\n              "
+                                "\r\n                QUARTER_PLAN\r\n              "
                               )
                             ]
                           ),
@@ -39655,7 +39655,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                SEMIANNUAL_PLAN\n              "
+                                "\r\n                SEMIANNUAL_PLAN\r\n              "
                               )
                             ]
                           ),
@@ -39668,7 +39668,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                ANNUAL_PLAN\n              "
+                                "\r\n                ANNUAL_PLAN\r\n              "
                               )
                             ]
                           )
@@ -39748,9 +39748,9 @@ var render = function() {
                     { staticClass: "px-6 py-4 whitespace-nowrap text-center" },
                     [
                       _vm._v(
-                        "\n            " +
+                        "\r\n            " +
                           _vm._s(item.price * item.qty) +
-                          "\n          "
+                          "\r\n          "
                       )
                     ]
                   ),
@@ -39798,7 +39798,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\n      add\n    ")]
+        [_vm._v("\r\n      add\r\n    ")]
       )
     ])
   ])
@@ -39822,7 +39822,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            id\n          ")]
+            [_vm._v("\r\n            id\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39831,7 +39831,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Package\n          ")]
+            [_vm._v("\r\n            Package\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39840,7 +39840,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Plan\n          ")]
+            [_vm._v("\r\n            Plan\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39849,7 +39849,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Price\n          ")]
+            [_vm._v("\r\n            Price\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39858,7 +39858,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Quantity\n          ")]
+            [_vm._v("\r\n            Quantity\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39867,7 +39867,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Total\n          ")]
+            [_vm._v("\r\n            Total\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -39876,7 +39876,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Actions\n          ")]
+            [_vm._v("\r\n            Actions\r\n          ")]
           )
         ]
       )
@@ -40027,9 +40027,9 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                " +
+                                    "\r\n                " +
                                       _vm._s(product.title) +
-                                      "\n              "
+                                      "\r\n              "
                                   )
                                 ]
                               )
@@ -40111,9 +40111,9 @@ var render = function() {
                     { staticClass: "px-6 py-4 whitespace-nowrap text-center" },
                     [
                       _vm._v(
-                        "\n            " +
+                        "\r\n            " +
                           _vm._s(item.price * item.qty) +
-                          "\n          "
+                          "\r\n          "
                       )
                     ]
                   ),
@@ -40161,7 +40161,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\n      add\n    ")]
+        [_vm._v("\r\n      add\r\n    ")]
       )
     ])
   ])
@@ -40185,7 +40185,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            id\n          ")]
+            [_vm._v("\r\n            id\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -40194,7 +40194,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Product\n          ")]
+            [_vm._v("\r\n            Product\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -40203,7 +40203,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Price\n          ")]
+            [_vm._v("\r\n            Price\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -40212,7 +40212,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Quantity\n          ")]
+            [_vm._v("\r\n            Quantity\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -40221,7 +40221,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Total\n          ")]
+            [_vm._v("\r\n            Total\r\n          ")]
           ),
           _vm._v(" "),
           _c(
@@ -40230,7 +40230,7 @@ var staticRenderFns = [
               staticClass:
                 "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             },
-            [_vm._v("\n            Actions\n          ")]
+            [_vm._v("\r\n            Actions\r\n          ")]
           )
         ]
       )
@@ -41321,9 +41321,7 @@ var render = function() {
                       [
                         _c(
                           "td",
-                          {
-                            staticClass: "px-2 py-2 whitespace-nowrap text-left"
-                          },
+                          { staticClass: "whitespace-nowrap text-left" },
                           [
                             _vm.sale.order
                               ? _c("input", {
@@ -41364,7 +41362,7 @@ var render = function() {
                                 }
                               ],
                               staticClass:
-                                "rounded-sm px-2 py-2 focus:outline-none bg-white-100",
+                                "rounded-sm focus:outline-none bg-white-100",
                               attrs: {
                                 type: "text",
                                 name: "reference",
@@ -41389,9 +41387,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          {
-                            staticClass: "px-2 py-2 whitespace-nowrap text-left"
-                          },
+                          { staticClass: "whitespace-nowrap text-left" },
                           [
                             _c("input", {
                               directives: [
@@ -41427,8 +41423,7 @@ var render = function() {
                                   expression: "sale.user.name"
                                 }
                               ],
-                              staticClass:
-                                "rounded-sm px-2 py-2 focus:outline-none",
+                              staticClass: "rounded-sm focus:outline-none",
                               attrs: {
                                 type: "text",
                                 name: "user",
@@ -41496,9 +41491,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          {
-                            staticClass: "px-2 py-2 whitespace-nowrap text-left"
-                          },
+                          { staticClass: "whitespace-nowrap text-left" },
                           [
                             _c("input", {
                               directives: [
@@ -41530,8 +41523,7 @@ var render = function() {
                                   expression: "user.username"
                                 }
                               ],
-                              staticClass:
-                                "rounded-sm px-2 py-2 focus:outline-none",
+                              staticClass: "rounded-sm focus:outline-none",
                               attrs: {
                                 type: "text",
                                 name: "admin",
@@ -41557,9 +41549,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          {
-                            staticClass: "px-2 py-2 whitespace-nowrap text-left"
-                          },
+                          { staticClass: "whitespace-nowrap text-left" },
                           [
                             !_vm.sale.document
                               ? _c("div", [
@@ -41571,17 +41561,15 @@ var render = function() {
                             _vm._v(" "),
                             _vm.sale.document
                               ? _c("div", { staticClass: "flex" }, [
-                                  _c(
-                                    "div",
-                                    { staticClass: "py-2 px-3 bg-gray-300" },
-                                    [_vm._v(_vm._s(_vm.sale.document))]
-                                  ),
+                                  _c("div", { staticClass: " bg-gray-300" }, [
+                                    _vm._v(_vm._s(_vm.sale.document))
+                                  ]),
                                   _vm._v(" "),
                                   _c(
                                     "button",
                                     {
                                       staticClass:
-                                        "rounded-sm px-3 py-2 focus:outline-none text-white font-bold bg-red-300",
+                                        "rounded-sm  focus:outline-none text-white font-bold bg-red-300",
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -41664,7 +41652,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "rounded-sm px-3 py-2 focus:outline-none bg-white-100 w-full mr-2",
+                              "rounded-sm  focus:outline-none bg-white-100 w-full mr-2",
                             attrs: {
                               type: "number",
                               name: "subtotal",
@@ -41700,7 +41688,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
+                              "rounded-sm  focus:outline-none w-full mr-2",
                             attrs: {
                               type: "number",
                               name: "tax",
@@ -41735,7 +41723,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                              "rounded-sm  focus:outline-none w-full",
                             attrs: {
                               type: "text",
                               name: "total",
@@ -41790,7 +41778,7 @@ var render = function() {
                             "select",
                             {
                               staticClass:
-                                "rounded-sm px-3 py-2 focus:outline-none w-full",
+                                "rounded-sm  focus:outline-none w-full",
                               attrs: { name: "payment_status" }
                             },
                             [
@@ -41868,7 +41856,7 @@ var render = function() {
                             "select",
                             {
                               staticClass:
-                                "rounded-sm px-3 py-2 focus:outline-none w-full",
+                                "rounded-sm  focus:outline-none w-full",
                               attrs: { name: "payment_method" }
                             },
                             [
@@ -41937,7 +41925,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                              "rounded-sm  focus:outline-none w-full",
                             attrs: { type: "number", name: "paid_amount" },
                             domProps: { value: _vm.sale.payment.paid_amount },
                             on: {
@@ -41972,7 +41960,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                              "rounded-sm  focus:outline-none w-full",
                             attrs: {
                               type: "number",
                               name: "due",
@@ -42008,7 +41996,7 @@ var render = function() {
                 expression: "sale.note"
               }
             ],
-            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
+            staticClass: "rounded-sm  focus:outline-none w-full mr-2",
             attrs: { name: "note", cols: "30", rows: "10" },
             domProps: { value: _vm.sale.note },
             on: {
@@ -42030,7 +42018,7 @@ var render = function() {
                 expression: "sale.payment.note"
               }
             ],
-            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
+            staticClass: "rounded-sm  focus:outline-none w-full",
             attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
             domProps: { value: _vm.sale.payment.note },
             on: {
@@ -42061,7 +42049,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              "px-2 py-2 md:px:1 md:py-py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Reference")]
         ),
@@ -42070,7 +42058,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              "px-2 py-2 md:px:1 md:py-py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Customer")]
         ),
@@ -42079,7 +42067,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              "px-2 py-2 md:px:1 md:py-py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Agent")]
         ),
@@ -42088,7 +42076,7 @@ var staticRenderFns = [
           "th",
           {
             staticClass:
-              "px-2 py-2 md:px:1 md:py-py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              " text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           },
           [_vm._v("Document")]
         )
@@ -42183,7 +42171,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass:
-            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
+            "rounded outline-none  bg-blue-600 hover:bg-blue-400 text-white font-semibold",
           attrs: { type: "submit" }
         },
         [_vm._v("\n        save\n      ")]
@@ -54825,9 +54813,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/chawad/core/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Applications/MAMP/htdocs/chawad/core/resources/sass/style.scss */"./resources/sass/style.scss");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/chawad/core/resources/sass/tailwind.scss */"./resources/sass/tailwind.scss");
+__webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\sass\style.scss */"./resources/sass/style.scss");
+module.exports = __webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\sass\tailwind.scss */"./resources/sass/tailwind.scss");
 
 
 /***/ })

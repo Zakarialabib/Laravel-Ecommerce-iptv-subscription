@@ -96,7 +96,7 @@
                     <table id="idtable" class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped data_table">
                         <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Image') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Title') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">{{ __('Category') }}</th>
@@ -108,7 +108,7 @@
                             
                             @foreach ($blogs as $id=>$blog)
                             <tr>
-                                <td class="px-1 py-2">{{ ++$id }}</td>
+                                <td>{{ ++$id }}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">
                                     <img class="w-80" src="{{ asset('assets/front/img/'.$blog->main_image) }}" alt="">
                                 </td>

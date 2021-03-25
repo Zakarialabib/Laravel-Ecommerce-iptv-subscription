@@ -170,10 +170,10 @@
                                         <br>
                                         <div class="block w-full overflow-auto scrolling-touch product-list">
                                             <h5 class="mb-3"><strong>{{ __('Ordered Products :') }}</strong></h5>
-                                            <table class="w-full max-w-full mb-4 bg-transparent table-bordered">
+                                            <table class="table-auto mb-4 bg-transparent table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="px-1 py-2">{{ __('#') }}</th>
+                                                        <th>{{ __('#') }}</th>
                                                         <th>{{__('Image')}}</th>
                                                         <th>{{__('Name')}}</th>
                                                         <th>{{__('Details')}}</th>

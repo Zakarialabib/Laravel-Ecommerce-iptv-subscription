@@ -77,10 +77,10 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="flex-auto p-6">
-                        <table class="w-full max-w-full mb-4 bg-transparent table-striped table-bordered data_table">
+                        <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
                             <thead>
                             <tr>
-                                <th class="px-1 py-2">{{ __('#') }}</th>
+                                <th>{{ __('#') }}</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">Icon</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">URL</th>
                                 <th class="px-1 py-2 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal" scope="col">Action</th>
@@ -89,7 +89,7 @@
                             <tbody>
                             @foreach ($slinks as $id=>$slink)
                             <tr>
-                                <td class="px-1 py-2">{{ ++$id }}</td>
+                                <td>{{ ++$id }}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">{{ $slink->icon }}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">{{ $slink->url}}</td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">

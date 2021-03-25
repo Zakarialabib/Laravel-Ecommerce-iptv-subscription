@@ -54,7 +54,7 @@
 
                             @foreach ($methods as $id=>$method)
                             <tr>
-                                <td class="px-1 py-2">
+                                <td>
                                     {{ $id }}
                                 </td>
 

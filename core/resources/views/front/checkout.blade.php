@@ -56,7 +56,7 @@
 					<span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 text-white hover:green-600 rounded-full py-1 px-3 cart-item-view">{{ $countitem }}</span>
 				  </h4>
 				  <div class="block w-full overflow-auto scrolling-touch">
-					<table class="w-full max-w-full mb-4 bg-transparent table-bordered">
+					<table class="table-auto mb-4 bg-transparent table-bordered">
 					  <thead>
 						<tr>
 						  <th width="45%">{{ __('Product Name') }}</th>
@@ -86,7 +86,7 @@
 				  <div class="add-shiping-methods">
 					<h4 class="g-title">{{ __('Shipping Methods') }}</h4>
 					<div class="block w-full overflow-auto scrolling-touch">
-					  <table class="w-full max-w-full mb-4 bg-transparent table-bordered">
+					  <table class="table-auto mb-4 bg-transparent table-bordered">
 						<thead class="cart-header">
 						  <tr>
 							<th class="custom-space">#</th>
@@ -115,7 +115,7 @@
 					<h4 class="title g-title">
 					  {{ __('Cart Summery') }} :
 					</h4>
-					<table class="w-full max-w-full mb-4 bg-transparent table-bordered">
+					<table class="table-auto mb-4 bg-transparent table-bordered">
 					  <tr>
 						<th width="33.3%">{{ __('Subtotal') }}</th>
 						<td>{{ Helper::showCurrencyPrice($cartTotal) }} </td>

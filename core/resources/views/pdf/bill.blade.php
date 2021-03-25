@@ -33,7 +33,7 @@
                             <div>
                                 <h3><strong>Bill Pay</strong></h3>
                             </div>
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                            <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
                                     <th scope="row">Bill Attendance ID:</th>
@@ -62,7 +62,7 @@
                             <div>
                                 <h3><strong>Package Details</strong></h3>
                             </div>
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                            <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
                                     <th scope="row">Package Name:</th>
@@ -92,7 +92,7 @@
                             <h3><strong>Client Details</strong></h3>
                         </div>
                         <div class="lg:w-1/2 pr-4 pl-4">
-                            <table class="w-full max-w-full mb-4 bg-transparent table-striped">
+                            <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Client Name:</th>
