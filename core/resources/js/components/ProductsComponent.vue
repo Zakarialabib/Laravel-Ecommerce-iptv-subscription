@@ -14,27 +14,27 @@
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Product
+            {{$t('message.product')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Price
+            {{$t('message.price')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Quantity
+            {{$t('message.quantity')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Total
+            {{$t('message.total')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Actions
+            {{$t('message.actions')}}
           </th>
         </tr>
       </thead>
@@ -111,7 +111,7 @@
       v-on:click.prevent="handleAddRow()"
       class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize"
     >
-      add
+      {{$t('message.add')}}
     </button>
   </div>
 </div>

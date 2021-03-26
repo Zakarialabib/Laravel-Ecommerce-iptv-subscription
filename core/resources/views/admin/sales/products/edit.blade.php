@@ -24,7 +24,7 @@
         @csrf
         @method('PUT')
         <div id="sales">
-          <sales-component category="products" :sale_prop="{{$sale}}" :user="{{Auth::user()}}"></sales-component>
+          <sales-component category="products" :sale_prop="{{$sale}}" :user="{{Auth::user()}}" lang="{{request()->session()->get('lang')}}"></sales-component>
         </div>
       </form>
     </div>

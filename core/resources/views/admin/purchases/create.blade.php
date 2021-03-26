@@ -23,7 +23,7 @@
       <form class="w-full" action="{{route('admin.purchases.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div id="purchases">
-          <purchases-component :purchase_prop="{{$purchase}}" :user="{{Auth::user()}}"></purchases-component>
+          <purchases-component :purchase_prop="{{$purchase}}" :user="{{Auth::user()}}" lang="{{request()->session()->get('lang')}}"></purchases-component>
         </div>
       </form>
     </div>

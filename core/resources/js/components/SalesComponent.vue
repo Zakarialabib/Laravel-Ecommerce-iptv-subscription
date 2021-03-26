@@ -5,10 +5,10 @@
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.reference')}}</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.customer')}}</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.agent')}}</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.document')}}</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -51,7 +51,6 @@
                     v-bind:key="index"
                     v-on:click="selectCustomer(customer)"
                   >
-                    <span v-if="customersList.length === 0">Loading...</span>
                     <span v-if="customersList.length !== 0">{{ customer.name }}</span>
                   </div>
                 </div>
@@ -85,16 +84,16 @@
           </tbody>
         </table>
       </div>
-      <h1 class="font-bold text-md py-2">Sale Items</h1>
+      <h1 class="font-bold text-md py-2">{{$t('message.sale_items')}}</h1>
       <products-component v-if="category === 'products'" :order_items="sale.orderitems" @changeSubTotal="changeSubTotal($event)"></products-component>
       <packages-component v-else :order_items="sale.orderitems" @changeSubTotal="changeSubTotal($event)"></packages-component>
       <div class="w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tax</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.subtotal')}}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.tax')}}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.total')}}</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -136,10 +135,10 @@
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment method</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paid amount</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.payment_status')}}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.payment_method')}}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.paid_amount')}}</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$t('message.due')}}</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -150,16 +149,16 @@
                   class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="sale.payment.status === 1">
-                    DUE
+                    {{$t('message.due')}}
                   </option>
                   <option value="2" :selected="sale.payment.status === 2">
-                    PAID
+                    {{$t('message.paid')}}
                   </option>
                   <option value="3" :selected="sale.payment.status === 3">
-                    PENDING
+                    {{$t('message.pending')}}
                   </option>
                   <option value="4" :selected="sale.payment.status === 4">
-                    PARTIAL
+                    {{$t('message.partial')}}
                   </option>
                 </select>
               </td>
@@ -169,13 +168,13 @@
                   class="rounded-sm px-3 py-2 focus:outline-none w-full"
                 >
                   <option value="1" :selected="sale.payment.method === 1">
-                    CASH
+                    {{$t('message.cash')}}
                   </option>
                   <option value="2" :selected="sale.payment.method === 2">
-                    CHECK
+                    {{$t('message.check')}}
                   </option>
                   <option value="3" :selected="sale.payment.method === 3">
-                    DEPOSIT
+                    {{$t('message.deposit')}}
                   </option>
                 </select>
               </td>
@@ -222,7 +221,7 @@
           type="submit"
           class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold"
         >
-          save
+          {{$t('message.save')}}
         </button>
       </div>
     </div>
@@ -235,7 +234,7 @@ import PackagesComponent from "./PackagesComponent.vue";
 
 export default {
   components: { ProductsComponent, PackagesComponent },
-  props: ["sale_prop", "user", "category"],
+  props: ["sale_prop", "user", "category", "lang"],
   data: function () {
     return {
       sale: this.sale_prop,
@@ -252,7 +251,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.sale);
+    this.$i18n.locale = this.lang;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf;
   },
 
