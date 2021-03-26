@@ -109,6 +109,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
 var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
 var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
@@ -129,7 +130,7 @@ module.exports = function xhrAdapter(config) {
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = config.auth.password || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
@@ -210,8 +211,6 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
-
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
@@ -277,7 +276,7 @@ module.exports = function xhrAdapter(config) {
       });
     }
 
-    if (requestData === undefined) {
+    if (!requestData) {
       requestData = null;
     }
 
@@ -345,6 +344,9 @@ axios.all = function all(promises) {
   return Promise.all(promises);
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js");
+
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/axios/lib/helpers/isAxiosError.js");
 
 module.exports = axios;
 
@@ -554,9 +556,10 @@ Axios.prototype.getUri = function getUri(config) {
 utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
-      url: url
+      url: url,
+      data: (config || {}).data
     }));
   };
 });
@@ -564,7 +567,7 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
 utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, data, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
       url: url,
       data: data
@@ -824,7 +827,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   error.response = response;
   error.isAxiosError = true;
 
-  error.toJSON = function() {
+  error.toJSON = function toJSON() {
     return {
       // Standard
       message: this.message,
@@ -873,59 +876,73 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
-  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
-  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
   var defaultToConfig2Keys = [
-    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
-    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
-    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
-    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
-    'httpsAgent', 'cancelToken', 'socketPath'
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
+    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
   ];
+  var directMergeKeys = ['validateStatus'];
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  }
 
   utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
     }
   });
 
-  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
-    if (utils.isObject(config2[prop])) {
-      config[prop] = utils.deepMerge(config1[prop], config2[prop]);
-    } else if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (utils.isObject(config1[prop])) {
-      config[prop] = utils.deepMerge(config1[prop]);
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
-    }
-  });
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
 
   utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
     }
   });
 
   var axiosKeys = valueFromConfig2Keys
     .concat(mergeDeepPropertiesKeys)
-    .concat(defaultToConfig2Keys);
+    .concat(defaultToConfig2Keys)
+    .concat(directMergeKeys);
 
   var otherKeys = Object
-    .keys(config2)
+    .keys(config1)
+    .concat(Object.keys(config2))
     .filter(function filterAxiosKeys(key) {
       return axiosKeys.indexOf(key) === -1;
     });
 
-  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
-    }
-  });
+  utils.forEach(otherKeys, mergeDeepProperties);
 
   return config;
 };
@@ -954,7 +971,7 @@ var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios
  */
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
-  if (!validateStatus || validateStatus(response.status)) {
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
     reject(createError(
@@ -1086,6 +1103,7 @@ var defaults = {
   xsrfHeaderName: 'X-XSRF-TOKEN',
 
   maxContentLength: -1,
+  maxBodyLength: -1,
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
@@ -1149,7 +1167,6 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 
 function encode(val) {
   return encodeURIComponent(val).
-    replace(/%40/gi, '@').
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
     replace(/%2C/gi, ',').
@@ -1330,6 +1347,29 @@ module.exports = function isAbsoluteURL(url) {
   // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
   // by any combination of letters, digits, plus, period, or hyphen.
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isAxiosError.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
 
@@ -1659,6 +1699,21 @@ function isObject(val) {
 }
 
 /**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+function isPlainObject(val) {
+  if (toString.call(val) !== '[object Object]') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
+}
+
+/**
  * Determine if a value is a Date
  *
  * @param {Object} val The value to test
@@ -1814,34 +1869,12 @@ function forEach(obj, fn) {
 function merge(/* obj1, obj2, obj3, ... */) {
   var result = {};
   function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
       result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Function equal to merge with the difference being that no reference
- * to original objects is kept.
- *
- * @see merge
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function deepMerge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = deepMerge(result[key], val);
-    } else if (typeof val === 'object') {
-      result[key] = deepMerge({}, val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
     } else {
       result[key] = val;
     }
@@ -1872,6 +1905,19 @@ function extend(a, b, thisArg) {
   return a;
 }
 
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+  return content;
+}
+
 module.exports = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
@@ -1881,6 +1927,7 @@ module.exports = {
   isString: isString,
   isNumber: isNumber,
   isObject: isObject,
+  isPlainObject: isPlainObject,
   isUndefined: isUndefined,
   isDate: isDate,
   isFile: isFile,
@@ -1891,9 +1938,9 @@ module.exports = {
   isStandardBrowserEnv: isStandardBrowserEnv,
   forEach: forEach,
   merge: merge,
-  deepMerge: deepMerge,
   extend: extend,
-  trim: trim
+  trim: trim,
+  stripBOM: stripBOM
 };
 
 
@@ -2244,6 +2291,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["order_items"],
   data: function data() {
@@ -2255,8 +2304,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.orderItems = this.order_items;
-    console.log(this.orderItems);
-    this.$emit('changeSubTotal', this.subTotal);
+    this.subTotalChanged();
   },
   computed: {
     subTotal: function subTotal() {
@@ -2268,43 +2316,44 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    handleDeleteItem: function handleDeleteItem(item) {
-      this.orderItems = this.orderItems.filter(function (i) {
-        return i.id !== item.id;
-      });
+    subTotalChanged: function subTotalChanged() {
       this.$emit('changeSubTotal', this.subTotal);
+    },
+    handleDeleteItem: function handleDeleteItem(index) {
+      this.orderItems.splice(index, 1);
+      this.subTotalChanged();
     },
     handleAddRow: function handleAddRow() {
       this.orderItems.push({
-        id: 0,
+        id: -1,
         product_order_id: 0,
         product_id: 0,
         title: "",
         price: "",
         qty: 0
       });
-      this.$emit('changeSubTotal', this.subTotal);
+      this.subTotalChanged();
     },
-    listProducts: function listProducts(item) {
+    listProducts: function listProducts(index) {
       var _this = this;
 
       axios.get("/admin/products/list").then(function (response) {
         if (response.status === 200) {
-          _this.menuId = item.id;
+          _this.menuId = index;
           _this.productsList = response.data.products;
         }
       });
     },
-    selectProduct: function selectProduct(product, item) {
-      var index = this.orderItems.indexOf(item);
+    selectProduct: function selectProduct(product, index) {
       Vue.set(this.orderItems, index, {
-        id: -1,
+        id: product.id,
         product_id: product.id,
         title: product.title,
         price: product.current_price,
         qty: 1
       });
-      this.$emit('changeSubTotal', this.subTotal);
+      this.subTotalChanged();
+      this.menuId = null;
     }
   }
 });
@@ -2635,8 +2684,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["purchase_prop", "user"],
+  props: ["purchase_prop", "user", "lang"],
   data: function data() {
     return {
       purchase: this.purchase_prop,
@@ -2650,7 +2707,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.purchase);
+    this.$i18n.locale = this.lang;
     this.purchaseItems = this.purchase.purchase_items || [];
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf;
   },
@@ -2660,7 +2717,7 @@ __webpack_require__.r(__webpack_exports__);
       this.purchaseItems.forEach(function (item) {
         total += item.price * item.qty;
       });
-      return total.toFixed(2);
+      return total;
     },
     total: function total() {
       return this.subTotal * this.tax / 100 + this.subTotal;
@@ -2673,10 +2730,8 @@ __webpack_require__.r(__webpack_exports__);
     debounceInput: _.debounce(function () {
       this.searchSuppliers(this.purchase.supplier.company_name);
     }, 500),
-    handleDeleteItem: function handleDeleteItem(item) {
-      this.purchaseItems = this.purchaseItems.filter(function (i) {
-        return i.id !== item.id;
-      });
+    handleDeleteItem: function handleDeleteItem(index) {
+      this.purchaseItems.splice(index, 1);
     },
     handleAddRow: function handleAddRow() {
       this.purchaseItems.push({
@@ -2975,6 +3030,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2982,7 +3042,7 @@ __webpack_require__.r(__webpack_exports__);
     ProductsComponent: _ProductsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     PackagesComponent: _PackagesComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["sale_prop", "user", "category"],
+  props: ["sale_prop", "user", "category", "lang"],
   data: function data() {
     return {
       sale: this.sale_prop,
@@ -2997,7 +3057,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.sale);
+    this.$i18n.locale = this.lang;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf;
   },
   computed: {
@@ -3013,7 +3073,7 @@ __webpack_require__.r(__webpack_exports__);
       this.searchCustomer(this.sale.user.name);
     }, 500),
     changeSubTotal: function changeSubTotal(subTotal) {
-      this.subTotal = subTotal.toFixed(2);
+      this.subTotal = subTotal;
     },
     searchCustomer: function searchCustomer(keyword) {
       var _this = this;
@@ -7571,7 +7631,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".menu[data-v-a4d08808] {\n  max-height: 150px;\n  overflow-y: scroll;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: 0.25rem;\n  color: #212529;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  font-size: 1rem;\n  list-style: none;\n  margin: 0.125rem 0 0;\n  padding: 0.5rem 0;\n  position: absolute;\n  text-align: left;\n}\n.menu-item[data-v-a4d08808] {\n  color: #212529;\n  padding: 0.25rem 1.5rem;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,\r\n    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.menu-item[data-v-a4d08808]:hover {\n  background-color: #f4f6f6;\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -18579,14 +18639,15 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.20';
+  var VERSION = '4.17.21';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
   var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
-      FUNC_ERROR_TEXT = 'Expected a function';
+      FUNC_ERROR_TEXT = 'Expected a function',
+      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
 
   /** Used to stand-in for `undefined` hash values. */
   var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -18719,10 +18780,11 @@ return jQuery;
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
 
-  /** Used to match leading and trailing whitespace. */
-  var reTrim = /^\s+|\s+$/g,
-      reTrimStart = /^\s+/,
-      reTrimEnd = /\s+$/;
+  /** Used to match leading whitespace. */
+  var reTrimStart = /^\s+/;
+
+  /** Used to match a single whitespace character. */
+  var reWhitespace = /\s/;
 
   /** Used to match wrap detail comments. */
   var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
@@ -18731,6 +18793,18 @@ return jQuery;
 
   /** Used to match words composed of alphanumeric characters. */
   var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+
+  /**
+   * Used to validate the `validate` option in `_.template` variable.
+   *
+   * Forbids characters which could potentially change the meaning of the function argument definition:
+   * - "()," (modification of function parameters)
+   * - "=" (default value)
+   * - "[]{}" (destructuring of function parameters)
+   * - "/" (beginning of a comment)
+   * - whitespace
+   */
+  var reForbiddenIdentifierChars = /[()=,{}\[\]\/\s]/;
 
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
@@ -19561,6 +19635,19 @@ return jQuery;
   }
 
   /**
+   * The base implementation of `_.trim`.
+   *
+   * @private
+   * @param {string} string The string to trim.
+   * @returns {string} Returns the trimmed string.
+   */
+  function baseTrim(string) {
+    return string
+      ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+      : string;
+  }
+
+  /**
    * The base implementation of `_.unary` without support for storing metadata.
    *
    * @private
@@ -19891,6 +19978,21 @@ return jQuery;
     return hasUnicode(string)
       ? unicodeToArray(string)
       : asciiToArray(string);
+  }
+
+  /**
+   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+   * character of `string`.
+   *
+   * @private
+   * @param {string} string The string to inspect.
+   * @returns {number} Returns the index of the last non-whitespace character.
+   */
+  function trimmedEndIndex(string) {
+    var index = string.length;
+
+    while (index-- && reWhitespace.test(string.charAt(index))) {}
+    return index;
   }
 
   /**
@@ -31061,7 +31163,7 @@ return jQuery;
       if (typeof value != 'string') {
         return value === 0 ? value : +value;
       }
-      value = value.replace(reTrim, '');
+      value = baseTrim(value);
       var isBinary = reIsBinary.test(value);
       return (isBinary || reIsOctal.test(value))
         ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -33433,6 +33535,12 @@ return jQuery;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
       }
+      // Throw an error if a forbidden character was found in `variable`, to prevent
+      // potential command injection attacks.
+      else if (reForbiddenIdentifierChars.test(variable)) {
+        throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);
+      }
+
       // Cleanup code by stripping empty strings.
       source = (isEvaluating ? source.replace(reEmptyStringLeading, '') : source)
         .replace(reEmptyStringMiddle, '$1')
@@ -33546,7 +33654,7 @@ return jQuery;
     function trim(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrim, '');
+        return baseTrim(string);
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -33581,7 +33689,7 @@ return jQuery;
     function trimEnd(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrimEnd, '');
+        return string.slice(0, trimmedEndIndex(string) + 1);
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -39917,7 +40025,100 @@ var render = function() {
       },
       [
         _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-          _vm._m(0),
+          _c("thead", { staticClass: "bg-gray-300" }, [
+            _c(
+              "tr",
+              {
+                staticClass:
+                  "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+              },
+              [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v("\r\n            id\r\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.product")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.price")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.quantity")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.total")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.actions")) +
+                        "\r\n          "
+                    )
+                  ]
+                )
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
@@ -40002,7 +40203,7 @@ var render = function() {
                         domProps: { value: item.title },
                         on: {
                           click: function($event) {
-                            return _vm.listProducts(item)
+                            return _vm.listProducts(index)
                           },
                           input: function($event) {
                             if ($event.target.composing) {
@@ -40013,19 +40214,19 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm.menuId === item.id
+                      _vm.menuId === index
                         ? _c(
                             "div",
                             { staticClass: "menu" },
-                            _vm._l(_vm.productsList, function(product, index) {
+                            _vm._l(_vm.productsList, function(product, _index) {
                               return _c(
                                 "div",
                                 {
-                                  key: index,
+                                  key: _index,
                                   staticClass: "menu-item",
                                   on: {
                                     click: function($event) {
-                                      return _vm.selectProduct(product, item)
+                                      return _vm.selectProduct(product, index)
                                     }
                                   }
                                 },
@@ -40066,6 +40267,9 @@ var render = function() {
                         },
                         domProps: { value: item.price },
                         on: {
+                          change: function($event) {
+                            return _vm.subTotalChanged()
+                          },
                           input: function($event) {
                             if ($event.target.composing) {
                               return
@@ -40099,6 +40303,9 @@ var render = function() {
                         },
                         domProps: { value: item.qty },
                         on: {
+                          change: function($event) {
+                            return _vm.subTotalChanged()
+                          },
                           input: function($event) {
                             if ($event.target.composing) {
                               return
@@ -40135,7 +40342,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.handleDeleteItem(item)
+                              return _vm.handleDeleteItem(index)
                             }
                           }
                         },
@@ -40165,82 +40372,12 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\r\n      add\r\n    ")]
+        [_vm._v("\r\n      " + _vm._s(_vm.$t("message.add")) + "\r\n    ")]
       )
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c(
-        "tr",
-        {
-          staticClass:
-            "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-        },
-        [
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            id\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Product\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Price\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Quantity\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Total\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Actions\r\n          ")]
-          )
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40272,7 +40409,45 @@ var render = function() {
         },
         [
           _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-            _vm._m(0),
+            _c("thead", { staticClass: "bg-gray-300" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.reference")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.supplier")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.agent")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.document")))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
               _c(
@@ -40521,7 +40696,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("h1", { staticClass: "font-bold text-md py-2" }, [
-        _vm._v("Purchase Items")
+        _vm._v(_vm._s(_vm.$t("message.purchase_items")))
       ]),
       _vm._v(" "),
       _c(
@@ -40532,7 +40707,100 @@ var render = function() {
         },
         [
           _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-            _vm._m(1),
+            _c("thead", { staticClass: "bg-gray-300" }, [
+              _c(
+                "tr",
+                {
+                  staticClass:
+                    "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+                },
+                [
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v("\n              id\n            ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.$t("message.product")) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.$t("message.price")) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.$t("message.quantity")) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.$t("message.total")) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.$t("message.actions")) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -40592,7 +40860,8 @@ var render = function() {
                           attrs: {
                             type: "text",
                             name: "title[]",
-                            placeholder: "Title"
+                            placeholder: "Title",
+                            autocomplete: "off"
                           },
                           domProps: { value: item.title },
                           on: {
@@ -40681,7 +40950,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n              " +
-                            _vm._s(item.price * item.qty) +
+                            _vm._s((item.price * item.qty).toFixed(2)) +
                             "\n            "
                         )
                       ]
@@ -40695,7 +40964,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.handleDeleteItem(item)
+                                return _vm.handleDeleteItem(index)
                               }
                             }
                           },
@@ -40725,7 +40994,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("\n        add\n      ")]
+          [_vm._v("\n        " + _vm._s(_vm.$t("message.add")) + "\n      ")]
         )
       ]),
       _vm._v(" "),
@@ -40737,7 +41006,36 @@ var render = function() {
         },
         [
           _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-            _vm._m(2),
+            _c("thead", { staticClass: "bg-gray-300" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.subtotal")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.tax")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.total")))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
               _c("tr", [
@@ -40855,7 +41153,45 @@ var render = function() {
         },
         [
           _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-            _vm._m(3),
+            _c("thead", { staticClass: "bg-gray-300" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.payment_status")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.payment_method")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.paid_amount")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v(_vm._s(_vm.$t("message.due")))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
               _c("tr", [
@@ -40879,7 +41215,13 @@ var render = function() {
                               selected: _vm.purchase.payment.status === 1
                             }
                           },
-                          [_vm._v("\n                  DUE\n                ")]
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.due")) +
+                                "\n                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40890,7 +41232,13 @@ var render = function() {
                               selected: _vm.purchase.payment.status === 2
                             }
                           },
-                          [_vm._v("\n                  PAID\n                ")]
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.paid")) +
+                                "\n                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40903,7 +41251,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                  PENDING\n                "
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.pending")) +
+                                "\n                "
                             )
                           ]
                         ),
@@ -40918,7 +41268,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                  PARTIAL\n                "
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.partial")) +
+                                "\n                "
                             )
                           ]
                         )
@@ -40947,7 +41299,13 @@ var render = function() {
                               selected: _vm.purchase.payment.method === 1
                             }
                           },
-                          [_vm._v("\n                  CASH\n                ")]
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.cash")) +
+                                "\n                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40960,7 +41318,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                  CHECK\n                "
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.check")) +
+                                "\n                "
                             )
                           ]
                         ),
@@ -40975,7 +41335,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                  DEPOSIT\n                "
+                              "\n                  " +
+                                _vm._s(_vm.$t("message.deposit")) +
+                                "\n                "
                             )
                           ]
                         )
@@ -41052,265 +41414,82 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "w-full flex justify-between mb-4" }, [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.purchase.note,
-              expression: "purchase.note"
-            }
-          ],
-          staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
-          attrs: { name: "note", cols: "30", rows: "10" },
-          domProps: { value: _vm.purchase.note },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "w-1/2" }, [
+          _c(
+            "label",
+            { staticClass: "text-gray-700", attrs: { for: "purchase_note" } },
+            [_vm._v(_vm._s(_vm.$t("message.purchase_note")))]
+          ),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.purchase.note,
+                expression: "purchase.note"
               }
-              _vm.$set(_vm.purchase, "note", $event.target.value)
+            ],
+            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
+            attrs: { name: "note", cols: "30", rows: "10" },
+            domProps: { value: _vm.purchase.note },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.purchase, "note", $event.target.value)
+              }
             }
-          }
-        }),
+          })
+        ]),
         _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.purchase.payment.note,
-              expression: "purchase.payment.note"
-            }
-          ],
-          staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
-          attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
-          domProps: { value: _vm.purchase.payment.note },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "w-1/2" }, [
+          _c(
+            "label",
+            { staticClass: "text-gray-700", attrs: { for: "payment_note" } },
+            [_vm._v(_vm._s(_vm.$t("message.payment_note")))]
+          ),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.purchase.payment.note,
+                expression: "purchase.payment.note"
               }
-              _vm.$set(_vm.purchase.payment, "note", $event.target.value)
+            ],
+            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
+            attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
+            domProps: { value: _vm.purchase.payment.note },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.purchase.payment, "note", $event.target.value)
+              }
             }
-          }
-        })
+          })
+        ])
       ]),
       _vm._v(" "),
-      _vm._m(4)
+      _c("div", { staticClass: "flex" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("\n        " + _vm._s(_vm.$t("message.save")) + "\n      ")]
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Reference")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Supplier")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Agent")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Document")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c(
-        "tr",
-        {
-          staticClass:
-            "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-        },
-        [
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              id\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              Product\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              Price\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              Quantity\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              Total\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\n              Actions\n            ")]
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Subtotal")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Tax")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Total")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Payment status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Payment method")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Paid amount")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Due")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("\n        save\n      ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41345,7 +41524,45 @@ var render = function() {
           },
           [
             _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-              _vm._m(0),
+              _c("thead", { staticClass: "bg-gray-300" }, [
+                _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.reference")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.customer")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.agent")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.document")))]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -41513,10 +41730,6 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm.customersList.length === 0
-                                        ? _c("span", [_vm._v("Loading...")])
-                                        : _vm._e(),
-                                      _vm._v(" "),
                                       _vm.customersList.length !== 0
                                         ? _c("span", [
                                             _vm._v(_vm._s(customer.name))
@@ -41645,7 +41858,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("h1", { staticClass: "font-bold text-md py-2" }, [
-          _vm._v("Sale Items")
+          _vm._v(_vm._s(_vm.$t("message.sale_items")))
         ]),
         _vm._v(" "),
         _vm.category === "products"
@@ -41674,7 +41887,36 @@ var render = function() {
           },
           [
             _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-              _vm._m(1),
+              _c("thead", { staticClass: "bg-gray-300" }, [
+                _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.subtotal")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.tax")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.total")))]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -41796,7 +42038,45 @@ var render = function() {
           },
           [
             _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-              _vm._m(2),
+              _c("thead", { staticClass: "bg-gray-300" }, [
+                _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.payment_status")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.payment_method")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.paid_amount")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    {
+                      staticClass:
+                        "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    },
+                    [_vm._v(_vm._s(_vm.$t("message.due")))]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -41825,7 +42105,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  DUE\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.due")) +
+                                    "\n                "
                                 )
                               ]
                             ),
@@ -41840,7 +42122,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  PAID\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.paid")) +
+                                    "\n                "
                                 )
                               ]
                             ),
@@ -41855,7 +42139,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  PENDING\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.pending")) +
+                                    "\n                "
                                 )
                               ]
                             ),
@@ -41870,7 +42156,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  PARTIAL\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.partial")) +
+                                    "\n                "
                                 )
                               ]
                             )
@@ -41901,7 +42189,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  CASH\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.cash")) +
+                                    "\n                "
                                 )
                               ]
                             ),
@@ -41916,7 +42206,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  CHECK\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.check")) +
+                                    "\n                "
                                 )
                               ]
                             ),
@@ -41931,7 +42223,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                  DEPOSIT\n                "
+                                  "\n                  " +
+                                    _vm._s(_vm.$t("message.deposit")) +
+                                    "\n                "
                                 )
                               ]
                             )
@@ -42009,198 +42303,85 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "w-full flex justify-between mb-4" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.sale.note,
-                expression: "sale.note"
-              }
-            ],
-            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
-            attrs: { name: "note", cols: "30", rows: "10" },
-            domProps: { value: _vm.sale.note },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "w-1/2" }, [
+            _c(
+              "label",
+              { staticClass: "text-gray-700", attrs: { for: "note" } },
+              [_vm._v(_vm._s(_vm.$t("message.sale_note")))]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sale.note,
+                  expression: "sale.note"
                 }
-                _vm.$set(_vm.sale, "note", $event.target.value)
+              ],
+              staticClass:
+                "rounded-sm px-3 py-2 focus:outline-none w-full mr-2",
+              attrs: { name: "note", cols: "30", rows: "10" },
+              domProps: { value: _vm.sale.note },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.sale, "note", $event.target.value)
+                }
               }
-            }
-          }),
+            })
+          ]),
           _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.sale.payment.note,
-                expression: "sale.payment.note"
-              }
-            ],
-            staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
-            attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
-            domProps: { value: _vm.sale.payment.note },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "w-1/2" }, [
+            _c(
+              "label",
+              { staticClass: "text-gray-700", attrs: { for: "payment_note" } },
+              [_vm._v(_vm._s(_vm.$t("message.payment_note")))]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sale.payment.note,
+                  expression: "sale.payment.note"
                 }
-                _vm.$set(_vm.sale.payment, "note", $event.target.value)
+              ],
+              staticClass: "rounded-sm px-3 py-2 focus:outline-none w-full",
+              attrs: { name: "payment_note", id: "", cols: "30", rows: "10" },
+              domProps: { value: _vm.sale.payment.note },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.sale.payment, "note", $event.target.value)
+                }
               }
-            }
-          })
+            })
+          ])
         ]),
         _vm._v(" "),
-        _vm._m(3)
+        _c("div", { staticClass: "flex" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("\n        " + _vm._s(_vm.$t("message.save")) + "\n      ")]
+          )
+        ])
       ],
       1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Reference")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Customer")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Agent")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Document")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Subtotal")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Tax")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Total")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Payment status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Payment method")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Paid amount")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          },
-          [_vm._v("Due")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("\n        save\n      ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

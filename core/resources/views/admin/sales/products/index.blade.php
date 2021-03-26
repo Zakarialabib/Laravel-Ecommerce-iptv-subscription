@@ -6,7 +6,7 @@
       <div class="flex flex-wrap ">
       <div class="sm:w-1/2 pr-4 pl-4">
           <h1 class="flex flex-wrap pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 m-0 text-gray-900">
-            {{ __('Sales') }}
+            {{ __('Sales List') }}
           </h1>
       </div><!-- /.col -->
       <div class="sm:w-1/2 pr-4 pl-4">

@@ -200,6 +200,8 @@
         </table>
       </div>
       <div class="w-full flex justify-between mb-4">
+      <div class="w-1/2">
+      <label for="note" class="text-gray-700">{{$t('message.sale_note')}}</label>
         <textarea
           class="rounded-sm px-3 py-2 focus:outline-none w-full mr-2"
           name="note"
@@ -207,7 +209,10 @@
           rows="10"
           v-model="sale.note"
         ></textarea>
-        <textarea
+            </div>
+          <div class="w-1/2">
+          <label for="payment_note" class="text-gray-700">{{$t('message.payment_note')}}</label>
+          <textarea
           class="rounded-sm px-3 py-2 focus:outline-none w-full"
           name="payment_note"
           id=""
@@ -215,6 +220,7 @@
           rows="10"
           v-model="sale.payment.note"
         ></textarea>
+        </div>
       </div>
       <div class="flex">
         <button

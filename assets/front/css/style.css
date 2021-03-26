@@ -217,7 +217,7 @@ body.modal-open {
   font-size: 14px;
   text-align: center;
   border-radius: 50%;
-  color: #fff;
+  color: #1a385b;
   background: #983ce9;
   cursor: pointer;
   transform: rotate(-90deg);
@@ -792,7 +792,7 @@ body {
   display: block;
   font-size: 14px;
   line-height: 24px;
-  color: #fff;
+  color: #1a385b;
 }
 
 .mainmenu-area .top-header .right-content ul li.language-change {
@@ -922,7 +922,7 @@ body {
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-link {
   line-height: 24px;
   font-size: 16px;
-  color: #222;
+  color: #fff;
   line-height: 26px;
   font-weight: 600;
   position: relative;
@@ -988,7 +988,7 @@ body {
 }
 
 .hero-area .hero-area-slider .intro-carousel .intro-content {
-  padding: 265px 0px 265px;
+  padding: 100px 0px 100px;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -1132,7 +1132,7 @@ body {
 
 .about-section .list li p:hover {
   background: #983ce9;
-  color: #fff;
+  color: #1a385b;
 }
 
 .about-section .list li p::before {
@@ -1192,7 +1192,7 @@ body {
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-  color: #fff;
+  color: #1a385b;
 }
 
 .pricingPlan-section .single-price .mbps {
@@ -1297,8 +1297,7 @@ body {
   border-radius: 50%;
   font-size: 22px;
   transition: all 0.3s ease-in;
-  color: #0250c5;
-  background: #fff;
+  background: #1a385b;
   box-shadow: rgba(36, 37, 38, 0.15) 4px 4px 30px 0px;
   transition: all 0.3s ease-in;
 }
@@ -1314,8 +1313,7 @@ body {
 }
 
 .pricingPlan-section .owl-controls .owl-nav div:hover {
-  color: #fff !important;
-  background: #0250c5;
+  color: #1a385b !important;
 }
 
 /*-------------------------------
@@ -1327,7 +1325,7 @@ body {
 --------------------------------*/
 
 .offer-section {
-  padding: 120px 0px 120px;
+  padding: 90px 0px 90px 0px;
 }
 
 .offer-section .offer-list {
@@ -1385,7 +1383,7 @@ body {
 }
 
 .offer-section .offer-list li .content:hover p {
-  color: #fff !important;
+  color: #1a385b !important;
 }
 
 .offer-section .offer-list li .content:hover::before {
@@ -1405,7 +1403,7 @@ Service Area Start
 --------------------------------*/
 
 .service-area {
-  padding: 120px 0px 90px;
+  padding: 100px 0px 90px;
 }
 
 .service-area .section-heading {
@@ -1452,7 +1450,7 @@ Counter Area Start
 --------------------------------*/
 
 .counter-section {
-  padding: 150px 0px 150px;
+  padding: 100px 0px 100px;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center !important;
@@ -1675,7 +1673,7 @@ Counter Area End
   padding-left: 2px;
   background: #983ce9;
   transition: all 0.3s ease-in;
-  color: #fff;
+  color: #1A385B;
   display: inline-block;
 }
 
@@ -1718,7 +1716,7 @@ Counter Area End
   font-size: 16px;
   text-transform: uppercase;
   transition: all 0.3s ease-in;
-  color: #fff;
+  color: #1a385b;
 }
 
 .footer-newsletter-widget .newsletter-form-area button:focus {
@@ -1758,7 +1756,7 @@ Counter Area End
   margin: 0px 3px;
   padding: 0px;
   background: #983ce9;
-  color: #fff;
+  color: #1a385b;
   border: 1px solid #983ce9;
   transition: all 0.3s ease-in;
 }
