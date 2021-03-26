@@ -36,7 +36,7 @@
         
                                         <div class="sm:w-4/5 pr-4 pl-4">
                                             <select class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded select2bs4" name="user_id" >
-                                                <option value="" disabled selected>Select User</option>
+                                                <option value="" disabled selected>{{ __('Select User') }}</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
@@ -52,7 +52,7 @@
         
                                         <div class="sm:w-4/5 pr-4 pl-4">
                                             <select class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded select2bs4" name="package_id" >
-                                                <option value="" disabled selected>Select Package</option>
+                                                <option value="" disabled selected>{{ __('Select Package') }}</option>
                                                 @foreach ($packages as $package)
                                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
                                                 @endforeach

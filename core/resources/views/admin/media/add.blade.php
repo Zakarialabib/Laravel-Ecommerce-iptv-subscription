@@ -73,7 +73,7 @@
                                     <div class="mb-4 flex flex-wrap ">
                                         <label class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Link') }}<span class="text-red-600">*</span></label>
                                         <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input type="text" name="link" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="{{ __('Link Hear') }}" value="{{ old('link') }}">
+                                            <input type="text" name="link" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="{{ __('Link') }}" value="{{ old('link') }}">
                                             @if ($errors->has('link'))
                                                 <p class="text-red-600"> {{ $errors->first('link') }} </p>
                                             @endif
