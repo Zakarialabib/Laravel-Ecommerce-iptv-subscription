@@ -16,7 +16,7 @@
               @elseif (request()->path()=='admin/product/completed/orders')
                 {{ __('Completed') }}
               @elseif (request()->path()=='admin/product/rejected/orders')
-                {{ __('Rejcted') }}
+                {{ __('Rejected') }}
               @endif
               {{ __('Order') }}
             </h1>
@@ -34,7 +34,7 @@
               @elseif (request()->path()=='admin/product/completed/orders')
                 {{ __('Completed') }}
               @elseif (request()->path()=='admin/product/rejected/orders')
-                {{ __('Rejcted') }}
+                {{ __('Rejected') }}
               @endif
               {{ __('Order') }}
             </li>
@@ -59,7 +59,7 @@
                           @elseif (request()->path()=='admin/product/completed/orders')
                             {{ __('Completed') }}
                           @elseif (request()->path()=='admin/product/rejected/orders')
-                            {{ __('Rejcted') }}
+                            {{ __('Rejected') }}
                           @endif
                           {{ __('Order List') }}
                         </h3>

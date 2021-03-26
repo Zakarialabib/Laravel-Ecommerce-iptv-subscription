@@ -17,7 +17,7 @@
 
 <body class="h-screen flex items-center justify-center bg-blue-800">
 
-<div class="login-box">
+<div class="w-2/4">
     <div class="login-logo">
     <a class="inline-block pt-1 pb-1 mr-4 text-lg whitespace-no-wrap" href="{{ route('front.index') }}">
     <img src="{{ asset('assets/front/img/'.$commonsetting->header_logo) }}" alt="">
@@ -35,13 +35,13 @@
         <form action="{{ route('admin.auth') }}" method="POST">
           @csrf
           <div class="relative flex items-stretch w-full mb-3">
-            <input type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" name="username" value="{{ old('username') }}" placeholder="{{ __('Username') }}">
+            <input type="text" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" name="username" value="{{ old('username') }}" placeholder="{{ __('Username') }}">
           </div>
           @if($errors->has('username'))
           <p class="m-1 text-red-600">{{ $errors->first('username') }}</p>
           @endif
           <div class="relative flex items-stretch w-full mb-3">
-            <input type="password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" name="password" value="{{ old('password') }}" placeholder="{{ __('Password') }}">
+            <input type="password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" name="password" value="{{ old('password') }}" placeholder="{{ __('Password') }}">
           </div>
           @if($errors->has('password'))
           <p class="m-1 text-red-600">{{ $errors->first('password') }}</p>

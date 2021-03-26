@@ -136,11 +136,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'], function () {
     Route::post('/login', 'Admin\LoginController@authenticate')->name('admin.auth');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus','setlang']], function () {
 
     //Admin Logout Route
     Route::get('/logout', 'Admin\LoginController@logout')->name('admin.logout');
     Route::get('/dashboard', 'Admin\DashboardController@dashboard')->name('admin.dashboard');
+    Route::get('/changelanguage/{lang}', 'Admin\DashboardController@changeLanguage')->name('changeLanguage');
 
     // Admin Profile Route
     Route::get('/profile', 'Admin\ProfileController@index')->name('admin.profil.index');

@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        
         View::composer('*', function ($view) {
             $adminprofile = Admin::first();
             $socials = Social::get();

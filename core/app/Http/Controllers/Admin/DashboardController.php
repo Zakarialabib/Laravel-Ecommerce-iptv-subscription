@@ -34,4 +34,14 @@ class DashboardController extends Controller
         $team = Team::all();
         return view('admin.dashboard', compact('user', 'packages', 'service', 'branch', 'blogs', 'testimonial', 'team', 'latestpackages', 'latestblogs', 'product'));
     }
+
+       // Change Language
+       public function changeLanguage($lang)
+       {
+   
+           session()->put('lang', $lang);
+           app()->setLocale($lang);
+   
+           return redirect()->route('admin.dashboard');
+       }
 }

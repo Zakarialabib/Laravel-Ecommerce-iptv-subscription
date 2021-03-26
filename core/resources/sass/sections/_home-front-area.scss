@@ -57,7 +57,7 @@
 				}
 			}
 			.intro-content{
-				padding: 265px 0px 265px;
+				padding: 100px 0px 100px;
 				background-size: cover;
 				background-repeat: no-repeat;
 				position: relative;
@@ -182,7 +182,7 @@
 					position: relative;
 					&:hover{
 						background: $base-color;
-						color: #fff;
+						color: #1a385b;
 					}
 					&::before{
 						position: absolute;
@@ -237,7 +237,7 @@
 			font-weight:  600;
 			font-size: 20px;
 			line-height: 30px;
-			color: #fff;
+			color: #1a385b;
 		}
 		.mbps{
 			text-align: center;
@@ -328,8 +328,7 @@
 		border-radius: 50%;
 		font-size: 22px;
 		transition: all 0.3s ease-in;
-		color: #0250c5;
-		background: #fff;
+		background: #1a385b;
 		box-shadow: $bs2;
 		transition: $transition;
 	  }
@@ -342,8 +341,7 @@
 		  right: -20px;
 	  }
 	  .owl-controls .owl-nav div:hover {
-		color: #fff!important;
-		background: #0250c5;
+		color: #1a385b!important;
 	  }
 }
 /*-------------------------------
@@ -354,7 +352,7 @@
   Offer  Area CSS Start
 --------------------------------*/
 .offer-section{
-	padding: 120px 0px 120px;
+	padding: 90px 0px 90px 0px;
 	.offer-list{
 		
 		margin-top: 26px;
@@ -399,7 +397,7 @@
 				&:hover{
 					color: #fff!important;
 					p{
-						color: #fff!important;
+						color: #1a385b!important;
 					}
 					&::before{
 						color: #fff;
@@ -424,7 +422,7 @@
 Service Area Start
 --------------------------------*/
 .service-area{
-	padding: 120px 0px 90px;
+	padding: 100px 0px 90px;
 	.section-heading{
 		margin-bottom: 56px;
 	}
@@ -469,7 +467,7 @@ Service Area End
 Counter Area Start
 --------------------------------*/
 .counter-section{
-	padding: 150px 0px 150px;
+	padding: 100px 0px 100px;
 	background-repeat: no-repeat!important;
 	background-size: cover!important;
 	background-position: center!important;
