@@ -1,4 +1,4 @@
-/*! tailwindcss v2.0.3 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v2.0.4 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -18463,7 +18463,6 @@ video {
 }
 
 .sticky {
-  position: -webkit-sticky;
   position: sticky;
 }
 
@@ -49090,7 +49089,6 @@ video {
   }
 
   .sm\:sticky {
-    position: -webkit-sticky;
     position: sticky;
   }
 
@@ -79639,7 +79637,6 @@ video {
   }
 
   .md\:sticky {
-    position: -webkit-sticky;
     position: sticky;
   }
 
@@ -110188,7 +110185,6 @@ video {
   }
 
   .lg\:sticky {
-    position: -webkit-sticky;
     position: sticky;
   }
 
@@ -140737,7 +140733,6 @@ video {
   }
 
   .xl\:sticky {
-    position: -webkit-sticky;
     position: sticky;
   }
 
@@ -171286,7 +171281,6 @@ video {
   }
 
   .\32xl\:sticky {
-    position: -webkit-sticky;
     position: sticky;
   }
 

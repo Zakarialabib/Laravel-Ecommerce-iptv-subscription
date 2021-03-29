@@ -48,7 +48,6 @@ background: <?php echo $color; ?>;
 .success-section .success-box .icon,
 .page-link,
 .auth .sign-form .reg-text a:hover,
-.single-blog .content .title:hover,
 .service-area.service-page .category-widget .category-list li a:hover, 
 .service-area.service-page .category-widget .category-list li a.active,
 .categori-widget .cat-list li.active p,
