@@ -82,7 +82,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <a href="{{ route('admin.funfact.add'). '?language=' . $currentLang->code }}" class="inline-flex justify-center py-2 px-4 mr-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <a href="{{ route('admin.funfact.add'). '?language=' . $currentLang->code }}" class="inline-block align-middle select-none border whitespace-no-wrap py-1 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                             <i class="fas fa-plus"></i> {{ __('Add offer') }}
                         </a>
                     </div>
@@ -105,7 +105,7 @@
                         <tr>
                             <td>{{ ++$id }}</td>
                             <td class="px-1 py-2 border-b border-gray-200 text-sm">
-                                <img  class="w-60" src="{{ asset('assets/front/img/'.$funfact->icon) }}" alt="">
+                                <img src="{{ asset('assets/front/img/'.$funfact->icon) }}" alt="">
                             </td>
                             <td class="px-1 py-2 border-b border-gray-200 text-sm">{{ $funfact->name }}</td>
                             <td class="px-1 py-2 border-b border-gray-200 text-sm">{{ $funfact->value }}</td>

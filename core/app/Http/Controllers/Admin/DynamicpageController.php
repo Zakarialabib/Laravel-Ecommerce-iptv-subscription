@@ -61,7 +61,7 @@ class DynamicpageController extends Controller
         $dynamicpage->save();
 
         $notification = array(
-            'messege' => 'Daynamic Page Added successfully!',
+            'messege' => 'Page Dynamique ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -107,7 +107,7 @@ class DynamicpageController extends Controller
         $dynamicpage->save();
 
         $notification = array(
-            'messege' => 'Daynamic Page Updated successfully!',
+            'messege' => 'Page Dynamique actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.dynamic_page').'?language='.$this->lang->code)->with('notification', $notification);

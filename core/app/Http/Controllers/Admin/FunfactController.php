@@ -56,7 +56,7 @@ class FunfactController extends Controller
         $funfact->save();
 
         $notification = array(
-            'messege' => 'Funfact Added successfully!',
+            'messege' => 'Chiffre Clé ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -96,7 +96,7 @@ class FunfactController extends Controller
         $funfact->save();
 
         $notification = array(
-            'messege' => 'Funfact Updated successfully!',
+            'messege' => 'Chiffre Clé actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.funfact').'?language='.$this->lang->code)->with('notification', $notification);
@@ -107,8 +107,13 @@ class FunfactController extends Controller
         $funfact = Funfact::find($id);
         @unlink('assets/front/img/'. $funfact->icon);
         $funfact->delete();
+      
+        $notification = array(
+            'messege' => 'Chiffre Clé supprimée avec succès !',
+            'alert' => 'success'
+        );
+        return redirect()->back()->with('notification', $notification);
 
-        return back();
     }
 
     public function funfactcontent(Request $request, $id){
@@ -132,7 +137,7 @@ class FunfactController extends Controller
         $funfact_title->save();
 
         $notification = array(
-            'messege' => 'Funfact Content Updated successfully!',
+            'messege' => 'Contenue Chiffre Clé actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.funfact').'?language='.$this->lang->code)->with('notification', $notification);

@@ -77,7 +77,7 @@
                                     </form>
                                     <a href="#" data-id="{{ $order->id }}" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple package_order_view" data-toggle="modal" data-target="#package_order_view"><i class="fas fa-eye mr-0"></i></a>
                                     @if($order->invoice_number)
-                                    <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap bg-yellow-500 no-underline bg-orange-400 text-black hover:bg-yellow-600 py-1 px-2 leading-tight text-xs  " href="{{asset('assets/front/invoices/package/'.$order->invoice_number)}}" target="_blank">Invoice</a>
+                                    <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap bg-yellow-500 no-underline bg-orange-400 text-black hover:bg-yellow-600 py-1 px-2 leading-tight text-xs  " href="{{asset('assets/front/invoices/package/'.$order->invoice_number)}}" target="_blank">{{ __('Invoice') }}</a>
                                     @endif
                                     <a href="#" data-id="{{ $order->id }}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-indigo-600 text-white hover:bg-teal-600 py-1 px-2 leading-tight text-xs  package_order_status"  data-toggle="modal" data-target="#package_order_status">{{ __('Update Status') }}</a>
                                 </td>

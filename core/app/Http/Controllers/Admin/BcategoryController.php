@@ -64,7 +64,7 @@ class BcategoryController extends Controller
 
 
         $notification = array(
-            'messege' => 'Blog Category Added successfully!',
+            'messege' => 'Catégorie de blog ajoutée avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -125,7 +125,7 @@ class BcategoryController extends Controller
         $bcategory->save();
 
         $notification = array(
-            'messege' => 'Blog Category Updated successfully!',
+            'messege' => 'La catégorie du blog a été mise à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.bcategory').'?language='.$this->lang->code)->with('notification', $notification);

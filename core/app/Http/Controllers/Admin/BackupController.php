@@ -33,7 +33,7 @@ class BackupController extends Controller
         $backup->save();
 
         $notification = array(
-            'messege' => 'Backup saved successfully',
+            'messege' => 'Backup sauvgardée avec succès',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -49,7 +49,7 @@ class BackupController extends Controller
         $backup->delete();
 
         $notification = array(
-            'messege' => 'Database sql file deleted successfully!',
+            'messege' => 'Fichier base de donnée sql est supprimée avec succes!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

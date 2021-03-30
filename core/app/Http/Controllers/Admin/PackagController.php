@@ -69,7 +69,7 @@ class PackagController extends Controller
         }
 
         $notification = array(
-            'messege' => 'Package Added successfully!',
+            'messege' => 'Abonnement ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -110,7 +110,7 @@ class PackagController extends Controller
         $package->update($request->all());
 
         $notification = array(
-            'messege' => 'Package Updated successfully!',
+            'messege' => 'Abonnement  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.package').'?language='.$this->lang->code)->with('notification', $notification);;
@@ -143,7 +143,7 @@ class PackagController extends Controller
         
 
         $notification = array(
-            'messege' => 'Pricing Plan Content Updated successfully!',
+            'messege' => 'Contenue du Plan des prix  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.package').'?language='.$this->lang->code)->with('notification', $notification);

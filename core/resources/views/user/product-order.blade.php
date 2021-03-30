@@ -65,7 +65,7 @@
                                         <tr>
                                         <td>{{$order->order_number}}</td>
                                              <td>{{$order->created_at->format('d-m-Y')}}</td>
-                                            <td>{{ Helper::showCurrency() }}{{$order->total}} </td>
+                                            <td>{{$order->total}}{{ Helper::showCurrency() }} </td>
                                             <td><a href="{{route('user.product.orderDetails',$order->id)}}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-indigo-600 text-white hover:bg-teal-600 py-1 px-2 leading-tight text-xs ">{{__('Details')}}</a></td>
                                         </tr>
                                         @endforeach

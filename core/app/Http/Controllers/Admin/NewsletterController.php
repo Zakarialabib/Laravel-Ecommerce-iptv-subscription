@@ -38,7 +38,7 @@ class NewsletterController extends Controller
         Newsletter::create($request->all());
 
         $notification = array(
-            'messege' => 'Newsletter Added successfully!',
+            'messege' => 'Nouveau contact ajoutée avec succés!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -73,7 +73,7 @@ class NewsletterController extends Controller
         $newsletter->update($request->all());
 
         $notification = array(
-            'messege' => 'Newsletter Updated successfully!',
+            'messege' => 'Boite au lettre actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.newsletter'))->with('notification', $notification);;
@@ -148,7 +148,7 @@ class NewsletterController extends Controller
           $mail->send();
 
           $notification = array(
-            'messege' => 'Mail sent successfully!',
+            'messege' => 'Courrier envoyé avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

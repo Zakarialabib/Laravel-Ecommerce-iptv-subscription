@@ -126,12 +126,12 @@
 					  @endphp
 					  <tr>
 						  <th width="33.3%">{{ __('Shiping Cost') }}</th>
-						  <td>+ <span>{{ Helper::showCurrency() }}</span><span class="shipping_cost">{{ $shipping_cost }}</span> </td>
+						  <td>+<span class="shipping_cost">{{ $shipping_cost }}</span><span>{{ Helper::showCurrency() }}</span> </td>
 						</tr>
 					  @endif
 					  <tr>
 						<th width="33.3%">{{ __('Total') }}</th>
-						<td><span>{{ Helper::showCurrency() }}</span><span class="grand_total" data="{{ $cartTotal }}" >{{ $cartTotal + $shipping_cost }}</span> </td>
+						<td><span class="grand_total" data="{{ $cartTotal }}" >{{ $cartTotal + $shipping_cost }}</span> <span>{{ Helper::showCurrency() }}</span></td>
 					  </tr>
 					</table>
 				  </div>

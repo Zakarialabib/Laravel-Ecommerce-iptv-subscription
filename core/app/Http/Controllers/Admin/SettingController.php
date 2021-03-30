@@ -79,7 +79,7 @@ class SettingController extends Controller
         $commoninfo->save();
 
          $notification = array(
-            'messege' => 'Basic Info Updated successfully!',
+            'messege' => 'Info de base actualisé avec succès !',
             'alert' => 'success'
         );
         return redirect(route('admin.basicinfo').'?language='.$this->lang->code)->with('notification', $notification);
@@ -116,7 +116,7 @@ class SettingController extends Controller
        $basicsettings->contact_title = $request->contact_title;
        $basicsettings->save();
 
-       Session::flash('success', 'Section title Updated Successfully!');
+       Session::flash('success', 'Section Titre actualisé avec succès !');
        return redirect()->route('admin.sectiontitle');
 
     }
@@ -136,7 +136,7 @@ class SettingController extends Controller
       $seo->save();
 
       $notification = array(
-         'messege' => 'SEO Info Updated Successfully!',
+         'messege' => 'SEO Info actualisé avec succès!',
          'alert' => 'success'
      );
      return redirect(route('admin.seoinfo').'?language='.$this->lang->code)->with('notification', $notification);
@@ -180,7 +180,7 @@ class SettingController extends Controller
       $scriptsettings->save();
 
       $notification = array(
-         'messege' => 'Scripts Updated Successfully!',
+         'messege' => 'Scripts actualisé avec succès!',
          'alert' => 'success'
      );
      return redirect()->back()->with('notification', $notification);
@@ -203,7 +203,7 @@ class SettingController extends Controller
 
 
       $notification = array(
-            'messege' => 'Basic Info Updated successfully!',
+            'messege' => 'Info de base actualisé avec succès !',
             'alert' => 'success'
         );
         return redirect(route('admin.basicinfo').'?language='.$this->lang->code)->with('notification', $notification);
@@ -353,7 +353,7 @@ class SettingController extends Controller
       $pagevisibility->save();
 
       $notification = array(
-         'messege' => 'Page visibility Updated Successfully!',
+         'messege' => 'Visibilité de Page actualisé avec succès !',
          'alert' => 'success'
      );
      return redirect()->back()->with('notification', $notification);
@@ -375,7 +375,7 @@ class SettingController extends Controller
        file_put_contents('assets/front/css/dynamic-css.css', $request->custom_css_area);
 
        $notification = array(
-         'messege' => 'Custom Style Added Success!',
+         'messege' => 'Style Personnalisé ajoutée avec Succes!',
          'alert' => 'success'
      );
      return redirect()->back()->with('notification', $notification);
@@ -402,7 +402,7 @@ class SettingController extends Controller
        $be->save();
 
        $notification = array(
-         'messege' => 'Cookie alert updated successfully!',
+         'messege' => 'Cookie alert updated successfully !',
          'alert' => 'success'
      );
      return redirect()->back()->with('notification', $notification);

@@ -46,7 +46,7 @@ class ShippingMethodController extends Controller
         $method->save();
 
         $notification = array(
-            'messege' => 'Shipping Method Added successfully!',
+            'messege' => 'Moyen de livraison ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -58,7 +58,12 @@ class ShippingMethodController extends Controller
         $method = Shipping::find($id);
         $method->delete();
 
-        return back();
+        $notification = array(
+            'messege' => 'Moyen de livraison supprimée avec succès !',
+            'alert' => 'success'
+        );
+        return redirect()->back()->with('notification', $notification);
+
     }
 
     //Method Delete
@@ -88,7 +93,7 @@ class ShippingMethodController extends Controller
         $method->update();
 
         $notification = array(
-            'messege' => 'Shipping Method Updated successfully!',
+            'messege' => 'Moyen de livraison actualisé avec succès !',
             'alert' => 'success'
         );
         return redirect(route('admin.shipping.index').'?language='.$this->lang->code)->with('notification', $notification);

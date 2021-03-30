@@ -56,7 +56,7 @@ class SupplierController extends Controller
         $suppliers->save();
 
         $notification = array(
-            'messege' => 'Supplier Added successfully!',
+            'messege' => 'Fournisseur ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -92,7 +92,7 @@ class SupplierController extends Controller
         $suppliers->update();
 
         $notification = array(
-            'messege' => 'Supplier Updated successfully!',
+            'messege' => 'Fournisseur actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -105,8 +105,9 @@ class SupplierController extends Controller
         $suppliers = Supplier::findOrFail($id);
         $suppliers->is_active = false;
         $suppliers->save();
+
         $notification = array(
-            'messege' => 'Supplier Deleted successfully!',
+            'messege' => 'Fournisseur supprimée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -150,7 +151,7 @@ class SupplierController extends Controller
            $supplier->is_active = true;
            $supplier->save();
            $notification = array(
-            'messege' => 'Supplier imported  successfully!',
+            'messege' => 'Fournisseur importée avec succès!',
             'alert' => 'success'
         );           
         }

@@ -25,7 +25,7 @@
                             <div class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                                 <h3 class="px-4 mt-1 w-1/2">{{ __('Add About Feature') }}</h3>
                                 <div class="flex w-1/2 justify-end">
-                                    <a href="{{ route('admin.about'). '?language=' . $currentLang->code }}" class="inline-flex justify-center py-2 px-4 mr-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <a href="{{ route('admin.about'). '?language=' . $currentLang->code }}" class="inline-block align-middle select-none border whitespace-no-wrap py-1 px-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                                         <i class="fas fa-angle-double-left"></i> {{ __('Back') }}
                                     </a>
                                 </div>

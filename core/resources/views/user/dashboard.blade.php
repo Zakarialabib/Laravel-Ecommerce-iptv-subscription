@@ -42,7 +42,7 @@
 			  <div class="dashboard-inner pricingPlan-section  packag-page p-0">
 				<div class="flex flex-wrap ">
 					@if($packagedetail)
-					<div class="lg:w-2/5 pr-4 pl-4 md:w-3/4 pr-4 pl-4">
+					<div class="lg:w-2/5 pr-4 pl-4 md:w-3/4">
 						<h4 class="mb-4"><strong>{{ __('Active Package :') }}</strong></h4>
 						<div class="single-price">
 							<h4 class="name">
@@ -65,10 +65,10 @@
 								<div class="price-area">
 									<div class="price-top-area">
 										@if($packagedetail->discount_price == null)
-											<p class="price showprice">{{ Helper::showCurrency() }}{{ $packagedetail->price }}</p>
+											<p class="price showprice">{{ $packagedetail->price }}{{ Helper::showCurrency() }}</p>
 										@else
-											<p class="discount_price showprice">{{ Helper::showCurrency() }}{{ $packagedetail->discount_price }}</p>
-											<p class="price discounted"><del>{{ Helper::showCurrency() }}{{ $packagedetail->price }}</del></p>
+											<p class="discount_price showprice">{{ $packagedetail->discount_price }}{{ Helper::showCurrency() }}</p>
+											<p class="price discounted"><del>{{ $packagedetail->price }}{{ Helper::showCurrency() }}</del></p>
 										@endif
 									</div>
 									<p class="time">

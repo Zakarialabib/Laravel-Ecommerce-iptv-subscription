@@ -98,7 +98,7 @@ class ProductController extends Controller
         $product->save();
 
         $notification = array(
-            'messege' => 'Product Added successfully!',
+            'messege' => 'Produit ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -182,7 +182,7 @@ class ProductController extends Controller
 
 
         $notification = array(
-            'messege' => 'Product Updated successfully!',
+            'messege' => 'Produit actualisé avec succès!',
             'alert' => 'success'
         );
 

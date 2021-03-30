@@ -43,7 +43,7 @@ class AboutController extends Controller
         About::create($request->all());
 
         $notification = array(
-            'messege' => 'About Feature Added successfully!',
+            'messege' => 'À propos ajoutée avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -78,7 +78,7 @@ class AboutController extends Controller
         $about->update($request->all());
 
         $notification = array(
-            'messege' => 'About Feature Updated successfully!',
+            'messege' => 'À propos mise à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.about').'?language='.$this->lang->code)->with('notification', $notification);
@@ -108,7 +108,7 @@ class AboutController extends Controller
         $about_title->save();
 
         $notification = array(
-            'messege' => 'About Content Updated successfully!',
+            'messege' => 'Le contenu À propos est à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.about').'?language='.$this->lang->code)->with('notification', $notification);

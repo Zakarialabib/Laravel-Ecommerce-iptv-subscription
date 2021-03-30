@@ -36,7 +36,7 @@
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
                 @foreach($plans as $key => $plan)
-                <div class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+                <div class="lg:w-1/3 pr-4 pl-4 md:w-1/2">
                     <div class="single-price">
                         <h4 class="name">
                             {{ $plan->name }}
@@ -58,10 +58,10 @@
                             <div class="price-area">
 								<div class="price-top-area">
 									@if($plan->discount_price == null)
-										<p class="price showprice">{{ Helper::showCurrency() }}{{ $plan->price }}</p>
+										<p class="price showprice">{{ $plan->price }}{{ Helper::showCurrency() }}</p>
 									@else
-										<p class="discount_price showprice">{{ Helper::showCurrency() }}{{ $plan->discount_price }}</p>
-										<p class="price discounted"><del>{{ Helper::showCurrency() }}{{ $plan->price }}</del></p>
+										<p class="discount_price showprice">{{ $plan->discount_price }}{{ Helper::showCurrency() }}</p>
+										<p class="price discounted"><del>{{ $plan->price }}{{ Helper::showCurrency() }}</del></p>
 									@endif
 								</div>
 								<p class="time">

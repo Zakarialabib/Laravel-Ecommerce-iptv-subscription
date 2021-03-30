@@ -56,7 +56,7 @@ class EmailController extends Controller
         }
 
         $notification = array(
-            'messege' => 'Email Configuration Updated Successfully',
+            'messege' => 'Configuration Email actualisé avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

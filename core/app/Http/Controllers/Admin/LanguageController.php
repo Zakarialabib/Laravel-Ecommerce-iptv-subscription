@@ -130,7 +130,7 @@ class LanguageController extends Controller
         $newlangsetting->save();
 
         $notification = array(
-          'messege' => 'Language added successfully!',
+          'messege' => 'Langue ajoutée avec succès !',
           'alert' => 'success'
         );
         return redirect()->route('admin.language.index')->with('notification', $notification);
@@ -161,7 +161,7 @@ class LanguageController extends Controller
       $language->save();
 
       $notification = array(
-        'messege' => 'Language updated successfully',
+        'messege' => 'Langue actualisé avec succès!',
         'alert' => 'success'
       );
       return redirect()->route('admin.language.index')->with('notification', $notification);
@@ -178,7 +178,7 @@ class LanguageController extends Controller
 
 
       if (empty($json)) {
-          return back()->with('warning', 'File Not Found.');
+          return back()->with('warning', 'Fichier non trouvée.');
       }
 
         return view('admin.language.edit-keyword', compact('page_title', 'json', 'la'));
@@ -194,7 +194,7 @@ class LanguageController extends Controller
         file_put_contents(resource_path('lang/') . $lang->code . '.json', $content);
 
         $notification = array(
-          'messege' => 'Updated successfully',
+          'messege' => 'Actualisé avec succès !',
           'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -207,7 +207,7 @@ class LanguageController extends Controller
         $la = Language::findOrFail($id);
         if ($la->is_default == 1) {
           $notification = array(
-            'messege' => 'Default language cannot be deleted!',
+            'messege' => 'La langue par défaut ne peut pas être supprimée !',
             'alert' => 'warning'
           );
           return back()->with('notification', $notification);
@@ -225,7 +225,7 @@ class LanguageController extends Controller
         $la->delete();
 
         $notification = array(
-          'messege' => 'Language Delete Successfully',
+          'messege' => 'Langue supprimé avec succès !',
           'alert' => 'success'
         );
         return redirect()->route('admin.language.index')->with('notification', $notification);
@@ -238,7 +238,7 @@ class LanguageController extends Controller
       $lang->save();
 
       $notification = array(
-        'messege' => 'laguage is set as defualt.',
+        'messege' => 'La langue est définie par défaut.',
         'alert' => 'success'
       );
 

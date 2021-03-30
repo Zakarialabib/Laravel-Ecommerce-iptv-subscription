@@ -88,7 +88,7 @@
 	@endif
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3">
 					<div class="section-heading
 					@if($commonsetting->is_package_bg)
 					white-color
@@ -104,7 +104,7 @@
 				</div>
 			</div>
 			<div class="flex flex-wrap ">
-				<div class="lg:w-full pr-4 pl-4">
+				<div class="lg:w-full">
 					<div class="pricing-slider">
 						@foreach($plans as $key => $plan)
 						<div class="slider-item">
@@ -129,10 +129,10 @@
 									<div class="price-area">
 										<div class="price-top-area">
 											@if($plan->discount_price == null)
-												<p class="price showprice">{{ Helper::showCurrency() }}{{ $plan->price }}</p>
+												<p class="price showprice">{{ $plan->price }}{{ Helper::showCurrency() }}</p>
 											@else
-												<p class="discount_price showprice">{{ Helper::showCurrency() }}{{ $plan->discount_price }}</p>
-												<p class="price discounted"><del>{{ Helper::showCurrency() }}{{ $plan->price }}</del></p>
+												<p class="discount_price showprice">{{ $plan->discount_price }}{{ Helper::showCurrency() }}</p>
+												<p class="price discounted"><del>{{ $plan->price }}{{ Helper::showCurrency() }}</del></p>
 											@endif
 										</div>
 										<p class="time">
@@ -161,7 +161,7 @@
 	<section class="offer-section">
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 md:w-2/3 pr-4 pl-4">
 					<div class="section-heading">
 						<h2 class="title">
 							{{ $sectionInfo->offer_title }}
@@ -186,7 +186,7 @@
 				</div>
 				<div class="lg:w-1/2 pr-4 pl-4 self-center">
 					<div class="offer-image">
-						<img class="w-1/2" src="{{ asset('assets/front/img/'.$sectionInfo->offer_image) }}" alt="">
+						<img src="{{ asset('assets/front/img/'.$sectionInfo->offer_image) }}" alt="">
 					</div>
 				</div>
 			</div>
@@ -208,7 +208,7 @@
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap ">
 				@foreach ($funfacts as $funfact)
-					<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+					<div class="lg:w-1/4 md:w-1/2 pr-4 pl-4">
 						<div class="single-counter">
 							<div class="icon">
 								<img src="{{ asset('assets/front/img/'.$funfact->icon) }}" alt="">
@@ -231,7 +231,7 @@
 	<section class="service-area">
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 md:w-2/3 pr-4 pl-4">
 					<div class="section-heading">
 						<h2 class="title">
 							{{ $sectionInfo->service_title }}
@@ -247,7 +247,7 @@
 				<div class="lg:w-1/3 pr-4 pl-4 md:w-1/2">
 					<a href="{{ route('front.service.details', $service->slug) }}" class="single-service">
 						<div class="left-area">
-							<img class="w-1/2" src="{{ asset('assets/front/img/'.$service->icon) }}" alt="">
+							<img src="{{ asset('assets/front/img/'.$service->icon) }}" alt="">
 						</div>
 						<div class="right-area">
 							<h4 class="title">
@@ -278,7 +278,7 @@
 		@endif
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 md:w-2/3 pr-4 pl-4">
 					<div class="section-heading
 					@if($commonsetting->is_testimonial_bg)
 					white-color
@@ -340,7 +340,7 @@
 	<section class="blog-section">
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 md:w-2/3 pr-4 pl-4">
 					<div class="section-heading">
 						<h2 class="title">
 							{{ $sectionInfo->blog_title }}
@@ -353,7 +353,7 @@
 			</div>
 			<div class="flex flex-wrap  justify-center">
 				@foreach ($blogs as $blog)
-				<div class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+				<div class="lg:w-1/3 md:w-1/2 pr-4 pl-4">
 					<a href="{{route('front.blogdetails', $blog->slug)}}" class="single-blog">
 						<div class="img">
 							<img src="{{asset('assets/front/img/'.$blog->main_image) }}" alt="">

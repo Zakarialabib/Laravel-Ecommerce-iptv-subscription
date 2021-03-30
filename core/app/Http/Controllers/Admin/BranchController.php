@@ -51,7 +51,7 @@ class BranchController extends Controller
         $branch->save();
 
         $notification = array(
-            'messege' => 'Branch Added successfully!',
+            'messege' => 'Branche ajoutée avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -63,7 +63,11 @@ class BranchController extends Controller
         $branch = Branch::find($id);
         $branch->delete();
 
-        return back();
+        $notification = array(
+            'messege' => 'Branche supprimée avec succès !',
+            'alert' => 'success'
+        );
+        return redirect()->back()->with('notification', $notification);
     }
 
     // Branch Edit
@@ -99,7 +103,7 @@ class BranchController extends Controller
         $branch->save();
 
         $notification = array(
-            'messege' => 'Branch Updated successfully!',
+            'messege' => 'Branche mise à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.branch').'?language='.$this->lang->code)->with('notification', $notification);;

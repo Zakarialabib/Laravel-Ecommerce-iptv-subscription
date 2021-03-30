@@ -58,11 +58,9 @@ class PaypalController extends Controller
 
 
 
-
     public function store(Request $request)
     {
     
-
         $input = $request->all();
         Session::put('package_data', $input);
 
@@ -123,7 +121,7 @@ class PaypalController extends Controller
             return Redirect::away($redirect_url);
         }
         $notification = array(
-            'messege' => 'Unknown error occurred',
+            'messege' => 'Une erreur inconnue est apparue!',
             'alert' => 'error'
         );
         return redirect()->back()->with('notification', $notification);
@@ -132,7 +130,7 @@ class PaypalController extends Controller
             return Redirect::away($redirect_url);
         }
         $notification = array(
-            'messege' => 'Unknown error occurred',
+            'messege' => 'Une erreur inconnue est apparue!',
             'alert' => 'error'
         );
         return redirect()->back()->with('notification', $notification);
@@ -141,7 +139,7 @@ class PaypalController extends Controller
     public function paycancle()
     {
         $notification = array(
-            'messege' => 'Payment Cancelled.',
+            'messege' => 'Paiement Annulée.',
             'alert' => 'error'
         );
         return redirect()->back()->with('notification', $notification);
@@ -249,8 +247,8 @@ class PaypalController extends Controller
 
                     // Content
                     $mail->isHTML(true);
-                    $mail->Subject = "Order placed for Package";
-                    $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your bill was paid successfully. We have attached an invoice in this mail.<br/>Thank you.';
+                    $mail->Subject = "Commande d'abonnement effectuée";
+                    $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre facture a été payée avec succès. Veuillez voir la piece jointe dans ce mail.<br/>Merci.';
 
                     $mail->send();
                 } catch (Exception $e) {
@@ -267,8 +265,8 @@ class PaypalController extends Controller
 
                     // Content
                     $mail->isHTML(true);
-                    $mail->Subject = "Order placed for Package";
-                    $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your bill was paid successfully. We have attached an invoice in this mail.<br/>Thank you.';
+                    $mail->Subject = "Commande d'abonnement effectuée";
+                    $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre facture a été payée avec succès. Veuillez voir la piece jointe dans ce mail.<br/>Merci.';
 
                     $mail->send();
                 } catch (Exception $e) {

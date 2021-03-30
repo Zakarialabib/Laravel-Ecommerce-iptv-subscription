@@ -51,7 +51,7 @@
 			</div>
 			<div class="flex flex-wrap  ">
 				@foreach ($products as $product)
-				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2">
 					<div class="single-product">
 						<div class="img">
 							<a href="{{ route('front.product.details', $product->slug) }}">
@@ -63,7 +63,7 @@
 								<a href="{{ route('front.product.details', $product->slug) }}">{{ $product->title }}</a>
 							</h4>
 							<div class="price">
-								{{ Helper::showCurrency() }}{{ $product->current_price }} <del>{{ Helper::showCurrency() }}{{ $product->current_price }}</del>
+								{{ $product->current_price }}{{ Helper::showCurrency() }} <del>{{ $product->current_price }}{{ Helper::showCurrency() }}</del>
 							</div>
 							@if(Auth::user())
 								<a data-href="{{route('add.cart',$product->id)}}" href="#" class="mybtn1 add-cart-btn first cart-link"> {{__('Add

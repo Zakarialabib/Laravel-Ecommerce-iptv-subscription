@@ -27,7 +27,7 @@ class CommentsController extends Controller
             $mailer->sendTicketComments($comment->ticket->user, Auth::user(), $comment->ticket, $comment);
         }
 
-        return redirect()->back()->with("status", "Your comment has be submitted.");
+        return redirect()->back()->with("status", "Votre commentaire a été envoyé.");
     }
 
     public function respondComment(Request $request)
@@ -39,7 +39,7 @@ class CommentsController extends Controller
         Comment::create($request->all());
 
         $notification = array(
-            'messege' => 'Your comment has be submitted!',
+            'messege' => 'Votre commentaire a été envoyé!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
