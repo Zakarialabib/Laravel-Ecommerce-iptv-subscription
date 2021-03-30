@@ -107,7 +107,7 @@
         <div class="modal-body">
             <div class="flex flex-wrap ">
                 <div class="lg:w-1/2 pr-4 pl-4">
-                    <h6 class="mb-3"><strong>{{ __('Customar Info :') }}</strong></h6>
+                    <h6 class="mb-3"><strong>{{ __('Customer Info :') }}</strong></h6>
                     <table class="table-auto mb-4 bg-transparent border table-striped">
                         <tbody>
                             <tr>

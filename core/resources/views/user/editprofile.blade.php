@@ -42,13 +42,13 @@
                 <div class="flex flex-wrap ">
                     <div class="md:w-full pr-4 pl-4">
                       <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                        <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ __('Edit Profile') }}</h5>
+                        <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 justify-center">{{ __('Edit Profile') }}</h5>
                         <div class="flex-auto p-6">
                           <form action="{{ route('user.updateprofile', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="flex flex-wrap  justify-center">
                                 <div class="md:w-1/2 pr-4 pl-4">
-                                    <div class="mb-4 mb-4 text-center">
+                                    <div class="mb-4 text-center">
                                         <div class="upload-img inline">
                                           <div class="img">
                                               <img class="mb-3 show-img img-demo" src="

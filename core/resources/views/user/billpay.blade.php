@@ -40,11 +40,11 @@
 			</div>
 			<div class="lg:w-3/4 pr-4 pl-4">
                 <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                    <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ __('Bill Pay') }}</h5>
+                    <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 justify-center">{{ __('Bill Pay') }}</h5>
                     <div class="flex-auto p-6">
                         <div class="flex flex-wrap ">
                             <div class="lg:w-full pr-4 pl-4 mt-3 block w-full overflow-auto scrolling-touch">
-                                <table class="table-auto mb-4 bg-transparent table-striped table-bordered">
+                                <table class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>{{ __('#') }}</th>

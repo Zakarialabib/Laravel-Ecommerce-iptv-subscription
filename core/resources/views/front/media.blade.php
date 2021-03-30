@@ -35,7 +35,7 @@
 	<section class="media-page">
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3">
 					<div class="section-heading">
 						<h2 class="title">
 							{{ $sectionInfo->entertainment_title }}
@@ -48,7 +48,7 @@
 			</div>
 			<div class="flex flex-wrap ">
                 @foreach($entertainments as $key => $entertainment)
-				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2">
 					<div class="single-service entertainment">
 						<div class="left-area">
 							<img src="{{ asset('assets/front/img/'.$entertainment->icon) }}" alt="">
@@ -66,7 +66,7 @@
 		</div>
 		<div class="container mx-auto sm:px-4 mt-5 pt-3">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3">
 					<div class="section-heading">
 						<h2 class="title">
 						{{ $sectionInfo->media_zone_title }}
@@ -79,8 +79,8 @@
 			</div>
 			<div class="flex flex-wrap ">
                 @foreach($mediazones as $key => $mediazone)
-				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
-					<a href="{{ $mediazone->link }}" class="single-service flex items-start block" target="_blank">
+				<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2">
+					<a href="{{ $mediazone->link }}" class="single-service flex items-start" target="_blank">
 						<div class="left-area">
 								<img src="{{ asset('assets/front/img/'.$mediazone->icon) }}" alt="">
 						</div>

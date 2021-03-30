@@ -21,7 +21,7 @@
     href="{{ route('user.product.order') }}"> {{ __('Product Order') }} </a>
   </li>
   <li>
-    <a class="@if(request()->path() == 'user/package-order') active  @endif" href="{{ route('user.packageorder') }}"> {{ __('Pacakge Order') }} </a>
+    <a class="@if(request()->path() == 'user/package-order') active  @endif" href="{{ route('user.packageorder') }}"> {{ __('Package Order') }} </a>
   </li>
   <li>
     <a class="@if(request()->path() == 'user/bill-pay') active  @endif" href="{{ route('user.billpay') }}"> {{ __('Bill Pay') }} </a>

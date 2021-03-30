@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Document PDF</title>
     <style>
     /*!
     * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -31,24 +31,24 @@
                         <div class="lg:w-1/2 pr-4 pl-4">
                           
                             <div>
-                                <h3><strong>Bill Pay</strong></h3>
+                                <h3><strong>{{__('Bill Pay')}}</strong></h3>
                             </div>
                             <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
-                                    <th scope="row">Bill Attendance ID:</th>
+                                    <th scope="row">{{__('Bill Attendance ID')}}:</th>
                                     <td>#{{$bill->attendance_id}}</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Bill Date:</th>
+                                    <th scope="row">{{__('Bill Date')}}:</th>
                                     <td>{{$bill->created_at}}</td>
                                   </tr>
                                     <tr>
-                                    <th scope="row">Bill Price:</th>
+                                    <th scope="row">{{__('Bill Price')}}:</th>
                                     <td>{{$bill->package_cost}}{{ Helper::showCurrency() }}</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Payment Method:</th>
+                                    <th scope="row">{{__('Payment Method')}}:</th>
                                     <td class="capitalize">
                                         @if (!empty($bill->method))
                                             {{$bill->method}}
@@ -60,28 +60,28 @@
                                 </tbody>
                             </table>
                             <div>
-                                <h3><strong>Package Details</strong></h3>
+                                <h3><strong>{{__('Package Details')}}</strong></h3>
                             </div>
                             <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
-                                    <th scope="row">Package Name:</th>
+                                    <th scope="row">{{__('Package Name')}}:</th>
                                     <td>{{$package->name}}</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Speed</th>
+                                    <th scope="row">{{__('Speed')}}:</th>
                                     <td> {{$package->speed}} / Mbps</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Time:</th>
+                                    <th scope="row">{{__('Time')}}:</th>
                                     <td> {{$package->time}} </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Price:</th>
+                                    <th scope="row">{{__('Price')}}:</th>
                                     <td> {{$package->price}}{{ Helper::showCurrency() }} </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Feature:</th>
+                                    <th scope="row">{{__('Feature')}}:</th>
                                     <td> {{$package->feature}} </td>
                                   </tr>
                                 </tbody>
@@ -89,33 +89,33 @@
                         </div>
 
                         <div>
-                            <h3><strong>Client Details</strong></h3>
+                            <h3><strong>{{__('Client Details')}}</strong></h3>
                         </div>
                         <div class="lg:w-1/2 pr-4 pl-4">
                             <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                     <tr>
-                                        <th scope="row">Client Name:</th>
+                                        <th scope="row">{{__('Name')}}:</th>
                                         <td>{{$user->name}}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Client Email:</th>
+                                        <th scope="row">{{__('Email')}}:</th>
                                         <td>{{$user->email}}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Client Phone:</th>
+                                        <th scope="row">{{__('Phone')}}:</th>
                                         <td>{{$user->phone}}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Client Country:</th>
+                                        <th scope="row">{{__('Country')}}:</th>
                                         <td>{{$user->country}}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Client City:</th>
+                                        <th scope="row">{{__('City')}}:</th>
                                         <td>{{$user->city}}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Client Address:</th>
+                                        <th scope="row">{{__('Address')}}:</th>
                                         <td>{{$user->address}}</td>
                                     </tr>
                                     

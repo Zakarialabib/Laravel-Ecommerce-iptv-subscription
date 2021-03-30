@@ -6,8 +6,8 @@
    <div class="p-0 -mb-5">
       <div class="container mx-auto sm:px-4 max-w-full">
         <div class="flex flex-wrap ">
-          <div class="w-full pr-4 pl-4">
-            <div class="flex flex-wrap text-lg capitalize text-bold pt-3 pb-3 py-4 px-4 mb-2 m-0 text-gray-900">
+          <div class="w-full">
+            <div class="flex flex-wrap text-lg capitalize text-bold py-4 px-4 mb-2 m-0 text-gray-900">
               <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ __('Welcome back,') }} {{ $adminprofile->name }} !</h1></div>
           </div>
         </div><!-- /.row -->
@@ -120,12 +120,12 @@
           <div class="md:w-1/2 sm:w-full px-2">
             <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-primary  card-outline">
               <div class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">
-                <h3 class="px-4 mt-1">{{ __('Latest 10 Package :') }}</h3>
+                <h3 class="mt-1">{{ __('Latest 10 Package :') }}</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="flex-auto p-6">
-                <table class="table-auto mb-4 bg-transparent table-striped table-bordered">
+                <table class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped">
                   <thead>
                       <tr>
                           <th>{{ __('#') }}</th>
@@ -179,7 +179,7 @@
           <div class="md:w-1/2 sm:w-full px-2">
             <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-primary  card-outline">
               <div class="flex py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">
-                <h3 class="px-4 mt-1">{{ __('Latest 10 Blog Post :') }}</h3>
+                <h3 class="mt-1">{{ __('Latest 10 Blog Post :') }}</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->

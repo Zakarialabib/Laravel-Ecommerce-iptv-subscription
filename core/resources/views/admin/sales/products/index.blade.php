@@ -56,11 +56,11 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
               @if ($sale->payment->status === \App\Payment::STATUS_DUE)
-             <span class="p-2 text-xs font-normal rounded-full bg-red-700 text-white"> {{__('DUE')}}</span>
+             <span class="p-2 text-xs font-normal rounded-full bg-red-600 text-white"> {{__('DUE')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PAID)
-              <span class="p-2 text-xs font-normal rounded-full bg-green-700 text-white">{{__('PAID')}}</span>
+              <span class="p-2 text-xs font-normal rounded-full bg-green-600 text-white">{{__('PAID')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PENDING)
-              <span class="p-2 text-xs font-normal rounded-full bg-blue-500 text-white">{{__('PENDING')}}</span>
+              <span class="p-2 text-xs font-normal rounded-full bg-blue-600 text-white">{{__('PENDING')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PARTIAL)
               <span class="p-2 text-xs font-normal rounded-full bg-yellow-400 text-white">{{__('PARTIAL')}}</span>
               @endif

@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Mailers\AppMailer;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Str;
-
+use App\Emailsetting;
 
 class TicketsController extends Controller
 {
@@ -68,7 +70,56 @@ class TicketsController extends Controller
             'status' => "Open"
         ]);
         $ticket->save();        
-        $mailer->sendTicketInformation(Auth::user(), $ticket);
+
+          // Send Mail to Buyer
+           $mail = new PHPMailer(true);
+           $ticketOwner = $ticket->user;
+
+           $em = Emailsetting::first();
+   
+           if ($em->is_smtp == 1) {
+               try {
+                   $mail->isSMTP();
+                   $mail->Host       = $em->smtp_host;
+                   $mail->SMTPAuth   = true;
+                   $mail->Username   = $em->smtp_user;
+                   $mail->Password   = $em->smtp_pass;
+                   $mail->SMTPSecure = $em->email_encryption;
+                   $mail->Port       = $em->smtp_port;
+   
+                   //Recipients
+                   $mail->setFrom($em->from_email, $em->from_name);
+                   $mail->addAddress($ticketOwner->email, $ticketOwner->name);
+   
+                   // Content
+                   $mail->isHTML(true);
+                   $mail->Subject = "Ticket' . $ticket->ticket_id .";
+                   $mail->Body    = 'Bonjour <strong>' . $ticketOwner->name . '</strong>,<br/>Votre Ticket est créer.<br/>'. $ticket->title . $ticket->status .'Si vous avez une autre question ou un problem à rsesoudre veuillez nous contactez.<br/>Merci et Bonne journée';
+   
+                   $mail->send();
+               } catch (Exception $e) {
+                   // die($e->getMessage());
+               }
+           } else {
+               try {
+                   //Recipients
+                   $mail->setFrom($em->from_mail, $em->from_name);
+                   $mail->addAddress($ticketOwner->email, $ticketOwner->name);
+   
+                   // Attachments
+   
+                   // Content
+                   $mail->isHTML(true);
+                   $mail->Subject = "Ticket' . $ticket->ticket_id .";
+                   $mail->Body    = 'Bonjour <strong>' . $ticketOwner->name . '</strong>,<br/>Votre Ticket est créer.<br/>'. $ticket->title . $ticket->status .'Si vous avez une autre question ou un problem à rsesoudre veuillez nous contactez.<br/>Merci et Bonne journée';
+   
+                   $mail->send();
+               } catch (Exception $e) {
+                   // die($e->getMessage());
+               }
+           }
+   
+
         return redirect()->back()->with("status", "A ticket with ID: #$ticket->ticket_id has been opened.");
     }
 
@@ -92,13 +143,62 @@ class TicketsController extends Controller
         return view('user.tickets.show', compact('ticket', 'category', 'comments'));
     }
 
-    public function close($ticket_id, AppMailer $mailer)
+    public function close($ticket_id)
     {
         $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
         $ticket->status = "Closed";
         $ticket->save();
-        $ticketOwner = $ticket->user;
-        $mailer->sendTicketStatusNotification($ticketOwner, $ticket);
+
+
+           // Send Mail to Buyer
+           $mail = new PHPMailer(true);
+           $ticketOwner = $ticket->user;
+
+           $em = Emailsetting::first();
+   
+           if ($em->is_smtp == 1) {
+               try {
+                   $mail->isSMTP();
+                   $mail->Host       = $em->smtp_host;
+                   $mail->SMTPAuth   = true;
+                   $mail->Username   = $em->smtp_user;
+                   $mail->Password   = $em->smtp_pass;
+                   $mail->SMTPSecure = $em->email_encryption;
+                   $mail->Port       = $em->smtp_port;
+   
+                   //Recipients
+                   $mail->setFrom($em->from_email, $em->from_name);
+                   $mail->addAddress($ticketOwner->email, $ticketOwner->name);
+   
+                   // Content
+                   $mail->isHTML(true);
+                   $mail->Subject = "Ticket Closed";
+                   $mail->Body    = 'Bonjour <strong>' . $ticketOwner->name . '</strong>,<br/>Votre Ticket est fermée. Si vous avez une autre question ou un problem à rsesoudre veuillez nous contactez.<br/>Merci et Bonne journée';
+   
+                   $mail->send();
+               } catch (Exception $e) {
+                   // die($e->getMessage());
+               }
+           } else {
+               try {
+                   //Recipients
+                   $mail->setFrom($em->from_mail, $em->from_name);
+                   $mail->addAddress($ticketOwner->email, $ticketOwner->name);
+   
+                   // Attachments
+   
+                   // Content
+                   $mail->isHTML(true);
+                   $mail->Subject = "Ticket Closed";
+                   $mail->Body    = 'Bonjour <strong>' . $ticketOwner->name . '</strong>,<br/>Votre Ticket est fermée. Si vous avez une autre question ou un problem à rsesoudre veuillez nous contactez.<br/>Merci et Bonne journée';
+   
+                   $mail->send();
+               } catch (Exception $e) {
+                   // die($e->getMessage());
+               }
+           }
+   
+
         return redirect()->back()->with("status", "The ticket has been closed.");
     }
 }
