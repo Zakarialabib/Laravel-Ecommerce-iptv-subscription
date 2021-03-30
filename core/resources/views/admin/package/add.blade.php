@@ -32,10 +32,10 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="flex-auto p-6">
-                                <form class="form-horizontal" action="{{ route('admin.package.store') }}" method="POST">
+                                <form class="form-horizontal" action="{{ route('admin.package.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Name') }}<span class="text-red-600">*</span></label>
+                                        <label class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Language') }}<span class="text-red-600">*</span></label>
         
                                         <div class="sm:w-4/5 pr-4 pl-4">
                                             <select class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm lang" name="language_id">
@@ -59,52 +59,128 @@
                                         </div>
                                     </div>
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Speed') }}<span class="text-red-600">*</span></label>
+                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Plan') }}<span class="text-red-600">*</span></label>
         
-                                        <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input type="number" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="speed" placeholder="{{ __('Speed') }}" value="{{ old('speed') }}">
-                                            @if ($errors->has('speed'))
-                                                <p class="text-red-600"> {{ $errors->first('speed') }} </p>
+                                        <div class="sm:w-3/5 pr-4 pl-4">
+                                            <select
+                                            name="type[]"
+                                            class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                            >
+                                                <option value="1" selected>
+                                                    {{__('monthly_plan')}}
+                                                </option>
+                                                <option value="2">
+                                                    {{__('quarter_plan')}}
+                                                </option>
+                                                <option value="3">
+                                                    {{__('semiannual_plan')}}
+                                                </option>
+                                                <option value="4">
+                                                    {{__('annual_plan')}}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has('type'))
+                                                <p class="text-red-600"> {{ $errors->first('type') }} </p>
                                             @endif
+                                        </div>
+                                        <div class="sm:w-1/5 pr-4 pl-4">
+                                            <input type="number" class="block appearance-none w-full py-2 px-3 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="price[]" placeholder="{{ __('Price') }}">
                                         </div>
                                     </div>
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Time') }}<span class="text-red-600">*</span></label>
+                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Plan') }}<span class="text-red-600">*</span></label>
         
-                                        <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input type="text" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="time" placeholder="{{ __('Time') }}" value="{{ old('time') }}">
-                                            @if ($errors->has('time'))
-                                                <p class="text-red-600"> {{ $errors->first('time') }} </p>
+                                        <div class="sm:w-3/5 pr-4 pl-4">
+                                            <select
+                                            name="type[]"
+                                            class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                            >
+                                                <option value="1">
+                                                    {{__('monthly_plan')}}
+                                                </option>
+                                                <option value="2" selected>
+                                                    {{__('quarter_plan')}}
+                                                </option>
+                                                <option value="3">
+                                                    {{__('semiannual_plan')}}
+                                                </option>
+                                                <option value="4">
+                                                    {{__('annual_plan')}}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has('type'))
+                                                <p class="text-red-600"> {{ $errors->first('type') }} </p>
                                             @endif
+                                        </div>
+                                        <div class="sm:w-1/5 pr-4 pl-4">
+                                            <input type="number" class="block appearance-none w-full py-2 px-3 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="price[]" placeholder="{{ __('Price') }}">
                                         </div>
                                     </div>
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Price') }}<span class="text-red-600">*</span></label>
+                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Plan') }}<span class="text-red-600">*</span></label>
         
-                                        <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input type="number" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="price" placeholder="{{ __('Price') }}" value="{{ old('price') }}">
-                                            @if ($errors->has('price'))
-                                                <p class="text-red-600"> {{ $errors->first('price') }} </p>
+                                        <div class="sm:w-3/5 pr-4 pl-4">
+                                            <select
+                                            name="type[]"
+                                            class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                            >
+                                                <option value="1">
+                                                    {{__('monthly_plan')}}
+                                                </option>
+                                                <option value="2">
+                                                    {{__('quarter_plan')}}
+                                                </option>
+                                                <option value="3" selected>
+                                                    {{__('semiannual_plan')}}
+                                                </option>
+                                                <option value="4">
+                                                    {{__('annual_plan')}}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has('type'))
+                                                <p class="text-red-600"> {{ $errors->first('type') }} </p>
                                             @endif
+                                        </div>
+                                        <div class="sm:w-1/5 pr-4 pl-4">
+                                            <input type="number" class="block appearance-none w-full py-2 px-3 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="price[]" placeholder="{{ __('Price') }}">
                                         </div>
                                     </div>
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Discount Price') }}</label>
+                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Plan') }}<span class="text-red-600">*</span></label>
         
-                                        <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input type="number" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="discount_price" placeholder="{{ __('Discount Price') }}" value="{{ old('discount_price') }}">
-                                            @if ($errors->has('discount_price'))
-                                                <p class="text-red-600"> {{ $errors->first('discount_price') }} </p>
+                                        <div class="sm:w-3/5 pr-4 pl-4">
+                                            <select
+                                            name="type[]"
+                                            class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                            >
+                                                <option value="1">
+                                                    {{__('monthly_plan')}}
+                                                </option>
+                                                <option value="2">
+                                                    {{__('quarter_plan')}}
+                                                </option>
+                                                <option value="3">
+                                                    {{__('semiannual_plan')}}
+                                                </option>
+                                                <option value="4" selected>
+                                                    {{__('annual_plan')}}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has('type'))
+                                                <p class="text-red-600"> {{ $errors->first('type') }} </p>
                                             @endif
+                                        </div>
+                                        <div class="sm:w-1/5 pr-4 pl-4">
+                                            <input type="number" class="block appearance-none w-full py-2 px-3 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" name="price[]" placeholder="{{ __('Price') }}">
                                         </div>
                                     </div>
                                     <div class="mb-4 flex flex-wrap ">
-                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Feature') }}<span class="text-red-600">*</span></label>
+                                        <label  class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Features') }}<span class="text-red-600">*</span></label>
         
                                         <div class="sm:w-4/5 pr-4 pl-4">
-                                            <input name="feature" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" data-role="tagsinput" placeholder="{{ __('Feature') }}" value="{{ old('feature') }}" >
-                                            @if ($errors->has('feature'))
-                                                <p class="text-red-600"> {{ $errors->first('feature') }} </p>
+                                            <input name="features" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" data-role="tagsinput" placeholder="{{ __('Feature') }}" value="{{ old('feature') }}" >
+                                            @if ($errors->has('features'))
+                                                <p class="text-red-600"> {{ $errors->first('features') }} </p>
                                             @endif
                                         </div>
                                     </div>

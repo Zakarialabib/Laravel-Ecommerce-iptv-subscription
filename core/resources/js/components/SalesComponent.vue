@@ -263,7 +263,7 @@ export default {
 
   computed: {
     total() {
-      return this.subTotal + this.subTotal * this.tax/100;
+      return parseFloat(this.subTotal) + parseFloat(this.subTotal) * this.tax/100;
     },
     due() {
       return (this.total - this.sale.payment.paid_amount).toFixed(2);

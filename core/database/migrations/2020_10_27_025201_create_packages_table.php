@@ -15,13 +15,9 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('language_id')->nullable();
-            $table->string('status')->nullable();
+            $table->foreignId('language_id')->constrained('languages')->nullable();
+            $table->integer('status')->nullable();
             $table->string('name')->nullable();
-            $table->string('speed')->nullable();
-            $table->integer('time')->nullable();
-            $table->text('feature')->nullable();
-            $table->decimal('price', 11, 2)->nullable();
             $table->timestamps();
         });
     }

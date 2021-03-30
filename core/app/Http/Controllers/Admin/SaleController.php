@@ -17,6 +17,7 @@ use App\Sale;
 use App\Payment;
 use App\Packageorder;
 use App\Package;
+use App\Plan;
 
 class SaleController extends Controller
 {
@@ -345,7 +346,7 @@ class SaleController extends Controller
     public function packageCreate(Request $request)
     {
         if($request->order) {
-            $order = Packageorder::where('id', $request->order)->with('package', 'user')->first();
+            $order = Packageorder::where('id', $request->order)->with('package', 'user', 'plan')->first();
             $sale = new Sale([
                 'id' => null,
                 'user' => $order->user,
@@ -376,13 +377,15 @@ class SaleController extends Controller
                 'order' => new Packageorder([
                     'id' => null,
                     'user' => User::first(),
+                    'plan' => new Plan([
+                        'id' => null,
+                        'type' => 1,
+                        'price' => 0,
+                    ]),
                     'package' => new Package([
                         'id' => -1,
                         'name' => '',
-                        'price' => 0,
-                        'time' => 1,
                     ]),
-                    'package_cost' => 0,
                 ]),
             ])
         ]);
@@ -397,8 +400,9 @@ class SaleController extends Controller
             'reference' => '',
             'package_id' => '',
             'name' => '',
-            'plan' => '',
-            'price' => '',
+            'plan_id' => '',
+            'plan_type' => '',
+            'plan_price' => '',
             'subtotal' => '',
             'tax' => '',
             'total' => '',
@@ -456,6 +460,17 @@ class SaleController extends Controller
             // update order
             PackageOrder::find($data['order_id'])->update([
                 'sale_id' => $sale->id,
+                'plan_id' => $data['plan_id'],
+                'package_id' => $data['package_id'],
+                'user_id' => $data['user_id'],
+                'package_cost' => $data['total'],
+            ]);
+        }
+        else 
+        {
+            PackageOrder::create([
+                'sale_id' => $sale->id,
+                'plan_id' => $data['plan_id'],
                 'package_id' => $data['package_id'],
                 'user_id' => $data['user_id'],
                 'package_cost' => $data['total'],

@@ -15,8 +15,10 @@ class CreatePackageordersTable extends Migration
     {
         Schema::create('packageorders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
-            $table->integer('package_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('sale_id')->nullable()->constrained('sales')->onDelete('set null');
+            $table->foreignId('package_id')->nullable()->constrained('packages')->onDelete('set null');
+            $table->foreignId('plan_id')->constrained('plans');
             $table->integer('status')->nullable();
             $table->double('package_cost')->nullable();
             $table->string('method')->nullable();

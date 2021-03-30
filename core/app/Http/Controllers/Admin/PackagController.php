@@ -20,7 +20,7 @@ class PackagController extends Controller
     public function listPackages(Request $request) {
         try {
             //code...
-            $packages = Package::all();
+            $packages = Package::with('plans')->get();
             return response(['packages' => $packages], 200);
         } catch (\Throwable $th) {
             return response(['packages' => null], 500);
@@ -45,16 +45,28 @@ class PackagController extends Controller
     public function store(Request $request){
         
         $data = $request->validate([
-            'name' => 'required|max:150',
-            'language_id' => 'required',
-            'plan' => 'required|max:150',
-            'feature' => 'required',
-            'price' => 'required|numeric',
-            'status' => 'required|max:150',
+            'name' => '',
+            'language_id' => '',
+            'type' => '',
+            'price' => '',
+            'features' => '',
+            'status' => '',
         ]);
 
+        $package = Package::create([
+            'name' => $data['name'],
+            'feature' => $data['features'],
+            'language_id' => $data['language_id'],
+            'status' => $data['status'],
+        ]);
 
-        Package::create($data);
+        foreach ($data['type'] as $key => $type) {
+            $package->plans()->create([
+                'type' => $type,
+                'price' => $data['price'][$key],
+                'features' => $data['features'],
+            ]);
+        }
 
         $notification = array(
             'messege' => 'Package Added successfully!',

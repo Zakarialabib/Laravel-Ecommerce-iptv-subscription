@@ -61,20 +61,23 @@
             </div>
           </td>
           <td class="px-3 py-4 whitespace-nowrap text-left">
+            <input type="hidden" name="plan_id" v-model="order.plan.id">
             <select
-              name="plan"
+              name="plan_type"
               class="rounded-sm px-3 py-2 focus:outline-none w-full"
+              v-model="selectedPlanType"
+              v-on:change="changePlan()"
             >
-              <option value="1" :selected="order.package.plan === 1">
+              <option value="1" :selected="order.plan.type === 1">
                 {{$t('message.monthly_plan')}}
               </option>
-              <option value="2" :selected="order.package.plan === 2">
+              <option value="2" :selected="order.plan.type === 2">
                 {{$t('message.quarter_plan')}}
               </option>
-              <option value="3" :selected="order.package.plan === 3">
+              <option value="3" :selected="order.plan.type === 3">
                 {{$t('message.semiannual_plan')}}
               </option>
-              <option value="4" :selected="order.package.plan === 4">
+              <option value="4" :selected="order.plan.type === 4">
                 {{$t('message.annual_plan')}}
               </option>
             </select>
@@ -82,10 +85,10 @@
           <td class="px-3 py-4 whitespace-nowrap text-left">
             <input
               class="rounded-sm px-3 py-2 focus:outline-none w-full"
-              name="price"
+              name="plan_price"
               type="number"
               v-on:change="subTotalChanged()"
-              v-model="order.package.price"
+              v-model="order.plan.price"
               placeholder="Price"
               readonly
             />
@@ -105,6 +108,7 @@ export default {
       order: null,
       showMenu: false,
       packagesList: [],
+      selectedPlanType: 1,
     };
   },
   mounted() {
@@ -113,7 +117,7 @@ export default {
   },
   methods: {
     subTotalChanged() {
-      this.$emit('changeSubTotal', this.order.package.price);
+      this.$emit('changeSubTotal', this.order.plan.price);
     },
     listPackages(index) {
       axios.get("/admin/package/list").then((response) => {
@@ -126,17 +130,21 @@ export default {
     selectPackage(packageItem) {
       this.order = {
         id: null,
+        plan: packageItem.plans[0],
         package: {
           id: packageItem.id,
           name: packageItem.name,
-          plan: packageItem.time,
-          price: packageItem.price,
+          plans: packageItem.plans,
         },
         user: null,
-        package_cost: 0,
       };
       this.subTotalChanged();
       this.showMenu = false
+    },
+    changePlan() {
+      const index = this.order.package.plans.findIndex(plan => plan.type == this.selectedPlanType);
+      this.order.plan = this.order.package.plans[index];
+      this.subTotalChanged();
     },
   },
 };

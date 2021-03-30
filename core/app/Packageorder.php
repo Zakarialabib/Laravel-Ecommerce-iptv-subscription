@@ -21,4 +21,9 @@ class Packageorder extends Model
     {
         return $this->belongsTo('App\Sale', 'sale_id', 'id');
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }
