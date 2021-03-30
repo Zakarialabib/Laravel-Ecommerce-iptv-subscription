@@ -5,12 +5,12 @@
   <div class="container mx-auto sm:px-4 max-w-full">
       <div class="flex flex-wrap ">
       <div class="sm:w-1/2 pr-4 pl-4">
-          <h1 class="flex flex-wrap pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 m-0 text-gray-900">
+          <h1 class="flex flex-wrap pt-3 pb-3 m-0 text-gray-900">
             {{ __('Purchases List') }}
           </h1>
       </div><!-- /.col -->
       <div class="sm:w-1/2 pr-4 pl-4">
-          <ol class="flex flex-wrap list-reset pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 rounded sm:float-right">
+          <ol class="flex flex-wrap list-reset pt-3 pb-3 mb-4 rounded sm:float-right">
           <li class="inline-block px-2 py-2 text-gray-700"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>{{ __('Home') }}</a></li>
           </ol>
       </div><!-- /.col -->
@@ -28,12 +28,12 @@
           <thead class="bg-gray-300">
           <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">N</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Reference') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Supplier') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Agent') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Total') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Payment') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -56,13 +56,13 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
               @if ($purchase->payment->status === \App\Payment::STATUS_DUE)
-              {{__('DUE')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-red-700 text-white"> {{__('DUE')}}</span>
               @elseif ($purchase->payment->status === \App\Payment::STATUS_PAID)
-              {{__('PAID')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-green-700 text-white">{{__('PAID')}}</span>
               @elseif ($purchase->payment->status === \App\Payment::STATUS_PENDING)
-              {{__('PENDING')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-blue-500 text-white">{{__('PENDING')}}</span>
               @elseif ($purchase->payment->status === \App\Payment::STATUS_PARTIAL)
-              {{__('PARTIAL')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-yellow-400 text-white">{{__('PARTIAL')}}</span>
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">

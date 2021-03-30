@@ -34,7 +34,7 @@
                             <div class="mb-4 flex flex-wrap ">
                                 <label class="sm:w-1/5 pr-4 pl-4 control-label">{{ __('Image') }} <span class="text-red-600">*</span></label>
                                 <div class="sm:w-4/5 pr-4 pl-4">
-                                    <img class="w-full mb-3 img-demo show-img" src="{{ asset('assets/front/img/'.$user->image) }}" alt="">
+                                    <img class="mb-3 img-demo show-img" src="{{ asset('assets/front/img/'.$user->image) }}" alt="">
                                     <div class="custom-file">
                                         <label class="custom-file-label" for="photo">{{ __('Choose New Image') }}</label>
                                         <input type="file" class="custom-file-input  up-img" name="photo" id="photo">

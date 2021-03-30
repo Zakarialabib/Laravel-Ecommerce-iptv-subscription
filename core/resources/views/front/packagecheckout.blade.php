@@ -205,10 +205,10 @@
 						<div class="price-area">
 							<div class="price-top-area">
 								@if($packagedetails->discount_price == null)
-									<p class="price showprice">{{ Helper::showCurrency() }}{{ $packagedetails->price }}</p>
+									<p class="price showprice">{{ $packagedetails->price }}{{ Helper::showCurrency() }}</p>
 								@else
-									<p class="discount_price showprice">{{ Helper::showCurrency() }}{{ $packagedetails->discount_price }}</p>
-									<p class="price discounted"><del>{{ Helper::showCurrency() }}{{ $packagedetails->price }}</del></p>
+									<p class="discount_price showprice">{{ $packagedetails->discount_price }}{{ Helper::showCurrency() }}</p>
+									<p class="price discounted"><del>{{ $packagedetails->price }}{{ Helper::showCurrency() }}</del></p>
 								@endif
 							</div>
 							<p class="time">

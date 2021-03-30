@@ -148,7 +148,7 @@
                                                         </p>
                                                         <p>{{__('Paid Amount')}} : <span class="amount">
     
-                                                            {{ Helper::showCurrency() }}{{$data->total}}
+                                                            {{$data->total}}{{ Helper::showCurrency() }}
     
                                                         </span></p>
     
@@ -156,7 +156,7 @@
                                                             {{__('Shipping Charge')}} :
                                                             
     
-                                                            {{ Helper::showCurrency() }}{{$data->shipping_charge}}
+                                                            {{$data->shipping_charge}}{{ Helper::showCurrency() }}
     
                                                             
                                                         </p>
@@ -193,8 +193,8 @@
                                                         <td>
                                                             <b>{{__('Quantity')}}:</b> <span>{{$order->qty}}</span><br>
                                                         </td>
-                                                        <td>{{ Helper::showCurrency() }}{{$order->price}}</td>
-                                                        <td>{{ Helper::showCurrency() }}{{$order->price * $order->qty}}</td>
+                                                        <td>{{$order->price}}{{ Helper::showCurrency() }}</td>
+                                                        <td>{{$order->price * $order->qty}}{{ Helper::showCurrency() }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

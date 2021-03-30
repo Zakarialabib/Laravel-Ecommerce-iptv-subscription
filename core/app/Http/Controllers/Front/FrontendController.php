@@ -82,7 +82,7 @@ class FrontendController extends Controller
         @mail($to, $subject, $message, $headers);
 
         $notification = array(
-            'messege' => 'Email sent successfully!',
+            'messege' => 'Envoi du mail réussi!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -258,7 +258,7 @@ class FrontendController extends Controller
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = "User message from contact page";
+                $mail->Subject = "Message depuis la page de contact";
                 $mail->Body    = "Name: ".$name."</br>Email: ".$fromemail."</br>Phone: ".$number."</br>Message: ".$request->message;
 
                 $mail->send();
@@ -274,8 +274,8 @@ class FrontendController extends Controller
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = "User message from contact page";
-                $mail->Body    = "Name: ".$name."</br>Email: ".$fromemail."</br>Phone: ".$number."</br>Message: ".$request->message;
+                $mail->Subject = "Message depuis la page d'accueil";
+                $mail->Body    = "Nom: ".$name."</br>Email: ".$fromemail."</br>Télephone: ".$number."</br>Message: ".$request->message;
 
                 $mail->send();
             } catch (Exception $e) {
@@ -285,7 +285,7 @@ class FrontendController extends Controller
 
 
          $notification = array(
-            'messege' => 'Mail send successfully',
+            'messege' => 'Envoi du mail réussi',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

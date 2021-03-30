@@ -28,7 +28,7 @@ class SocialController extends Controller
         $slink->save();
 
         $notification = array(
-            'messege' => 'Social Link Added Successfully!',
+            'messege' => 'Liens Reseaux Sociaux ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -54,7 +54,7 @@ class SocialController extends Controller
         $slink->save();
 
         $notification = array(
-            'messege' => 'Social Link Updated Successfully!',
+            'messege' => 'Liens Reseaux Sociaux actualisé avec succès !',
             'alert' => 'success'
         );
         return redirect()->route('admin.slinks')->with('notification', $notification);
@@ -65,8 +65,12 @@ class SocialController extends Controller
 
         $slink = Social::findOrFail($id);
         $slink->delete();
-
-        return redirect()->back();
+        
+        $notification = array(
+            'messege' => 'Liens Reseaux Sociaux supprimée avec succès !',
+            'alert' => 'success'
+        );
+        return redirect()->back()->with('notification', $notification);
     }
 
 

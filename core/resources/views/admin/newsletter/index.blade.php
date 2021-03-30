@@ -25,7 +25,7 @@
                     <div class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                         <h3 class="px-4 mt-1 w-1/2">{{ __('Email List') }}</h3>
                         <div class="w-1/2 justify-end flex">
-                            <a href="{{ route('admin.newsletter.add')}}" class="inline-flex justify-center py-2 px-4 mr-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <a href="{{ route('admin.newsletter.add')}}" class="inline-block align-middle select-none border whitespace-no-wrap py-1 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                                 <i class="fas fa-plus"></i> {{ __('Add Email') }}
                             </a>
                         </div>

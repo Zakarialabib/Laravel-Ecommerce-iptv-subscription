@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <th>{{__('Package Price')}}</th>
-                                    <td>{{ Helper::showCurrency() }}{{ $package->price }} / {{ $package->time }}</td>
+                                    <td>{{ $package->price }} / {{ $package->time }}{{ Helper::showCurrency() }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{__('Package Feature')}}</th>

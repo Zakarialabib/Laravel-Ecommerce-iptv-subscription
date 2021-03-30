@@ -45,7 +45,7 @@
                                   </tr>
                                     <tr>
                                     <th scope="row">Bill Price:</th>
-                                    <td>{{ Helper::showCurrency() }}{{$bill->package_cost}}</td>
+                                    <td>{{$bill->package_cost}}{{ Helper::showCurrency() }}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">Payment Method:</th>
@@ -78,7 +78,7 @@
                                   </tr>
                                   <tr>
                                     <th scope="row">Price:</th>
-                                    <td> {{ Helper::showCurrency() }}{{$package->price}} </td>
+                                    <td> {{$package->price}}{{ Helper::showCurrency() }} </td>
                                   </tr>
                                   <tr>
                                     <th scope="row">Feature:</th>

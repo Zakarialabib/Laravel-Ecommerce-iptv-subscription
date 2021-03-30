@@ -76,8 +76,8 @@
                         <td>
                             <input type="number" aria-details="{{ $product->stock }}" name="product_quantity[]" class="quantity block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded cart_qty_update" value="{{ $item['qty'] }}">
                         </td>
-                        <td>{{ Helper::showCurrency() }}{{ $item['price'] }} <span class="fas fa-times"></span> {{ $item['qty'] }}</td>
-                        <td> {{ Helper::showCurrency() }}<span class="cart_price">{{ $item['price'] * $item['qty'] }}</td></span>
+                        <td>{{ $item['price'] }}{{ Helper::showCurrency() }} <span class="fas fa-times"></span> {{ $item['qty'] }}</td>
+                        <td> <span class="cart_price">{{ $item['price'] * $item['qty'] }}{{ Helper::showCurrency() }}</span></td>
                         <td>
                           <button class="inline-block align-middle text-center select-none px-2 py-1.5 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple item-remove" rel="{{$pid}}" data-href="{{route('cart.item.remove',$pid)}}"><i class="fas fa-trash"></i></button>
                         </td>
@@ -119,7 +119,7 @@
               </tr>
               <tr>
                 <th>{{ __('Total') }}</th>
-                <td> <span>{{ Helper::showCurrency() }}</span><span class="cart-total-view">{{ $cartTotal }}</span> </td>
+                <td> <span class="cart-total-view">{{ $cartTotal }}</span><span>{{ Helper::showCurrency() }}</span> </td>
               </tr>
             </table>
             <div class="checkout-btn-wrape">

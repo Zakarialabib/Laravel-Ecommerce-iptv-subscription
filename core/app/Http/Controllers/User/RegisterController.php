@@ -80,10 +80,10 @@ class RegisterController extends Controller
                     $mailer = new MailSend();
                     $mailer->sendCustomMail($data);
 
-                    return redirect(route('user.login'))->with('success',__('We need to verify your email address. We have sent an email to'). ' '.$to. ' '  .__('to verify your email address. Please click link in that email to continue.'));
+                    return redirect(route('user.login'))->with('success',__('Nous devons vérifier votre adresse électronique. Nous avons envoyé un e-mail à'). ' '.$to. ' '  .__('pour vérifier votre adresse e-mail. Veuillez cliquer sur le lien dans cet e-mail pour continuer.'));
                 }else{
                     $notification = array(
-                        'messege' => 'Successfully Registered',
+                        'messege' => 'Enregistré avec succès',
                         'alert' => 'success'
                     );
                     return redirect(route('user.login'))->with('notification', $notification);
@@ -109,7 +109,7 @@ class RegisterController extends Controller
             Auth::guard('web')->login($user);
             
             $notification = array(
-            'messege' => 'Email Verified Successfully',
+            'messege' => 'Email vérifié avec succès!!',
             'alert' => 'success'
         );
         return redirect(route('user.dashboard'))->with('notification', $notification);

@@ -51,13 +51,13 @@
                                   <tr>
                                     <th scope="row">Shipping Charge:</th>
                                     <td class="capitalize">
-                                        {{ Helper::showCurrency() }}{{$order->shipping_charge}}
+                                        {{$order->shipping_charge}}{{ Helper::showCurrency() }}
                                     </td>
                                   </tr>
                                   <tr>
                                     <th scope="row">Grand Total:</th>
                                     <td class="capitalize">
-                                        {{ Helper::showCurrency() }}{{$order->total}}
+                                        {{$order->total}}{{ Helper::showCurrency() }}
                                     </td>
                                   </tr>
                                 </tbody>
@@ -192,9 +192,9 @@
                                         <img src="{{str_replace ( 'core' , '' , base_path() ) . 'assets/front/img/'.$item->image}}" alt="image" width="100">
                                     </td>
                                     <td>{{$item->title}}</td>
-                                    <td><span>{{ Helper::showCurrency() }}{{$item->price}} </td>
+                                    <td><span>{{$item->price}}{{ Helper::showCurrency() }} </td>
                                     <td>{{$item->qty}}</td>
-                                    <td><span> {{ Helper::showCurrency() }} {{$item->price * $item->qty}} </span></td>
+                                    <td><span>  {{$item->price * $item->qty}}{{ Helper::showCurrency() }} </span></td>
 
                                   </tr>
                                 @endforeach

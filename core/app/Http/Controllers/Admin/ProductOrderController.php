@@ -81,7 +81,7 @@ class ProductOrderController extends Controller
                  // Content
                  $mail->isHTML(true);
                  $mail->Subject = $sub;
-                 $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your order status is '.$request->order_status.'.<br/>Thank you.';
+                 $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre commande est '.$request->order_status.'.<br/>Merci et Bonne journée.';
                  $mail->send();
              } catch (Exception $e) {
                  // die($e->getMessage());
@@ -97,8 +97,7 @@ class ProductOrderController extends Controller
                  // Content
                  $mail->isHTML(true);
                  $mail->Subject = $sub ;
-                 $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your order status is '.$request->order_status.'.<br/>Thank you.';
-
+                 $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre commande est '.$request->order_status.'.<br/>Merci et Bonne journée.';
                  $mail->send();
              } catch (Exception $e) {
                  // die($e->getMessage());
@@ -106,7 +105,7 @@ class ProductOrderController extends Controller
          }
 
          $notification = array(
-            'messege' => 'Order status changed successfully!',
+            'messege' => 'Le statut de la commande a été modifié avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -130,7 +129,7 @@ class ProductOrderController extends Controller
         $order->delete();
 
         $notification = array(
-            'messege' => 'product order deleted successfully!',
+            'messege' => 'Commande produit supprimé avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

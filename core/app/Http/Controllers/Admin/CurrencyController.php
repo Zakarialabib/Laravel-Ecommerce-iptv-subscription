@@ -49,7 +49,7 @@ class CurrencyController extends Controller
         $data->save();
 
         $notification = array(
-            'messege' => 'Currency Added successfully!',
+            'messege' => 'Devis ajouté avec succès!!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -80,7 +80,7 @@ class CurrencyController extends Controller
     
 
          $notification = array(
-            'messege' => 'Currency Updated successfully!',
+            'messege' => 'Devis à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.currency').'?language='.$this->lang->code)->with('notification', $notification);
@@ -95,7 +95,7 @@ class CurrencyController extends Controller
             $data = Currency::where('id','!=',$id1)->update(['is_default' => 0]);
             
             $notification = array(
-                'messege' => 'Currency Updated successfully!',
+                'messege' => 'Devis à jour avec succès!',
                 'alert' => 'warning'
             );
             return redirect()->back()->with('notification', $notification);
@@ -111,7 +111,7 @@ class CurrencyController extends Controller
         if($id == 1)
         {
             $notification = array(
-                'messege' => 'You cant\'t remove the main currency.',
+                'messege' => 'Vous ne pouvez pas supprimer la devis principale!',
                 'alert' => 'warning'
             );
             return redirect()->back()->with('notification', $notification);
@@ -124,7 +124,7 @@ class CurrencyController extends Controller
         $data->delete();
 
         $notification = array(
-            'messege' => 'Currency Deleted successfully!',
+            'messege' => 'Devis supprimé avec succès!',
             'alert' => 'warning'
         );
         return redirect()->back()->with('notification', $notification);

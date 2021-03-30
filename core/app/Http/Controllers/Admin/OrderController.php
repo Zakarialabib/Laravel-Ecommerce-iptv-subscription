@@ -42,7 +42,7 @@ class OrderController extends Controller
         $data['order']->save();
 
         $notification = array(
-            'messege' => 'Order status updated successfully!',
+            'messege' => 'Status de la Commande actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -63,7 +63,7 @@ class OrderController extends Controller
         $order->delete();
 
         $notification = array(
-            'messege' => 'Order deleted successfully!',
+            'messege' => 'Commande supprimée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -101,7 +101,7 @@ class OrderController extends Controller
         $bill->delete();
 
         $notification = array(
-            'messege' => 'Bill deleted successfully!',
+            'messege' => 'Facture supprimée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -182,8 +182,8 @@ class OrderController extends Controller
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = "Bill Paid";
-                $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your bill was paid successfully. We have attached an invoice in this mail.<br/>Thank you.';
+                $mail->Subject = "Facture Payée";
+                $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre Facture est payer avec succes. Nous avons attacher la facture avec cette email.<br/>Merci et Bonne journée';
 
                 $mail->send();
             } catch (Exception $e) {
@@ -200,8 +200,8 @@ class OrderController extends Controller
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = "Bill Paid";
-                $mail->Body    = 'Hello <strong>' . $user->name . '</strong>,<br/>Your bill was paid successfully. We have attached an invoice in this mail.<br/>Thank you.';
+                $mail->Subject = "Facture Payée";
+                $mail->Body    = 'Bonjour <strong>' . $user->name . '</strong>,<br/>Votre Facture est payer avec succes. Nous avons attacher la facture avec cette email.<br/>Merci et Bonne journée.';
 
                 $mail->send();
             } catch (Exception $e) {
@@ -210,7 +210,7 @@ class OrderController extends Controller
         }
 
         $notification = array(
-            'messege' => 'Custom bill Added successfully!',
+            'messege' => 'La Facture personnalisée est ajouté avec succés!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

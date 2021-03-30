@@ -58,7 +58,7 @@ class SliderController extends Controller
         
 
         $notification = array(
-            'messege' => 'Slider Added successfully!',
+            'messege' => 'Carrousel ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -71,7 +71,12 @@ class SliderController extends Controller
         @unlink('assets/front/img/'. $slider->image);
         $slider->delete();
 
-        return back();
+        $notification = array(
+            'messege' => 'Carrousel supprimée avec succès !',
+            'alert' => 'success'
+        );
+
+        return redirect()->back()->with('notification', $notification);
     }
 
     // slider Category Edit
@@ -113,7 +118,7 @@ class SliderController extends Controller
         $slider->save();
 
         $notification = array(
-            'messege' => 'Slider Updated successfully!',
+            'messege' => 'Carrousel actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.slider').'?language='.$this->lang->code)->with('notification', $notification);;

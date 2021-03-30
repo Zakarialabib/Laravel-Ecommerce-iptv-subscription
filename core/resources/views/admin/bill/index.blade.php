@@ -73,7 +73,7 @@
                                         <i class="fas fa-trash"></i>
                                         </button>
                                     </form> @if($bill->invoice_number)
-                                    <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap bg-yellow-500 no-underline bg-orange-400 text-black hover:bg-yellow-600 py-1 px-2 leading-tight text-xs  " href="{{asset('assets/front/invoices/bill/'.$bill->invoice_number)}}" target="_blank">Invoice</a>
+                                    <a class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap bg-yellow-500 no-underline bg-orange-400 text-black hover:bg-yellow-600 py-1 px-2 leading-tight text-xs  " href="{{asset('assets/front/invoices/bill/'.$bill->invoice_number)}}" target="_blank">{{ __('Invoice') }}</a>
                                     @endif
                                     <a href="#" data-id="{{ $bill->id }}" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple billpay_view" data-toggle="modal" data-target="#billpay_view"><i class="fas fa-eye mr-0"></i></a>
                                 </td>

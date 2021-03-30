@@ -52,7 +52,7 @@ class FooterController extends Controller
 
 
       $notification = array(
-            'messege' => 'Footer Info Updated successfully!',
+            'messege' => 'Info bas de page actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.footer.index').'?language='.$this->lang->code)->with('notification', $notification);

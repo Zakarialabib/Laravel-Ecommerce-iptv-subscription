@@ -47,7 +47,7 @@ class OfferController extends Controller
         $offer->save();
 
         $notification = array(
-            'messege' => 'Offer Added successfully!',
+            'messege' => 'Offre ajoutée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -86,7 +86,7 @@ class OfferController extends Controller
         $offer->save();
 
         $notification = array(
-            'messege' => 'Offer Updated successfully!',
+            'messege' => 'Offre  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.offer').'?language='.$this->lang->code)->with('notification', $notification);
@@ -117,7 +117,7 @@ class OfferController extends Controller
         $offer_title->save();
 
         $notification = array(
-            'messege' => 'Offer Content Updated successfully!',
+            'messege' => 'Contenue de loffre  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.offer').'?language='.$this->lang->code)->with('notification', $notification);

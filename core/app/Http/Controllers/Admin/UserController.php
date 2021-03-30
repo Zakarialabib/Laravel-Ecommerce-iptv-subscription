@@ -63,7 +63,7 @@ class UserController extends Controller
         $user->save();
 
         $notification = array(
-            'messege' => 'User created successfully!',
+            'messege' => 'Utilisateur ajoutée avec succès !!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -140,7 +140,7 @@ class UserController extends Controller
         $user->save();
 
         $notification = array(
-            'messege' => 'User updated successfully!',
+            'messege' => 'Utilisateur actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.user.index'))->with('notification', $notification);
@@ -158,7 +158,7 @@ class UserController extends Controller
         $user->delete();
 
         $notification = array(
-            'messege' => 'User deleted successfully!',
+            'messege' => 'Utilisateur supprimée avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

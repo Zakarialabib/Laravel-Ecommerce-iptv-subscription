@@ -99,7 +99,7 @@ class BlogController extends Controller
         $blog->save();
 
         $notification = array(
-            'messege' => 'Blog Added successfully!',
+            'messege' => 'Article de blog ajouté avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -113,6 +113,11 @@ class BlogController extends Controller
         @unlink('assets/front/img/'. $blog->main_image);
         $blog->delete();
 
+        $notification = array(
+            'messege' => 'Article du blog supprimée avec succès !',
+            'alert' => 'success'
+        );
+        return redirect()->back()->with('notification', $notification);
     }
 
     // Blog  Edit
@@ -181,7 +186,7 @@ class BlogController extends Controller
         $blog->save();
 
         $notification = array(
-            'messege' => 'Blog Updated successfully!',
+            'messege' => 'Article de blog à jour avec succès!',
             'alert' => 'success'
         );
 
@@ -204,7 +209,7 @@ class BlogController extends Controller
         $blog_title->save();
 
         $notification = array(
-            'messege' => 'Blog Content Updated successfully!',
+            'messege' => 'Contenue des Articles blog à jour avec succès!',
             'alert' => 'success'
         );
         return redirect(route('admin.blog').'?language='.$this->lang->code)->with('notification', $notification);

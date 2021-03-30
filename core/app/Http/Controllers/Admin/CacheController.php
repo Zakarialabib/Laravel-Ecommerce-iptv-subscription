@@ -15,7 +15,7 @@ class CacheController extends Controller
         Artisan::call('view:clear');
   
         $notification = array(
-            'messege' => 'Cache, route, view, config cleared successfully!',
+            'messege' => 'Cache et configuration effacés avec succès !',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

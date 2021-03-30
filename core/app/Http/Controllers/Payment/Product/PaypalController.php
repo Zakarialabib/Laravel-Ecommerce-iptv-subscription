@@ -182,7 +182,7 @@ class PaypalController extends Controller
             return Redirect::away($redirect_url);
         }
         $notification = array(
-            'messege' => 'Unknown error occurred',
+            'messege' => 'Une erreur inconnue est apparue!',
             'alert' => 'error'
         );
         return redirect()->back()->with('notification', $notification);
@@ -192,7 +192,7 @@ class PaypalController extends Controller
             return Redirect::away($redirect_url);
         }
         $notification = array(
-            'messege' => 'Unknown error occurred',
+            'messege' => 'Une erreur inconnue est apparue!',
             'alert' => 'error'
         );
         return redirect()->back()->with('notification', $notification);

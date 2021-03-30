@@ -76,7 +76,7 @@ class UserController extends Controller
         $user->save();
 
         $notification = array(
-            'messege' => 'Profile updated successfully!',
+            'messege' => 'Profile  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
@@ -138,7 +138,7 @@ class UserController extends Controller
 
 
         $notification = array(
-            'messege' => 'User password updated successfully!',
+            'messege' => 'Mot de passe utilisateur  actualisé avec succès!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);
