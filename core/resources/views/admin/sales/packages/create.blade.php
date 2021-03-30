@@ -20,10 +20,10 @@
 <section class="content">
   <div class="container mx-auto sm:px-4 max-w-full">
     <div class="flex flex-wrap ">
-      <form class="w-full" action="{{route('admin.sales.products.store')}}" method="post" enctype="multipart/form-data">
+      <form class="w-full" action="{{route('admin.sales.packages.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div id="sales">
-          <sales-component category="packages" :sale_prop="{{$sale}}" :user="{{Auth::user()}}" lang="{{request()->session()->get('lang')}}"></sales-component>
+          <sales-component category="packages" :sale_prop="{{$sale}}" :user="{{Auth::user()}}" lang="{{(request()->session()->has('lang')) ? request()->session()->get('lang') : $lang->code}}"></sales-component>
         </div>
       </form>
     </div>

@@ -62,14 +62,14 @@
                                   <p>{{ __('Products') }}</p>
                                 </a>
                             </li>
-                            <!--     <li class="">
+                            <li class="">
                                 <a href="{{ route('admin.sales.packages.index') }}" class="nav-link
                                 @if(request()->routeIs('admin.sales.packages.index')) active @endif
                                 ">
                                   <i class="far nav-icon"></i>
                                   <p>{{ __("Packages") }}</p>
                                 </a>
-                            </li>-->
+                            </li>
                           </ul>
                         </li>
                         <li class="">

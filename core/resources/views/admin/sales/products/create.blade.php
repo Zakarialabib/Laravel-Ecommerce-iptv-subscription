@@ -23,7 +23,7 @@
       <form class="w-full" action="{{route('admin.sales.products.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div id="sales">
-          <sales-component category="products" :sale_prop="{{$sale}}" :user="{{Auth::user()}}"></sales-component>
+          <sales-component category="products" :sale_prop="{{$sale}}" :user="{{Auth::user()}}" lang="{{(request()->session()->has('lang')) ? request()->session()->get('lang') : $lang->code}}"></sales-component>
         </div>
       </form>
     </div>

@@ -16,6 +16,7 @@ use App\User;
 use App\Sale;
 use App\Payment;
 use App\Packageorder;
+use App\Package;
 
 class SaleController extends Controller
 {
@@ -357,29 +358,111 @@ class SaleController extends Controller
                 'document' => null,
                 'note' => null,
                 'order' => $order,
-                'orderitems' => $order->orderitems,
             ]);
             return view('admin.sales.packages.create', compact('sale'));
         }
-        return view('admin.sales.packages.create', ['sale' => new Sale([
-            'id' => null,
-            'user' => User::first(),
-            'admin' => Auth::user(),
-            'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
-            'reference' => null,
-            'subtotal' => 0,
-            'tax' => 0,
-            'total' => 0,
-            'document' => null,
-            'note' => null,
-            'order' => null,
-            'orderitems' => [],
-        ])]);
+        return view('admin.sales.packages.create', [
+            'sale' => new Sale([
+                'id' => null,
+                'user' => User::first(),
+                'admin' => Auth::user(),
+                'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
+                'reference' => null,
+                'subtotal' => 0,
+                'tax' => 0,
+                'total' => 0,
+                'document' => null,
+                'note' => null,
+                'order' => new Packageorder([
+                    'id' => null,
+                    'user' => User::first(),
+                    'package' => new Package([
+                        'id' => -1,
+                        'name' => '',
+                        'price' => 0,
+                        'time' => 1,
+                    ]),
+                    'package_cost' => 0,
+                ]),
+            ])
+        ]);
     }
 
     public function packageStore(Request $request)
     {
+        $data = $request->validate([
+            'user_id' => '',
+            'admin_id' => '',
+            'order_id' => '',
+            'reference' => '',
+            'package_id' => '',
+            'name' => '',
+            'plan' => '',
+            'price' => '',
+            'subtotal' => '',
+            'tax' => '',
+            'total' => '',
+            'note' => '',
+            'payment_status' => '',
+            'payment_method' => '',
+            'paid_amount' => '',
+            'due' => '',
+            'payment_note' => '',
+        ]);
 
+        //handle sale payment
+        $payment = Auth::user()->payments()->create([
+            'user_id' => $data['user_id'],
+            'reference' => mt_rand(1000000000, 9999999999),
+            'status' => $data['payment_status'],
+            'method' => $data['payment_method'],
+            'paid_amount' => $data['paid_amount'],
+            'due' => $data['due'],
+            'note' => $data['payment_note'],
+        ]);
+
+        $document = $request->document;
+        if ($document) {
+            $v = Validator::make(
+                [
+                    'extension' => strtolower($request->document->getClientOriginalExtension()),
+                ],
+                [
+                    'extension' => 'in:jpg,jpeg,png,gif,pdf,csv,docx,xlsx,txt',
+                ]
+            );
+            if ($v->fails())
+                return redirect()->back()->withErrors($v->errors());
+
+            $documentName = $document->getClientOriginalName();
+            $documentPath = $document->storeAs('sales/documents', $data['reference'] . '-' . $documentName, 'local');
+            $data['document'] = $data['reference'] . '-' . $documentName;
+        }
+
+        $sale = Auth::user()->sales()->create([
+            'user_id' => $data['user_id'],
+            'payment_id' => $payment->id,
+            'reference' => $data['reference'],
+            'subtotal' => $data['subtotal'],
+            'tax' => $data['tax'],
+            'total' => $data['total'],
+            'note' => $data['note'],
+            'document' => $data['document'] ?? null,
+            'is_product' => false,
+        ]);
+
+        if($data['order_id'])
+        {
+            // update order
+            PackageOrder::find($data['order_id'])->update([
+                'sale_id' => $sale->id,
+                'package_id' => $data['package_id'],
+                'user_id' => $data['user_id'],
+                'package_cost' => $data['total'],
+            ]);
+        }
+
+        return redirect()->route('admin.sales.packages.index');
     }
 
     public function packageEdit($id) {

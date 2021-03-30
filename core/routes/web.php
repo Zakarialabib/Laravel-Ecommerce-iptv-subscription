@@ -243,6 +243,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::group(['middleware' => 'checkpermission:Package'], function() {
 
     // Package Route
+    Route::get('/package/list', 'Admin\PackagController@listPackages');
     Route::get('/package', 'Admin\PackagController@package')->name('admin.package');
     Route::get('/package/add', 'Admin\PackagController@add')->name('admin.package.add');
     Route::post('/package/store', 'Admin\PackagController@store')->name('admin.package.store');
@@ -527,7 +528,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     // Package Sales
     Route::get('/sales/packages', 'Admin\SaleController@packages')->name('admin.sales.packages.index');
     Route::get('/sales/packages/create', 'Admin\SaleController@packageCreate')->name('admin.sales.packages.create');
+    Route::post('/sales/packages', 'Admin\SaleController@packageStore')->name('admin.sales.packages.store');
     Route::get('/sales/packages/{id}', 'Admin\SaleController@packageShow')->name('admin.sales.packages.show');
+    Route::get('/sales/packages/{id}/edit', 'Admin\SaleController@packageEdit')->name('admin.sales.packages.edit');
 
     // Purchases
     Route::get('/purchases', 'Admin\PurchaseController@index')->name('admin.purchases.index');
@@ -544,7 +547,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::get('/sales/products', 'Admin\SaleController@products')->name('admin.sales.products.index');
     Route::get('/sales/products/create', 'Admin\SaleController@productCreate')->name('admin.sales.products.create');
     Route::get('/sales/products/{id}', 'Admin\SaleController@productShow')->name('admin.sales.products.show');
-    Route::post('/sales/products/store', 'Admin\SaleController@productStore')->name('admin.sales.products.store');
+    Route::post('/sales/products', 'Admin\SaleController@productStore')->name('admin.sales.products.store');
     Route::get('/sales/products/edit/{id}', 'Admin\SaleController@productEdit')->name('admin.sales.products.edit');
     Route::put('/sales/products/{id}', 'Admin\SaleController@productUpdate')->name('admin.sales.products.update');
     Route::delete('/sales/products/{id}', 'Admin\SaleController@productDelete')->name('admin.sales.products.delete');

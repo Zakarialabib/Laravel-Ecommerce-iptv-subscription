@@ -14,68 +14,49 @@
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Package
+            {{$t('message.package')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Plan
+            {{$t('message.plan')}}
           </th>
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Price
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Quantity
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Total
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Actions
+            {{$t('message.price')}}
           </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        <tr
-          v-for="(item, index) in orderItems"
-          v-bind:key="index"
-          class="border-b border-gray-200 hover:bg-gray-100"
-        >
+        <tr class="border-b border-gray-200 hover:bg-gray-100" v-if="order">
           <td class="px-3 py-4 whitespace-nowrap text-center">
-            <span>{{ index + 1 }}</span>
+            <span>1</span>
           </td>
           <td class="px-3 py-4 whitespace-nowrap text-left">
-            <input type="hidden" name="order_item_id[]" v-model="item.id" />
+            <input type="hidden" name="order_id" v-model="order.id" />
             <input
               type="hidden"
-              name="package_id[]"
-              v-model="item.package_id"
+              name="package_id"
+              v-model="order.package.id"
             />
             <input
               class="rounded-sm px-3 py-2 focus:outline-none w-full"
               type="text"
-              name="title[]"
-              v-model="item.title"
-              placeholder="Title"
-              @click="listPackages(item)"
+              name="name"
+              v-model="order.package.name"
+              placeholder="Name"
+              @click="listPackages()"
               readonly
             />
-            <div v-if="menuId === item.id" class="menu">
+            <div v-if="showMenu" class="menu">
               <div
                 class="menu-item"
-                v-for="(product, index) in packagesList"
+                v-for="(packageItem, index) in packagesList"
                 v-bind:key="index"
-                @click="selectPackage(product, item)"
+                @click="selectPackage(packageItem)"
               >
-                {{ product.title }}
+                {{ packageItem.name }}
               </div>
             </div>
           </td>
@@ -84,121 +65,78 @@
               name="plan"
               class="rounded-sm px-3 py-2 focus:outline-none w-full"
             >
-              <option value="1" :selected="product.plan === 1">
-                MONTHLY_PLAN
+              <option value="1" :selected="order.package.plan === 1">
+                {{$t('message.monthly_plan')}}
               </option>
-              <option value="2" :selected="sale.plan === 2">
-                QUARTER_PLAN
+              <option value="2" :selected="order.package.plan === 2">
+                {{$t('message.quarter_plan')}}
               </option>
-              <option value="3" :selected="sale.plan === 3">
-                SEMIANNUAL_PLAN
+              <option value="3" :selected="order.package.plan === 3">
+                {{$t('message.semiannual_plan')}}
               </option>
-              <option value="4" :selected="sale.plan === 4">
-                ANNUAL_PLAN
+              <option value="4" :selected="order.package.plan === 4">
+                {{$t('message.annual_plan')}}
               </option>
             </select>
           </td>
           <td class="px-3 py-4 whitespace-nowrap text-left">
             <input
               class="rounded-sm px-3 py-2 focus:outline-none w-full"
-              name="price[]"
+              name="price"
               type="number"
-              v-model="item.price"
+              v-on:change="subTotalChanged()"
+              v-model="order.package.price"
               placeholder="Price"
+              readonly
             />
-          </td>
-          <td class="px-3 py-4 whitespace-nowrap text-left">
-            <input
-              class="rounded-sm px-3 py-2 focus:outline-none w-full"
-              type="number"
-              name="qty[]"
-              v-model="item.qty"
-              placeholder="Quantity"
-            />
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">
-            {{ (item.price * item.qty).toFixed(2) }}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-            <button v-on:click.prevent="handleDeleteItem(item)">
-              <i class="fas fa-trash-alt"></i>
-            </button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
-  <div class="flex justify-end w-full mb-4">
-    <button
-      v-on:click.prevent="handleAddRow()"
-      class="rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize"
-    >
-      add
-    </button>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-  props: ["order_items"],
+  props: ["order-prop"],
   data: function () {
     return {
-      orderItems: [],
-      menuId: null,
+      order: null,
+      showMenu: false,
       packagesList: [],
     };
   },
   mounted() {
-    this.orderItems = this.order_items;
-    console.log(this.orderItems);
-    this.$emit('changeSubTotal', this.subTotal);
-  },
-  computed: {
-    subTotal() {
-      let total = 0;
-      this.orderItems.forEach((item) => {
-        total += item.price * item.qty;
-      });
-      return total;
-    },
+    this.order = this.orderProp;
+    this.subTotalChanged();
   },
   methods: {
-    handleDeleteItem(item) {
-      this.orderItems = this.orderItems.filter((i) => i.id !== item.id);
-      this.$emit('changeSubTotal', this.subTotal);
+    subTotalChanged() {
+      this.$emit('changeSubTotal', this.order.package.price);
     },
-    handleAddRow() {
-      this.orderItems.push({
-        id: 0,
-        package_order_id: 0,
-        package_id: 0,
-        title: "",
-        plan: 1,
-        price: "",
-        qty: 0,
-      });
-      this.$emit('changeSubTotal', this.subTotal);
-    },
-    listPackages(item) {
-      axios.get("/admin/products/list").then((response) => {
+    listPackages(index) {
+      axios.get("/admin/package/list").then((response) => {
         if (response.status === 200) {
-          this.menuId = item.id;
-          this.productsList = response.data.products;
+          this.showMenu = true;
+          this.packagesList = response.data.packages;
         }
       });
     },
-    selectPackage(product, item) {
-      const index = this.orderItems.indexOf(item);
-      Vue.set(this.orderItems, index, {
-        id: -1,
-        product_id: product.id,
-        title: product.title,
-        plan: product.plan,
-        price: product.current_price,
-        qty: 1,
-      });
-      this.$emit('changeSubTotal', this.subTotal);
+    selectPackage(packageItem) {
+      this.order = {
+        id: null,
+        package: {
+          id: packageItem.id,
+          name: packageItem.name,
+          plan: packageItem.time,
+          price: packageItem.price,
+        },
+        user: null,
+        package_cost: 0,
+      };
+      this.subTotalChanged();
+      this.showMenu = false
     },
   },
 };

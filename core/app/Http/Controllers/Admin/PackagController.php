@@ -17,6 +17,16 @@ class PackagController extends Controller
         $this->lang = Language::where('is_default',1)->first();
     }
 
+    public function listPackages(Request $request) {
+        try {
+            //code...
+            $packages = Package::all();
+            return response(['packages' => $packages], 200);
+        } catch (\Throwable $th) {
+            return response(['packages' => null], 500);
+        }
+    }
+
     public function package(Request $request){
         $lang = Language::where('code', $request->language)->first()->id;
      

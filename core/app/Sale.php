@@ -46,4 +46,9 @@ class Sale extends Model
     {
         return $this->hasOne('App\ProductOrder');
     }
+
+    public function packageOrder() 
+    {
+        return $this->hasOne('App\Packageorder');
+    }
 }

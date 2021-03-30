@@ -19,9 +19,9 @@ class CreatePackagesTable extends Migration
             $table->string('status')->nullable();
             $table->string('name')->nullable();
             $table->string('speed')->nullable();
-            $table->string('time')->nullable();
+            $table->integer('time')->nullable();
             $table->text('feature')->nullable();
-            $table->string('price')->nullable();
+            $table->decimal('price', 11, 2)->nullable();
             $table->timestamps();
         });
     }

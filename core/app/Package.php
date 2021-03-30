@@ -21,6 +21,7 @@ class Package extends Model
     protected $casts = [
         'status' => 'integer',
         'plan' => 'integer',
+        'price' => 'float',
     ];
 
     public function packageorders(): HasMany

@@ -154,7 +154,7 @@ export default {
         product_order_id: 0,
         product_id: 0,
         title: "",
-        price: "",
+        price: 0,
         qty: 0,
       });
       this.subTotalChanged();
