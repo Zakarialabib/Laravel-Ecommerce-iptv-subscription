@@ -8,6 +8,10 @@ class Plan extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'type' => 'integer'
+    ];
+
     const MONTHLY_PLAN = 1; 
     const QUARTER_PLAN = 2; 
     const SEMIANNUAL_PLAN = 3; 

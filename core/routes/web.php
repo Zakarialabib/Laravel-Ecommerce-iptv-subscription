@@ -530,6 +530,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::get('/sales/packages/create', 'Admin\SaleController@packageCreate')->name('admin.sales.packages.create');
     Route::post('/sales/packages', 'Admin\SaleController@packageStore')->name('admin.sales.packages.store');
     Route::get('/sales/packages/{id}', 'Admin\SaleController@packageShow')->name('admin.sales.packages.show');
+    Route::put('/sales/packages/{id}', 'Admin\SaleController@packageUpdate')->name('admin.sales.packages.update');
     Route::get('/sales/packages/{id}/edit', 'Admin\SaleController@packageEdit')->name('admin.sales.packages.edit');
 
     // Purchases

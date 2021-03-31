@@ -86,7 +86,7 @@
       </div>
       <h1 class="font-bold text-md py-2">{{$t('message.sale_items')}}</h1>
       <products-component v-if="category === 'products'" :order_items="sale.orderitems" @changeSubTotal="changeSubTotal($event)"></products-component>
-      <packages-component v-else :order-prop="sale.order" @changeSubTotal="changeSubTotal($event)"></packages-component>
+      <packages-component v-else :order-prop="sale.package_order" @changeSubTotal="changeSubTotal($event)"></packages-component>
       <div class="w-1/2 overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-300">

@@ -358,7 +358,7 @@ class SaleController extends Controller
                 'total' => 0,
                 'document' => null,
                 'note' => null,
-                'order' => $order,
+                'package_order' => $order,
             ]);
             return view('admin.sales.packages.create', compact('sale'));
         }
@@ -374,7 +374,7 @@ class SaleController extends Controller
                 'total' => 0,
                 'document' => null,
                 'note' => null,
-                'order' => new Packageorder([
+                'package_order' => new Packageorder([
                     'id' => null,
                     'user' => User::first(),
                     'plan' => new Plan([
@@ -481,7 +481,94 @@ class SaleController extends Controller
     }
 
     public function packageEdit($id) {
-        $sale = Sale::where('id', $id)->with('user', 'order', 'payment', 'orderitems')->first();
+        $sale = Sale::where('id', $id)->with('user', 'payment', 'packageOrder.plan', 'packageOrder.package')->first();
         return view('admin.sales.packages.edit', compact('sale'));
+    }
+
+    public function packageUpdate(Request $request, $id)
+    {
+        $data = $request->validate([
+            'user_id' => '',
+            'admin_id' => '',
+            'order_id' => '',
+            'reference' => '',
+            'package_id' => '',
+            'name' => '',
+            'plan_id' => '',
+            'plan_type' => '',
+            'plan_price' => '',
+            'subtotal' => '',
+            'tax' => '',
+            'total' => '',
+            'note' => '',
+            'payment_status' => '',
+            'payment_method' => '',
+            'paid_amount' => '',
+            'due' => '',
+            'payment_note' => '',
+        ]);
+
+        $sale = Sale::find($id);
+        
+        if($sale)
+        {
+            $sale->packageOrder()->update([
+                'user_id' => $data['user_id'],
+                'package_id' => $data['package_id'],
+                'plan_id' => $data['plan_id'],
+                'package_cost' => $data['total'],
+            ]);
+            // update payment
+            $sale->payment->update([
+                'user_id' => $data['user_id'],
+                'admin_id' => Auth::user()->id,
+                'status' => $data['payment_status'],
+                'method' => $data['payment_method'],
+                'paid_amount' => $data['paid_amount'],
+                'due' => $data['due'],
+                'note' => $data['payment_note'],
+            ]);
+
+            //update document
+            if($request->document)
+            {
+                $v = Validator::make(
+                    [
+                        'extension' => strtolower($request->document->getClientOriginalExtension()),
+                    ],
+                    [
+                        'extension' => 'in:jpg,jpeg,png,gif,pdf,csv,docx,xlsx,txt',
+                    ]
+                );
+                if ($v->fails())
+                    return redirect()->back()->withErrors($v->errors());
+    
+                $documentName = $request->document->getClientOriginalName();
+                $documentPath = $request->document->storeAs('sales/documents', $data['reference'] . '-' . $documentName, 'local');
+                 
+                //update sale document
+                $sale->update(['document' => $data['reference'] . '-' . $documentName]);
+            }
+
+            // update sale
+            $sale->update([
+                'user_id' => $data['user_id'],
+                'admin_id' => Auth::user()->id,
+                'payment_id' => $sale->payment->id,
+                'reference' => $data['reference'],
+                'subtotal' => $data['subtotal'],
+                'tax' => $data['tax'],
+                'total' => $data['total'],
+                'note' => $data['note'],
+            ]);
+        }
+
+        return redirect()->route('admin.sales.packages.index');
+    }
+
+    public function packageShow($id)
+    {
+        $sale = Sale::find($id);
+        return view('admin.sales.packages.show', compact('sale'));
     }
 }
