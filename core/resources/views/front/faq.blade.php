@@ -45,7 +45,7 @@
                                 {{ $faq->title }}
                             </h4>
                         </div>
-                        <div id="id{{ $faq->id }}" class="panel-collapse hidden @if ($loop->first) opacity-100 block @endif" aria-labelledby="id{{ $faq->id }}" data-parent="#accordion-1">
+                        <div id="id{{ $faq->id }}" class="panel-collapse hidden @if ($loop->first) opacity-100 @endif" aria-labelledby="id{{ $faq->id }}" data-parent="#accordion-1">
                             <div class="panel-body">
                             	{!! $faq->content !!}
                             </div>

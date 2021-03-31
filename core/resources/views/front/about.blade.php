@@ -75,7 +75,7 @@
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap ">
 				@foreach ($funfacts as $funfact)
-					<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2 pr-4 pl-4">
+					<div class="lg:w-1/4 pr-4 pl-4 md:w-1/2">
 						<div class="single-counter">
 							<div class="icon">
 								<img src="{{ asset('assets/front/img/'.$funfact->icon) }}" alt="">
@@ -97,7 +97,7 @@
 	<section class="offer-section">
 		<div class="container mx-auto sm:px-4">
 			<div class="flex flex-wrap  justify-center">
-				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3 pr-4 pl-4">
+				<div class="lg:w-1/2 pr-4 pl-4 md:w-2/3">
 					<div class="section-heading">
 						<h2 class="title">
 							{{ $sectionInfo->offer_title }}

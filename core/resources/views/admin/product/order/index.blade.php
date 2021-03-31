@@ -112,11 +112,16 @@
                                           {{ __('Actions') }}
                                         </button>
                                         <div class="dropdown-menu edit-options dropdown-menu-right dropdown-default" aria-labelledby="dropdownMenuButton">
+<<<<<<< Updated upstream
                                           <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">Details</a>
                                           <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">Invoice</a>
                                           <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" 
                                           href="{{($order->sale) ? route('admin.sales.products.edit', ['id' => $order->sale->id]) : route('admin.sales.products.create', ['order' => $order->id])}}" 
                                           >{{__('Sales')}}</a> 
+=======
+                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">{{ __('Details') }}</a>
+                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">{{ __('Invoice') }}</a>
+>>>>>>> Stashed changes
                                           <form  id="deleteform" class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" action="{{ route('admin.product.order.delete') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="order_id" value="{{ $order->id }}">

@@ -22,8 +22,6 @@ if( isset( $_GET[ 'color' ] ) ) {
 .team .team-member .social,
 .user-dashboard-area .card .card-header,
 .user-dashboard-area .user-menu ul li a::after,
-.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover, 
-.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item.active,
 .service-area.service-page .get-support,
 .testimonial .testimonial-slider .owl-controls .owl-nav div:hover,
 .product-details-section .right-area .product-info .qtySelector i:hover,
@@ -44,7 +42,6 @@ background: <?php echo $color; ?>;
 .media-page .single-service.entertainment .title,
 .media-page .single-service.media .title,
 .contact-us .right-area .contact-info .left .icon,
-.contact-us .right-area .social-links ul li a,
 .success-section .success-box .icon,
 .page-link,
 .auth .sign-form .reg-text a:hover,
@@ -63,18 +60,7 @@ color: <?php echo $color; ?>!important;
 }
 
 
-
-.mybtn1,
-.footer-newsletter-widget .social-links .fotter-social-links ul li a,
-.contact-us .left-area .contact-form .submit-btn,
-.contact-us .right-area .social-links ul li a:hover
-{
-background: <?php echo $color; ?>;
-border: 1px solid <?php echo $color; ?>;
-}
-
 .offer-section .offer-list li .content:hover::before,
-.contact-us .right-area .social-links ul li a:hover,
 .select-payment .payment_gateway_check .mybtn1.active, 
 .select-payment .payment_gateway_check .mybtn1:hover
 {
@@ -83,7 +69,6 @@ color: #fff!important;
 
 .branch-page .single-branch,
 .contact-us .left-area .contact-form ul li .input-field:focus,
-.contact-us .left-area .contact-form .submit-btn:hover
 {
 border: 1px solid <?php echo $color; ?>;
 }

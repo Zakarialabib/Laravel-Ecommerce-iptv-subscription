@@ -28,12 +28,12 @@
           <thead class="bg-gray-300">
           <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">N</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Reference')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Customer')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Agent')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Total')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Payment')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions')}}</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -56,13 +56,13 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
               @if ($sale->payment->status === \App\Payment::STATUS_DUE)
-              {{__('DUE')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-red-600 text-white"> {{__('DUE')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PAID)
-              {{__('PAID')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-green-600 text-white">{{__('PAID')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PENDING)
-              {{__('PENDING')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-blue-600 text-white">{{__('PENDING')}}</span>
               @elseif ($sale->payment->status === \App\Payment::STATUS_PARTIAL)
-              {{__('PARTIAL')}}
+              <span class="p-2 text-xs font-normal rounded-full bg-yellow-400 text-white">{{__('PARTIAL')}}</span>
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">

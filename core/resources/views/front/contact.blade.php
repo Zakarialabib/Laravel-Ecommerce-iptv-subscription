@@ -54,7 +54,7 @@
 										<textarea name="message" class="input-field textarea" placeholder="{{ __('Your Message') }} *"></textarea>
 									</li>
 								</ul>
-								<button class="submit-btn mybtn1" type="submit">{{ __('Send Message') }}</button>
+								<button class="mybtn1" type="submit">{{ __('Send Message') }}</button>
 							</form>
 						</div>
 					</div>

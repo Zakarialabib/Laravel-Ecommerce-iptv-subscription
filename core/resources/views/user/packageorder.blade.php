@@ -40,42 +40,42 @@
 			</div>
 			<div class="lg:w-3/4 pr-4 pl-4">
                 <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                    <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ __('Package Order') }}</h5>
+                    <h5 class="flex my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 justify-center">{{ __('Package Order') }}</h5>
                     <div class="flex-auto p-6">
                         <div class="flex flex-wrap ">
                             <div class="lg:w-full pr-4 pl-4 mt-3">
                                 @if($order)
-                                <table class="table-auto mb-4 bg-transparent border table-striped">
+                                <table class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped">
                                     <tbody>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Package Name') }}</th>
                                             <td>{{ $order->package->name }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Speed Limit') }}</th>
                                             <td>{{ $order->package->speed }} <span>{{ __('Mbps') }}</span></td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Package Price') }}</th>
                                             <td>{{ $order->currency_sign }}{{ $order->package->price}} / {{ $order->package->time }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Package Feature') }}</th>
                                             <td>{{ $order->package->feature}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Payment Method') }}</th>
                                             <td>{{ $order->method}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Attendance Id') }}</th>
                                             <td>{{ $order->attendance_id}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Txn Id') }}</th>
                                             <td>{{ $order->txn_id}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr >
                                             <th scope="row">{{ __('Status') }}</th>
                                             <td>
                                                 @if($order->status == 0)

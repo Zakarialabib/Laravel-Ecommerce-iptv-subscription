@@ -38,7 +38,7 @@ class NewsletterController extends Controller
         Newsletter::create($request->all());
 
         $notification = array(
-            'messege' => 'Nouveau contact ajoutée avec succés!',
+            'messege' => 'Vous etes inscrit au offres CHAWAD ELECTRO!',
             'alert' => 'success'
         );
         return redirect()->back()->with('notification', $notification);

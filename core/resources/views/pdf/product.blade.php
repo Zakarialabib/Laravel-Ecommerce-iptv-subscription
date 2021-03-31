@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Document PDF</title>
     <style>
     /*!
     * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -30,32 +30,32 @@
                     <div class="flex flex-wrap ">
                         <div class="lg:w-1/2 pr-4 pl-4">
                             <div>
-                                <h3><strong>Order Details</strong></h3>
+                                <h3><strong>{{__('Order Details')}}</strong></h3>
                             </div>
                             <table class="table-auto mb-4 bg-transparent table-striped">
                                 <tbody>
                                   <tr>
-                                    <th scope="row">Order Number:</th>
+                                    <th scope="row">{{__('Order Number')}}:</th>
                                     <td>#{{$order->order_number}}</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Order Date:</th>
+                                    <th scope="row">{{__('Order Date')}}:</th>
                                     <td>{{$order->created_at->format('d-m-Y')}}</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Payment Method:</th>
+                                    <th scope="row">{{__('Payment Method')}}:</th>
                                     <td class="capitalize">
                                        {{$order->method}}
                                     </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Shipping Charge:</th>
+                                    <th scope="row">{{__('Shipping Charge')}}:</th>
                                     <td class="capitalize">
                                         {{$order->shipping_charge}}{{ Helper::showCurrency() }}
                                     </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">Grand Total:</th>
+                                    <th scope="row">{{__('Grand Total')}}:</th>
                                     <td class="capitalize">
                                         {{$order->total}}{{ Helper::showCurrency() }}
                                     </td>
@@ -68,32 +68,32 @@
                         @if($order->shipping_name && $order->shipping_email && $order->shipping_number &&  $order->shipping_address)
                             <div class="lg:w-1/2 pr-4 pl-4">
                                 <div>
-                                    <h3><strong>Billing Details</strong></h3>
+                                    <h3><strong>{{__('Billing Details')}}</strong></h3>
                                 </div>
                                 <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
-                                            <th scope="row">Billing Name:</th>
+                                            <th scope="row">{{__('Billing Name')}}:</th>
                                             <td>{{$order->billing_name }} </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Email:</th>
+                                            <th scope="row">{{__('Billing Email')}}:</th>
                                             <td>{{$order->billing_email}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Number:</th>
+                                            <th scope="row">{{__('Billing Number')}}:</th>
                                             <td>{{$order->billing_number}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Address:</th>
+                                            <th scope="row">{{__('Billing Address')}}:</th>
                                             <td>{{$order->billing_address}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing City:</th>
+                                            <th scope="row">{{__('Billing City')}}:</th>
                                             <td>{{$order->billing_city}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Country:</th>
+                                            <th scope="row">{{__('Billing Country')}}:</th>
                                             <td>{{$order->billing_country}}</td>
                                         </tr>
                                     </tbody>
@@ -101,32 +101,32 @@
                             </div>
                             <div class="lg:w-1/2 pr-4 pl-4">
                                 <div>
-                                    <h3><strong>Shipping Details</strong></h3>
+                                    <h3><strong>{{__('Shipping Details')}}</strong></h3>
                                 </div>
                                 <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
-                                            <th scope="row">Shipping Name:</th>
+                                            <th scope="row">{{__('Shipping Name')}}:</th>
                                             <td>{{$order->shipping_name }} </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Shipping Email:</th>
+                                            <th scope="row">{{__('Shipping Email')}}:</th>
                                             <td>{{$order->shipping_email}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Shipping Number:</th>
+                                            <th scope="row">{{__('Shipping Number')}}:</th>
                                             <td>{{$order->shipping_number}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Shipping Address:</th>
+                                            <th scope="row">{{__('Shipping Address')}}:</th>
                                             <td>{{$order->shipping_address}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Shipping City:</th>
+                                            <th scope="row">{{__('Shipping City')}}:</th>
                                             <td>{{$order->shipping_city}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Shipping Country:</th>
+                                            <th scope="row">{{__('Shipping Country')}}:</th>
                                             <td>{{$order->shipping_country}}</td>
                                         </tr>
                                     </tbody>
@@ -135,32 +135,32 @@
                         @else 
                             <div class="lg:w-1/2 pr-4 pl-4">
                                 <div>
-                                    <h3><strong>Billing Details</strong></h3>
+                                    <h3><strong>{{__('Billing Details')}}</strong></h3>
                                 </div>
                                 <table class="table-auto mb-4 bg-transparent table-striped">
                                     <tbody>
                                         <tr>
-                                            <th scope="row">Billing Name:</th>
+                                            <th scope="row">{{__('Billing Name')}}:</th>
                                             <td>{{$order->billing_name }} </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Email:</th>
+                                            <th scope="row">{{__('Billing Email')}}:</th>
                                             <td>{{$order->billing_email}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Number:</th>
+                                            <th scope="row">{{__('Billing Number')}}:</th>
                                             <td>{{$order->billing_number}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Address:</th>
+                                            <th scope="row">{{__('Billing Address')}}:</th>
                                             <td>{{$order->billing_address}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing City:</th>
+                                            <th scope="row">{{__('Billing City')}}:</th>
                                             <td>{{$order->billing_city}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Billing Country:</th>
+                                            <th scope="row">{{__('Billing Country')}}:</th>
                                             <td>{{$order->billing_country}}</td>
                                         </tr>
                                     </tbody>
@@ -170,17 +170,17 @@
                     </div>
                     <div class="flex flex-wrap ">
                         <div>
-                            <h3><strong>Ordered Products</strong></h3>
+                            <h3><strong>{{__('Ordered Products')}}</strong></h3>
                         </div>
                         <table class="table-auto mb-4 bg-transparent table-striped" style="margin-bottom:100px">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Qty</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">{{__('Image')}}</th>
+                                <th scope="col">{{__('Product Name')}}</th>
+                                <th scope="col">{{__('Price')}}</th>
+                                <th scope="col">{{__('Qty')}}</th>
+                                <th scope="col">{{__('Total')}}</th>
                               </tr>
                             </thead>
                             <tbody>
