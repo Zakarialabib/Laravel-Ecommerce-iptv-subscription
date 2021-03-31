@@ -21,7 +21,7 @@
   <div class="container sm:px-4 max-w-full mx-auto">
     <div class="flex flex-wrap ">
       <div class="w-full flex justify-end mb-4">
-        <a href="{{route('admin.sales.products.create')}}" class="rounded-md focus:outline-none bg-blue-500 hover:bg-blue-800 text-white text-md py-2 px-3">{{__('Add sale')}}</a>
+        <a href="{{route('admin.sales.packages.create')}}" class="rounded-md focus:outline-none bg-blue-500 hover:bg-blue-800 text-white text-md py-2 px-3">{{__('Add sale')}}</a>
       </div>
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
         <table class="w-full divide-y divide-gray-200">
