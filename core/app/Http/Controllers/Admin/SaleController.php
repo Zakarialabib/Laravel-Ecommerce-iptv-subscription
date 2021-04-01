@@ -42,7 +42,7 @@ class SaleController extends Controller
                 'user' => $order->user,
                 'admin' => Auth::user(),
                 'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
-                'reference' => null,
+                'reference' => SaleController::generateProductReference(),
                 'subtotal' => 0,
                 'tax' => 0,
                 'total' => 0,
@@ -58,7 +58,7 @@ class SaleController extends Controller
             'user' => User::first(),
             'admin' => Auth::user(),
             'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
-            'reference' => null,
+            'reference' => SaleController::generateProductReference(),
             'subtotal' => 0,
             'tax' => 0,
             'total' => 0,
@@ -345,6 +345,8 @@ class SaleController extends Controller
 
     public function packageCreate(Request $request)
     {
+        SaleController::generatePackageReference();
+
         if($request->order) {
             $order = Packageorder::where('id', $request->order)->with('package', 'user', 'plan')->first();
             $sale = new Sale([
@@ -352,7 +354,7 @@ class SaleController extends Controller
                 'user' => $order->user,
                 'admin' => Auth::user(),
                 'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
-                'reference' => null,
+                'reference' => SaleController::generatePackageReference(),
                 'subtotal' => 0,
                 'tax' => 0,
                 'total' => 0,
@@ -368,7 +370,7 @@ class SaleController extends Controller
                 'user' => User::first(),
                 'admin' => Auth::user(),
                 'payment' => new Payment(['status' => 1, 'method' => 1, 'paid_amount' => 0, 'due' => 0, 'note' => '']),
-                'reference' => null,
+                'reference' => SaleController::generatePackageReference(),
                 'subtotal' => 0,
                 'tax' => 0,
                 'total' => 0,
@@ -570,5 +572,19 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         return view('admin.sales.packages.show', compact('sale'));
+    }
+
+    public static function generatePackageReference()
+    {
+        $latest = Sale::packages()->latest()->first();
+        $latest->reference++;
+        return $latest->reference;
+    }
+
+    public static function generateProductReference()
+    {
+        $latest = Sale::products()->latest()->first();
+        $latest->reference++;
+        return $latest->reference;
     }
 }
