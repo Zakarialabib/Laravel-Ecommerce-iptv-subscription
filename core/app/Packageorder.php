@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Packageorder extends Model
 {
     protected $guarded = [];
+    protected $casts = [
+        'package_status' => 'integer',
+    ];
+
+    const INACTIVE = 1; 
+    const NEAR_END = 2;
+    const ACTIVE = 3; 
 
     public function user(): BelongsTo
     {

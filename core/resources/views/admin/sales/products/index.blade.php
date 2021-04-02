@@ -18,6 +18,7 @@
   </div><!-- /.container-fluid -->
 </div>
 <section class="content">
+  @csrf
   <div class="container sm:px-4 max-w-full mx-auto">
     <div class="flex flex-wrap ">
       <div class="w-full flex justify-end mb-4">
@@ -33,6 +34,7 @@
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Agent') }}</th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Total') }}</th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Payment') }}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Status') }}</th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
           </tr>
         </thead>
@@ -66,6 +68,11 @@
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
+              <div class="w-16 h-10 mx-auto flex items-center rounded-full p-1 duration-300 ease-in-out {{($sale->is_locked) ? 'bg-green-400' : 'bg-gray-300'}}">
+                <div data-id="{{$sale->id}}" data-status="{{$sale->is_locked}}" class="sale-lock cursor-pointer bg-white w-8 h-8 rounded-full shadow-md transform duration-100 ease-in-out {{($sale->is_locked) ? 'translate-x-6' : 'translate-x-0'}}"></div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-center">
               <div class="w-full flex justify-around">
                 <a href="{{route('admin.sales.products.show', ['id' => $sale->id])}}">
                   <i class="fas fa-newspaper"></i>
@@ -86,4 +93,9 @@
     </div>
   </div>
 <section>
+@endsection
+
+@section('script')
+<script src="{{asset('assets/admin/js/app.js')}}"></script>
+<script src="{{asset('assets/admin/js/sales-lock.js')}}"></script>
 @endsection

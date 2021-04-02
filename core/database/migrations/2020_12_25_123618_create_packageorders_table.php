@@ -21,6 +21,8 @@ class CreatePackageordersTable extends Migration
             $table->foreignId('plan_id')->constrained('plans');
             $table->integer('status')->nullable();
             $table->double('package_cost')->nullable();
+            $table->date('start_date');
+            $table->integer('package_status')->default(1);
             $table->string('method')->nullable();
             $table->string('currency_sign')->nullable();
             $table->string('currency_code')->nullable();

@@ -25,6 +25,7 @@ class CreateSalesTable extends Migration
             $table->string('document')->nullable();
             $table->text('note');
             $table->boolean('is_product')->default(true);
+            $table->boolean('is_locked')->default(true);
             $table->timestamps();
         });
     }

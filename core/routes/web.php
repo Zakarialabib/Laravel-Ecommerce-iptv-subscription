@@ -525,6 +525,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::post('close_ticket/{ticket_id}', 'Admin\TicketsController@close');
     Route::post('tickets/comment','Admin\CommentsController@postComment');
 
+    // Sales
+    Route::post('/sales/lock', 'Admin\SaleController@updateLock');
+
     // Package Sales
     Route::get('/sales/packages', 'Admin\SaleController@packages')->name('admin.sales.packages.index');
     Route::get('/sales/packages/create', 'Admin\SaleController@packageCreate')->name('admin.sales.packages.create');
@@ -537,8 +540,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::get('/purchases', 'Admin\PurchaseController@index')->name('admin.purchases.index');
     Route::get('/purchases/create', 'Admin\PurchaseController@create')->name('admin.purchases.create');
     Route::post('/purchases', 'Admin\PurchaseController@store')->name('admin.purchases.store');
-    Route::get('/purchases/show/{id}', 'Admin\PurchaseController@show')->name('admin.purchases.show');
-    Route::get('/purchases/edit/{id}', 'Admin\PurchaseController@edit')->name('admin.purchases.edit');
+    Route::get('/purchases/{id}', 'Admin\PurchaseController@show')->name('admin.purchases.show');
+    Route::get('/purchases/{id}/edit', 'Admin\PurchaseController@edit')->name('admin.purchases.edit');
     Route::put('/purchases/{id}', 'Admin\PurchaseController@update')->name('admin.purchases.update');
 
     // Supplier
@@ -549,7 +552,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::get('/sales/products/create', 'Admin\SaleController@productCreate')->name('admin.sales.products.create');
     Route::get('/sales/products/{id}', 'Admin\SaleController@productShow')->name('admin.sales.products.show');
     Route::post('/sales/products', 'Admin\SaleController@productStore')->name('admin.sales.products.store');
-    Route::get('/sales/products/edit/{id}', 'Admin\SaleController@productEdit')->name('admin.sales.products.edit');
+    Route::get('/sales/products/{id}/edit', 'Admin\SaleController@productEdit')->name('admin.sales.products.edit');
     Route::put('/sales/products/{id}', 'Admin\SaleController@productUpdate')->name('admin.sales.products.update');
     Route::delete('/sales/products/{id}', 'Admin\SaleController@productDelete')->name('admin.sales.products.delete');
     Route::delete('/sales/products/file/{id}', 'Admin\SaleController@deleteSaleFile')->name('admin.sales.products.file.delete');

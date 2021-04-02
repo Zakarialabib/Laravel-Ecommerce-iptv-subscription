@@ -10,6 +10,7 @@ class Sale extends Model
 
     protected $casts = [
         'is_product' => 'boolean',
+        'is_locked' => 'boolean',
     ];
 
     public function scopeProducts($query)

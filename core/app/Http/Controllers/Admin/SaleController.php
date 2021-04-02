@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\ProductOrder;
 use App\OrderItem;
-use App\Product;
 use App\User;
 use App\Sale;
 use App\Payment;
@@ -21,6 +21,23 @@ use App\Plan;
 
 class SaleController extends Controller
 {
+    public function updateLock(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'sale_id' => '',
+                'status' => '',
+            ]);
+            $sale = Sale::find($data['sale_id'])->update([
+                'is_locked' => $data['status'],
+            ]);
+    
+            return response(['sale' => $sale], 200);
+        } catch (\Throwable $th) {
+            return response(['sale' => null], 500);
+        }
+    }
+
     public function productShow($id) 
     {
         $sale = Sale::find($id);
@@ -388,6 +405,8 @@ class SaleController extends Controller
                         'id' => -1,
                         'name' => '',
                     ]),
+                    'start_date' => Carbon::now()->format('Y-m-d'),
+                    'package_status' => 1,
                 ]),
             ])
         ]);
@@ -405,6 +424,8 @@ class SaleController extends Controller
             'plan_id' => '',
             'plan_type' => '',
             'plan_price' => '',
+            'start_date' => '',
+            'package_status' => '',
             'subtotal' => '',
             'tax' => '',
             'total' => '',
@@ -466,6 +487,9 @@ class SaleController extends Controller
                 'package_id' => $data['package_id'],
                 'user_id' => $data['user_id'],
                 'package_cost' => $data['total'],
+                'start_date' => $data['start_date'],
+                'end_date' => SaleController::calculateEndDate($data['start_date'], $data['plan_type']),
+                'package_status' => $data['package_status'],
             ]);
         }
         else 
@@ -476,6 +500,9 @@ class SaleController extends Controller
                 'package_id' => $data['package_id'],
                 'user_id' => $data['user_id'],
                 'package_cost' => $data['total'],
+                'start_date' => $data['start_date'],
+                'end_date' => SaleController::calculateEndDate($data['start_date'], $data['plan_type']),
+                'package_status' => $data['package_status'],
             ]);
         }
 
@@ -483,7 +510,7 @@ class SaleController extends Controller
     }
 
     public function packageEdit($id) {
-        $sale = Sale::where('id', $id)->with('user', 'payment', 'packageOrder.plan', 'packageOrder.package')->first();
+        $sale = Sale::where('id', $id)->with('user', 'payment', 'packageOrder.plan', 'packageOrder.package.plans')->first();
         return view('admin.sales.packages.edit', compact('sale'));
     }
 
@@ -499,6 +526,8 @@ class SaleController extends Controller
             'plan_id' => '',
             'plan_type' => '',
             'plan_price' => '',
+            'start_date' => '',
+            'package_status' => '',
             'subtotal' => '',
             'tax' => '',
             'total' => '',
@@ -519,6 +548,9 @@ class SaleController extends Controller
                 'package_id' => $data['package_id'],
                 'plan_id' => $data['plan_id'],
                 'package_cost' => $data['total'],
+                'start_date' => $data['start_date'],
+                'end_date' => SaleController::calculateEndDate($data['start_date'], $data['plan_type']),
+                'package_status' => $data['package_status'],
             ]);
             // update payment
             $sale->payment->update([
@@ -586,5 +618,30 @@ class SaleController extends Controller
         $latest = Sale::products()->latest()->first();
         $latest->reference++;
         return $latest->reference;
+    }
+
+    public static function calculateEndDate($startDate, $planType)
+    {
+        //dd(number_format($planType));
+        switch (number_format($planType)) {
+            case 1:
+                $endDate = Carbon::parse($startDate)->addMonths(1);
+                break;
+            case 2:
+                $endDate = Carbon::parse($startDate)->addMonths(3);
+                break;
+            case 3:
+                $endDate = Carbon::parse($startDate)->addMonths(6);
+                break;
+            case 4:
+                $endDate = Carbon::parse($startDate)->addMonths(12);
+                break;
+            
+            default:
+                $endDate = Carbon::parse($startDate)->addMonths(1);
+                break;
+        }
+
+        return $endDate;
     }
 }

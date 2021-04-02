@@ -63,6 +63,8 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{__('Package')}}</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{__('Plan')}}</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{__('Price')}}</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{__('Start Date')}}</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{__('Status')}}</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -83,6 +85,16 @@
                       @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">{{$sale->packageOrder->package_cost}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">{{$sale->packageOrder->start_date}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                      @if ($sale->packageOrder->package_status === \App\Packageorder::INACTIVE)
+                      <span class="p-2 text-xs font-normal rounded-full bg-red-600 text-white"> {{__('INACTIVE')}}</span>
+                      @elseif ($sale->packageOrder->package_status === \App\Packageorder::ACTIVE)
+                      <span class="p-2 text-xs font-normal rounded-full bg-green-600 text-white">{{__('ACTIVE')}}</span>
+                      @elseif ($sale->packageOrder->package_status === \App\Packageorder::NEAR_END)
+                      <span class="p-2 text-xs font-normal rounded-full bg-yellow-400 text-white">{{__('NEAR END')}}</span>
+                      @endif
+                    </td>
                   </tr>
                 </tbody>
               </table>

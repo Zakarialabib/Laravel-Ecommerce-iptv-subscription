@@ -26,6 +26,16 @@
           >
             {{$t('message.price')}}
           </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            {{$t('message.start_date')}}
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            {{$t('message.status')}}
+          </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -68,16 +78,16 @@
               v-model="selectedPlanType"
               v-on:change="changePlan()"
             >
-              <option value="1" :selected="order.plan.type === 1">
+              <option value="1">
                 {{$t('message.monthly_plan')}}
               </option>
-              <option value="2" :selected="order.plan.type === 2">
+              <option value="2">
                 {{$t('message.quarter_plan')}}
               </option>
-              <option value="3" :selected="order.plan.type === 3">
+              <option value="3">
                 {{$t('message.semiannual_plan')}}
               </option>
-              <option value="4" :selected="order.plan.type === 4">
+              <option value="4">
                 {{$t('message.annual_plan')}}
               </option>
             </select>
@@ -92,6 +102,31 @@
               placeholder="Price"
               readonly
             />
+          </td>
+          <td class="px-3 py-4 whitespace-nowrap text-left">
+            <input 
+            class="rounded-sm px-3 py-2 focus:outline-none w-full"
+            type="date" 
+            name="start_date"
+            v-model="order.start_date"
+            >
+          </td>
+          <td class="px-3 py-4 whitespace-nowrap text-left">
+            <select
+              name="package_status"
+              class="rounded-sm px-3 py-2 focus:outline-none w-full"
+              v-model="order.package_status"
+            >
+              <option value="1" :selected="order.package_status === 1">
+                {{$t('message.inactive')}}
+              </option>
+              <option value="2" :selected="order.package_status === 2">
+                {{$t('message.near_end')}}
+              </option>
+              <option value="3" :selected="order.package_status === 3">
+                {{$t('message.active')}}
+              </option>
+            </select>
           </td>
         </tr>
       </tbody>
@@ -113,6 +148,7 @@ export default {
   },
   mounted() {
     this.order = this.orderProp;
+    this.selectedPlanType = this.order.plan.type;
     this.subTotalChanged();
   },
   methods: {
@@ -136,7 +172,8 @@ export default {
           name: packageItem.name,
           plans: packageItem.plans,
         },
-        user: null,
+        user: this.order.user,
+        start_date: this.order.start_date,
       };
       this.subTotalChanged();
       this.showMenu = false
