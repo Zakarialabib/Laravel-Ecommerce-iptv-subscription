@@ -34,6 +34,9 @@
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Total')}}</th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Payment')}}</th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Status')}}</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <i class="fas fa-lock"></i>
+            </th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions')}}</th>
           </tr>
         </thead>
@@ -76,13 +79,26 @@
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
+              @if (Auth::user()->role->name === 'Super Admin')    
+              <div class="w-16 h-10 mx-auto flex items-center rounded-full p-1 duration-300 ease-in-out {{($sale->is_locked) ? 'bg-gray-300' : 'bg-green-400'}}">
+                <div data-id="{{$sale->id}}" data-status="{{$sale->is_locked}}" class="sale-lock cursor-pointer bg-white w-8 h-8 rounded-full shadow-md transform duration-100 ease-in-out {{($sale->is_locked) ? 'translate-x-0' : 'translate-x-6'}}"></div>
+              </div>
+              @elseif(!$sale->is_locked)
+              <i class="fas fa-lock-open"></i>
+              @else
+              <i class="fas fa-lock"></i>
+              @endif
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-center">
               <div class="w-full flex justify-around">
                 <a href="{{route('admin.sales.packages.show', ['id' => $sale->id])}}">
                   <i class="fas fa-newspaper"></i>
                 </a>
+                @if (Auth::user()->role->name === 'Super Admin' || !$sale->is_locked)
                 <a href="{{route('admin.sales.packages.edit', ['id' => $sale->id])}}">
                   <i class="fas fa-edit"></i>
-                </a>
+                </a>                
+                @endif
                 <button >
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -96,4 +112,9 @@
     </div>
   </div>
 <section>
+@endsection
+
+@section('script')
+<script src="{{asset('assets/admin/js/app.js')}}"></script>
+<script src="{{asset('assets/admin/js/sales-lock.js')}}"></script>
 @endsection
