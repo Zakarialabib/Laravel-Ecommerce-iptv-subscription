@@ -3,5 +3,6 @@
     "/front/css/style.css": "/front/css/style.css",
     "/admin/css/tailwind.css": "/admin/css/tailwind.css",
     "/admin/js/purchases.js": "/admin/js/purchases.js",
-    "/admin/js/sales.js": "/admin/js/sales.js"
+    "/admin/js/sales.js": "/admin/js/sales.js",
+    "/admin/js/sales-lock.js": "/admin/js/sales-lock.js"
 }

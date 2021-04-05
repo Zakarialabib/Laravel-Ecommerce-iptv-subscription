@@ -109,7 +109,6 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
 
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
 var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
-var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
 var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
@@ -130,7 +129,7 @@ module.exports = function xhrAdapter(config) {
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
+      var password = config.auth.password || '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
@@ -211,6 +210,8 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
+
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
@@ -276,7 +277,7 @@ module.exports = function xhrAdapter(config) {
       });
     }
 
-    if (!requestData) {
+    if (requestData === undefined) {
       requestData = null;
     }
 
@@ -344,9 +345,6 @@ axios.all = function all(promises) {
   return Promise.all(promises);
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js");
-
-// Expose isAxiosError
-axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/axios/lib/helpers/isAxiosError.js");
 
 module.exports = axios;
 
@@ -556,10 +554,9 @@ Axios.prototype.getUri = function getUri(config) {
 utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, config) {
-    return this.request(mergeConfig(config || {}, {
+    return this.request(utils.merge(config || {}, {
       method: method,
-      url: url,
-      data: (config || {}).data
+      url: url
     }));
   };
 });
@@ -567,7 +564,7 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
 utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, data, config) {
-    return this.request(mergeConfig(config || {}, {
+    return this.request(utils.merge(config || {}, {
       method: method,
       url: url,
       data: data
@@ -827,7 +824,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   error.response = response;
   error.isAxiosError = true;
 
-  error.toJSON = function toJSON() {
+  error.toJSON = function() {
     return {
       // Standard
       message: this.message,
@@ -876,73 +873,59 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
-  var valueFromConfig2Keys = ['url', 'method', 'data'];
-  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
+  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
   var defaultToConfig2Keys = [
-    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
-    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
-    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
-    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
-    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
+    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
+    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath'
   ];
-  var directMergeKeys = ['validateStatus'];
-
-  function getMergedValue(target, source) {
-    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
-      return utils.merge(target, source);
-    } else if (utils.isPlainObject(source)) {
-      return utils.merge({}, source);
-    } else if (utils.isArray(source)) {
-      return source.slice();
-    }
-    return source;
-  }
-
-  function mergeDeepProperties(prop) {
-    if (!utils.isUndefined(config2[prop])) {
-      config[prop] = getMergedValue(config1[prop], config2[prop]);
-    } else if (!utils.isUndefined(config1[prop])) {
-      config[prop] = getMergedValue(undefined, config1[prop]);
-    }
-  }
 
   utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
-    if (!utils.isUndefined(config2[prop])) {
-      config[prop] = getMergedValue(undefined, config2[prop]);
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
     }
   });
 
-  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
+    if (utils.isObject(config2[prop])) {
+      config[prop] = utils.deepMerge(config1[prop], config2[prop]);
+    } else if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (utils.isObject(config1[prop])) {
+      config[prop] = utils.deepMerge(config1[prop]);
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
 
   utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
-    if (!utils.isUndefined(config2[prop])) {
-      config[prop] = getMergedValue(undefined, config2[prop]);
-    } else if (!utils.isUndefined(config1[prop])) {
-      config[prop] = getMergedValue(undefined, config1[prop]);
-    }
-  });
-
-  utils.forEach(directMergeKeys, function merge(prop) {
-    if (prop in config2) {
-      config[prop] = getMergedValue(config1[prop], config2[prop]);
-    } else if (prop in config1) {
-      config[prop] = getMergedValue(undefined, config1[prop]);
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
     }
   });
 
   var axiosKeys = valueFromConfig2Keys
     .concat(mergeDeepPropertiesKeys)
-    .concat(defaultToConfig2Keys)
-    .concat(directMergeKeys);
+    .concat(defaultToConfig2Keys);
 
   var otherKeys = Object
-    .keys(config1)
-    .concat(Object.keys(config2))
+    .keys(config2)
     .filter(function filterAxiosKeys(key) {
       return axiosKeys.indexOf(key) === -1;
     });
 
-  utils.forEach(otherKeys, mergeDeepProperties);
+  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
 
   return config;
 };
@@ -971,7 +954,7 @@ var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios
  */
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
+  if (!validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
     reject(createError(
@@ -1103,7 +1086,6 @@ var defaults = {
   xsrfHeaderName: 'X-XSRF-TOKEN',
 
   maxContentLength: -1,
-  maxBodyLength: -1,
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
@@ -1167,6 +1149,7 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 
 function encode(val) {
   return encodeURIComponent(val).
+    replace(/%40/gi, '@').
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
     replace(/%2C/gi, ',').
@@ -1347,29 +1330,6 @@ module.exports = function isAbsoluteURL(url) {
   // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
   // by any combination of letters, digits, plus, period, or hyphen.
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/axios/lib/helpers/isAxiosError.js":
-/*!********************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/isAxiosError.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Determines whether the payload is an error thrown by Axios
- *
- * @param {*} payload The value to test
- * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
- */
-module.exports = function isAxiosError(payload) {
-  return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
 
@@ -1699,21 +1659,6 @@ function isObject(val) {
 }
 
 /**
- * Determine if a value is a plain Object
- *
- * @param {Object} val The value to test
- * @return {boolean} True if value is a plain Object, otherwise false
- */
-function isPlainObject(val) {
-  if (toString.call(val) !== '[object Object]') {
-    return false;
-  }
-
-  var prototype = Object.getPrototypeOf(val);
-  return prototype === null || prototype === Object.prototype;
-}
-
-/**
  * Determine if a value is a Date
  *
  * @param {Object} val The value to test
@@ -1869,12 +1814,34 @@ function forEach(obj, fn) {
 function merge(/* obj1, obj2, obj3, ... */) {
   var result = {};
   function assignValue(val, key) {
-    if (isPlainObject(result[key]) && isPlainObject(val)) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
       result[key] = merge(result[key], val);
-    } else if (isPlainObject(val)) {
-      result[key] = merge({}, val);
-    } else if (isArray(val)) {
-      result[key] = val.slice();
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Function equal to merge with the difference being that no reference
+ * to original objects is kept.
+ *
+ * @see merge
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function deepMerge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val);
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val);
     } else {
       result[key] = val;
     }
@@ -1905,19 +1872,6 @@ function extend(a, b, thisArg) {
   return a;
 }
 
-/**
- * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
- *
- * @param {string} content with BOM
- * @return {string} content value without BOM
- */
-function stripBOM(content) {
-  if (content.charCodeAt(0) === 0xFEFF) {
-    content = content.slice(1);
-  }
-  return content;
-}
-
 module.exports = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
@@ -1927,7 +1881,6 @@ module.exports = {
   isString: isString,
   isNumber: isNumber,
   isObject: isObject,
-  isPlainObject: isPlainObject,
   isUndefined: isUndefined,
   isDate: isDate,
   isFile: isFile,
@@ -1938,9 +1891,9 @@ module.exports = {
   isStandardBrowserEnv: isStandardBrowserEnv,
   forEach: forEach,
   merge: merge,
+  deepMerge: deepMerge,
   extend: extend,
-  trim: trim,
-  stripBOM: stripBOM
+  trim: trim
 };
 
 
@@ -2092,73 +2045,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["order_items"],
+  props: ["order-prop"],
   data: function data() {
     return {
-      orderItems: [],
-      menuId: null,
-      packagesList: []
+      order: null,
+      showMenu: false,
+      packagesList: [],
+      selectedPlanType: 1
     };
   },
   mounted: function mounted() {
-    this.orderItems = this.order_items;
-    console.log(this.orderItems);
-    this.$emit('changeSubTotal', this.subTotal);
-  },
-  computed: {
-    subTotal: function subTotal() {
-      var total = 0;
-      this.orderItems.forEach(function (item) {
-        total += item.price * item.qty;
-      });
-      return total;
-    }
+    this.order = this.orderProp;
+    this.selectedPlanType = this.order.plan.type;
+    this.subTotalChanged();
   },
   methods: {
-    handleDeleteItem: function handleDeleteItem(item) {
-      this.orderItems = this.orderItems.filter(function (i) {
-        return i.id !== item.id;
-      });
-      this.$emit('changeSubTotal', this.subTotal);
+    subTotalChanged: function subTotalChanged() {
+      this.$emit('changeSubTotal', this.order.plan.price);
     },
-    handleAddRow: function handleAddRow() {
-      this.orderItems.push({
-        id: 0,
-        package_order_id: 0,
-        package_id: 0,
-        title: "",
-        plan: 1,
-        price: "",
-        qty: 0
-      });
-      this.$emit('changeSubTotal', this.subTotal);
-    },
-    listPackages: function listPackages(item) {
+    listPackages: function listPackages(index) {
       var _this = this;
 
-      axios.get("/admin/products/list").then(function (response) {
+      axios.get("/admin/package/list").then(function (response) {
         if (response.status === 200) {
-          _this.menuId = item.id;
-          _this.productsList = response.data.products;
+          _this.showMenu = true;
+          _this.packagesList = response.data.packages;
         }
       });
     },
-    selectPackage: function selectPackage(product, item) {
-      var index = this.orderItems.indexOf(item);
-      Vue.set(this.orderItems, index, {
-        id: -1,
-        product_id: product.id,
-        title: product.title,
-        plan: product.plan,
-        price: product.current_price,
-        qty: 1
+    selectPackage: function selectPackage(packageItem) {
+      this.order = {
+        id: null,
+        plan: packageItem.plans[0],
+        "package": {
+          id: packageItem.id,
+          name: packageItem.name,
+          plans: packageItem.plans
+        },
+        user: this.order.user,
+        start_date: this.order.start_date
+      };
+      this.subTotalChanged();
+      this.showMenu = false;
+    },
+    changePlan: function changePlan() {
+      var _this2 = this;
+
+      var index = this.order["package"].plans.findIndex(function (plan) {
+        return plan.type == _this2.selectedPlanType;
       });
-      this.$emit('changeSubTotal', this.subTotal);
+      this.order.plan = this.order["package"].plans[index];
+      this.subTotalChanged();
     }
   }
 });
@@ -2329,7 +2267,7 @@ __webpack_require__.r(__webpack_exports__);
         product_order_id: 0,
         product_id: 0,
         title: "",
-        price: "",
+        price: 0,
         qty: 0
       });
       this.subTotalChanged();
@@ -3062,7 +3000,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     total: function total() {
-      return this.subTotal * this.tax / 100 + this.subTotal;
+      return parseFloat(this.subTotal) + parseFloat(this.subTotal) * this.tax / 100;
     },
     due: function due() {
       return (this.total - this.sale.payment.paid_amount).toFixed(2);
@@ -18639,15 +18577,14 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.21';
+  var VERSION = '4.17.20';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
   var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
-      FUNC_ERROR_TEXT = 'Expected a function',
-      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
+      FUNC_ERROR_TEXT = 'Expected a function';
 
   /** Used to stand-in for `undefined` hash values. */
   var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -18780,11 +18717,10 @@ return jQuery;
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
 
-  /** Used to match leading whitespace. */
-  var reTrimStart = /^\s+/;
-
-  /** Used to match a single whitespace character. */
-  var reWhitespace = /\s/;
+  /** Used to match leading and trailing whitespace. */
+  var reTrim = /^\s+|\s+$/g,
+      reTrimStart = /^\s+/,
+      reTrimEnd = /\s+$/;
 
   /** Used to match wrap detail comments. */
   var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
@@ -18793,18 +18729,6 @@ return jQuery;
 
   /** Used to match words composed of alphanumeric characters. */
   var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
-
-  /**
-   * Used to validate the `validate` option in `_.template` variable.
-   *
-   * Forbids characters which could potentially change the meaning of the function argument definition:
-   * - "()," (modification of function parameters)
-   * - "=" (default value)
-   * - "[]{}" (destructuring of function parameters)
-   * - "/" (beginning of a comment)
-   * - whitespace
-   */
-  var reForbiddenIdentifierChars = /[()=,{}\[\]\/\s]/;
 
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
@@ -19635,19 +19559,6 @@ return jQuery;
   }
 
   /**
-   * The base implementation of `_.trim`.
-   *
-   * @private
-   * @param {string} string The string to trim.
-   * @returns {string} Returns the trimmed string.
-   */
-  function baseTrim(string) {
-    return string
-      ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
-      : string;
-  }
-
-  /**
    * The base implementation of `_.unary` without support for storing metadata.
    *
    * @private
@@ -19978,21 +19889,6 @@ return jQuery;
     return hasUnicode(string)
       ? unicodeToArray(string)
       : asciiToArray(string);
-  }
-
-  /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
-   * character of `string`.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the index of the last non-whitespace character.
-   */
-  function trimmedEndIndex(string) {
-    var index = string.length;
-
-    while (index-- && reWhitespace.test(string.charAt(index))) {}
-    return index;
   }
 
   /**
@@ -31163,7 +31059,7 @@ return jQuery;
       if (typeof value != 'string') {
         return value === 0 ? value : +value;
       }
-      value = baseTrim(value);
+      value = value.replace(reTrim, '');
       var isBinary = reIsBinary.test(value);
       return (isBinary || reIsOctal.test(value))
         ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -33535,12 +33431,6 @@ return jQuery;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
       }
-      // Throw an error if a forbidden character was found in `variable`, to prevent
-      // potential command injection attacks.
-      else if (reForbiddenIdentifierChars.test(variable)) {
-        throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);
-      }
-
       // Cleanup code by stripping empty strings.
       source = (isEvaluating ? source.replace(reEmptyStringLeading, '') : source)
         .replace(reEmptyStringMiddle, '$1')
@@ -33654,7 +33544,7 @@ return jQuery;
     function trim(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return baseTrim(string);
+        return string.replace(reTrim, '');
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -33689,7 +33579,7 @@ return jQuery;
     function trimEnd(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.slice(0, trimmedEndIndex(string) + 1);
+        return string.replace(reTrimEnd, '');
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -39594,325 +39484,504 @@ var render = function() {
       },
       [
         _c("table", { staticClass: "w-full divide-y divide-gray-200" }, [
-          _vm._m(0),
+          _c("thead", { staticClass: "bg-gray-300" }, [
+            _c(
+              "tr",
+              {
+                staticClass:
+                  "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+              },
+              [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [_vm._v("\r\n            id\r\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.package")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.plan")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.price")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.start_date")) +
+                        "\r\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  },
+                  [
+                    _vm._v(
+                      "\r\n            " +
+                        _vm._s(_vm.$t("message.status")) +
+                        "\r\n          "
+                    )
+                  ]
+                )
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "tbody",
-            { staticClass: "bg-white divide-y divide-gray-200" },
-            _vm._l(_vm.orderItems, function(item, index) {
-              return _c(
-                "tr",
-                {
-                  key: index,
-                  staticClass: "border-b border-gray-200 hover:bg-gray-100"
-                },
-                [
-                  _c(
-                    "td",
-                    { staticClass: "px-3 py-4 whitespace-nowrap text-center" },
-                    [_c("span", [_vm._v(_vm._s(index + 1))])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.id,
-                            expression: "item.id"
-                          }
-                        ],
-                        attrs: { type: "hidden", name: "order_item_id[]" },
-                        domProps: { value: item.id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+          _c("tbody", { staticClass: "bg-white divide-y divide-gray-200" }, [
+            _vm.order
+              ? _c(
+                  "tr",
+                  { staticClass: "border-b border-gray-200 hover:bg-gray-100" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.id,
+                              expression: "order.id"
                             }
-                            _vm.$set(item, "id", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.package_id,
-                            expression: "item.package_id"
-                          }
-                        ],
-                        attrs: { type: "hidden", name: "package_id[]" },
-                        domProps: { value: item.package_id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                          ],
+                          attrs: { type: "hidden", name: "order_id" },
+                          domProps: { value: _vm.order.id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.order, "id", $event.target.value)
                             }
-                            _vm.$set(item, "package_id", $event.target.value)
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.title,
-                            expression: "item.title"
-                          }
-                        ],
-                        staticClass:
-                          "rounded-sm px-3 py-2 focus:outline-none w-full",
-                        attrs: {
-                          type: "text",
-                          name: "title[]",
-                          placeholder: "Title",
-                          readonly: ""
-                        },
-                        domProps: { value: item.title },
-                        on: {
-                          click: function($event) {
-                            return _vm.listPackages(item)
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.package.id,
+                              expression: "order.package.id"
                             }
-                            _vm.$set(item, "title", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.menuId === item.id
-                        ? _c(
-                            "div",
-                            { staticClass: "menu" },
-                            _vm._l(_vm.packagesList, function(product, index) {
-                              return _c(
-                                "div",
-                                {
-                                  key: index,
-                                  staticClass: "menu-item",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.selectPackage(product, item)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\r\n                " +
-                                      _vm._s(product.title) +
-                                      "\r\n              "
-                                  )
-                                ]
+                          ],
+                          attrs: { type: "hidden", name: "package_id" },
+                          domProps: { value: _vm.order.package.id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.order.package,
+                                "id",
+                                $event.target.value
                               )
-                            }),
-                            0
-                          )
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
-                    [
-                      _c(
-                        "select",
-                        {
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.package.name,
+                              expression: "order.package.name"
+                            }
+                          ],
                           staticClass:
                             "rounded-sm px-3 py-2 focus:outline-none w-full",
-                          attrs: { name: "plan" }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "1" },
-                              domProps: { selected: _vm.product.plan === 1 }
-                            },
-                            [
-                              _vm._v(
-                                "\r\n                MONTHLY_PLAN\r\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "2" },
-                              domProps: { selected: _vm.sale.plan === 2 }
-                            },
-                            [
-                              _vm._v(
-                                "\r\n                QUARTER_PLAN\r\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "3" },
-                              domProps: { selected: _vm.sale.plan === 3 }
-                            },
-                            [
-                              _vm._v(
-                                "\r\n                SEMIANNUAL_PLAN\r\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "4" },
-                              domProps: { selected: _vm.sale.plan === 4 }
-                            },
-                            [
-                              _vm._v(
-                                "\r\n                ANNUAL_PLAN\r\n              "
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.price,
-                            expression: "item.price"
-                          }
-                        ],
-                        staticClass:
-                          "rounded-sm px-3 py-2 focus:outline-none w-full",
-                        attrs: {
-                          name: "price[]",
-                          type: "number",
-                          placeholder: "Price"
-                        },
-                        domProps: { value: item.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.qty,
-                            expression: "item.qty"
-                          }
-                        ],
-                        staticClass:
-                          "rounded-sm px-3 py-2 focus:outline-none w-full",
-                        attrs: {
-                          type: "number",
-                          name: "qty[]",
-                          placeholder: "Quantity"
-                        },
-                        domProps: { value: item.qty },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "qty", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "px-6 py-4 whitespace-nowrap text-center" },
-                    [
-                      _vm._v(
-                        "\r\n            " +
-                          _vm._s((item.price * item.qty).toFixed(2)) +
-                          "\r\n          "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      staticClass:
-                        "px-6 py-4 whitespace-nowrap flex justify-center"
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Name",
+                            readonly: ""
+                          },
+                          domProps: { value: _vm.order.package.name },
                           on: {
                             click: function($event) {
-                              $event.preventDefault()
-                              return _vm.handleDeleteItem(item)
+                              return _vm.listPackages()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.order.package,
+                                "name",
+                                $event.target.value
+                              )
                             }
                           }
-                        },
-                        [_c("i", { staticClass: "fas fa-trash-alt" })]
-                      )
-                    ]
-                  )
-                ]
-              )
-            }),
-            0
-          )
+                        }),
+                        _vm._v(" "),
+                        _vm.showMenu
+                          ? _c(
+                              "div",
+                              { staticClass: "menu" },
+                              _vm._l(_vm.packagesList, function(
+                                packageItem,
+                                index
+                              ) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: index,
+                                    staticClass: "menu-item",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selectPackage(packageItem)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(packageItem.name) +
+                                        "\r\n              "
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.plan.id,
+                              expression: "order.plan.id"
+                            }
+                          ],
+                          attrs: { type: "hidden", name: "plan_id" },
+                          domProps: { value: _vm.order.plan.id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.order.plan,
+                                "id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedPlanType,
+                                expression: "selectedPlanType"
+                              }
+                            ],
+                            staticClass:
+                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                            attrs: { name: "plan_type" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectedPlanType = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.changePlan()
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v(
+                                "\r\n                " +
+                                  _vm._s(_vm.$t("message.monthly_plan")) +
+                                  "\r\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "2" } }, [
+                              _vm._v(
+                                "\r\n                " +
+                                  _vm._s(_vm.$t("message.quarter_plan")) +
+                                  "\r\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "3" } }, [
+                              _vm._v(
+                                "\r\n                " +
+                                  _vm._s(_vm.$t("message.semiannual_plan")) +
+                                  "\r\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "4" } }, [
+                              _vm._v(
+                                "\r\n                " +
+                                  _vm._s(_vm.$t("message.annual_plan")) +
+                                  "\r\n              "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.plan.price,
+                              expression: "order.plan.price"
+                            }
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
+                          attrs: {
+                            name: "plan_price",
+                            type: "number",
+                            placeholder: "Price",
+                            readonly: ""
+                          },
+                          domProps: { value: _vm.order.plan.price },
+                          on: {
+                            change: function($event) {
+                              return _vm.subTotalChanged()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.order.plan,
+                                "price",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.start_date,
+                              expression: "order.start_date"
+                            }
+                          ],
+                          staticClass:
+                            "rounded-sm px-3 py-2 focus:outline-none w-full",
+                          attrs: { type: "date", name: "start_date" },
+                          domProps: { value: _vm.order.start_date },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.order,
+                                "start_date",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "px-3 py-4 whitespace-nowrap text-left" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.order.package_status,
+                                expression: "order.package_status"
+                              }
+                            ],
+                            staticClass:
+                              "rounded-sm px-3 py-2 focus:outline-none w-full",
+                            attrs: { name: "package_status" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.order,
+                                  "package_status",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "1" },
+                                domProps: {
+                                  selected: _vm.order.package_status === 1
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(_vm.$t("message.inactive")) +
+                                    "\r\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "2" },
+                                domProps: {
+                                  selected: _vm.order.package_status === 2
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(_vm.$t("message.near_end")) +
+                                    "\r\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "3" },
+                                domProps: {
+                                  selected: _vm.order.package_status === 3
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(_vm.$t("message.active")) +
+                                    "\r\n              "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              : _vm._e()
+          ])
         ])
       ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex justify-end w-full mb-4" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "rounded outline-none py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white font-semibold capitalize",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.handleAddRow()
-            }
-          }
-        },
-        [_vm._v("\r\n      add\r\n    ")]
-      )
-    ])
+    )
   ])
 }
 var staticRenderFns = [
@@ -39920,79 +39989,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-300" }, [
-      _c(
-        "tr",
-        {
-          staticClass:
-            "bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-        },
-        [
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            id\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Package\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Plan\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Price\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Quantity\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Total\r\n          ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            },
-            [_vm._v("\r\n            Actions\r\n          ")]
-          )
-        ]
-      )
-    ])
+    return _c(
+      "td",
+      { staticClass: "px-3 py-4 whitespace-nowrap text-center" },
+      [_c("span", [_vm._v("1")])]
+    )
   }
 ]
 render._withStripped = true
@@ -41871,7 +41872,7 @@ var render = function() {
               }
             })
           : _c("packages-component", {
-              attrs: { order_items: _vm.sale.orderitems },
+              attrs: { "order-prop": _vm.sale.package_order },
               on: {
                 changeSubTotal: function($event) {
                   return _vm.changeSubTotal($event)
@@ -55016,9 +55017,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\sass\style.scss */"./resources/sass/style.scss");
-module.exports = __webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\sass\tailwind.scss */"./resources/sass/tailwind.scss");
+__webpack_require__(/*! c:\laragon\www\chawad\core\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! c:\laragon\www\chawad\core\resources\sass\style.scss */"./resources/sass/style.scss");
+module.exports = __webpack_require__(/*! c:\laragon\www\chawad\core\resources\sass\tailwind.scss */"./resources/sass/tailwind.scss");
 
 
 /***/ })

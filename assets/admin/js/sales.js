@@ -2356,8 +2356,19 @@ var messages = {
       agent: 'agent',
       document: 'document',
       product: 'product',
+      "package": 'package',
+      monthly_plan: 'monthly plan',
+      quarter_plan: 'quarter plan',
+      semiannual_plan: 'semiannual plan',
+      annual_plan: 'annual plan',
+      start_date: 'start date',
+      status: 'status',
+      active: 'active',
+      near_end: 'near end',
+      inactive: 'inactive',
       price: 'price',
       quantity: 'quantity',
+      plan: 'plan',
       actions: 'actions',
       sale_items: 'sale items',
       purchase_items: 'purchase items',
@@ -2388,8 +2399,19 @@ var messages = {
       agent: 'agent',
       document: 'document',
       product: 'produit',
+      "package": 'abonnement',
+      monthly_plan: 'plan mensuelle',
+      quarter_plan: 'plan trimestre',
+      semiannual_plan: 'plan semi annuelle',
+      annual_plan: 'plan annuelle',
+      start_date: 'date de debut',
+      status: 'status',
+      active: 'active',
+      near_end: 'near end',
+      inactive: 'inactive',
       price: 'prix',
       quantity: "quantit\xE9",
+      plan: 'plan',
       actions: 'actions',
       sale_items: 'Articles vendue',
       purchase_items: "Articles achet\xE9",
@@ -2399,8 +2421,8 @@ var messages = {
       payment_status: 'Statut de paiement',
       payment_method: 'Mode de paiement',
       paid_amount: "Montant pay\xE9",
-      due: "impay\xE9",
-      paid: "pay\xE9",
+      due: "Impay\xE9",
+      paid: "Pay\xE9",
       pending: 'En attente',
       partial: 'Partiel',
       cash: "ESP\xC8CES",
@@ -2424,7 +2446,7 @@ var messages = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\pc\Documents\GitHub\chawad\core\resources\js\sales.js */"./resources/js/sales.js");
+module.exports = __webpack_require__(/*! c:\laragon\www\chawad\core\resources\js\sales.js */"./resources/js/sales.js");
 
 
 /***/ })

@@ -19,8 +19,8 @@ body.modal-open {
   padding: 8px 30px;
   display: inline-block;
   color: #1a385b;
-  background: #983ce9;
-  border: 1px solid #983ce9;
+  background: #f4f71f;
+  border: 1px solid #f4f71f;
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s ease-in;
@@ -28,7 +28,7 @@ body.modal-open {
 }
 
 .mybtn1:hover {
-  color: #983ce9;
+  color: #f4f71f;
   background: #1a385b;
 }
 
@@ -1510,7 +1510,7 @@ Counter Area End
 ---------------------------*/
 
 .auth {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .auth .sign-form {
@@ -1755,15 +1755,15 @@ Counter Area End
   line-height: 35px;
   margin: 0px 3px;
   padding: 0px;
-  background: #983ce9;
+  background: #F4F71F;
   color: #1a385b;
-  border: 1px solid #983ce9;
+  border: 1px solid #F4F71F;
   transition: all 0.3s ease-in;
 }
 
 .footer-newsletter-widget .social-links .fotter-social-links ul li a:hover {
   background: none;
-  color: #983ce9;
+  color: #F4F71F;
 }
 
 .footer-newsletter-widget .social-links .fotter-social-links ul li:first-child {
@@ -2459,7 +2459,7 @@ Counter Area End
 ------------------------------*/
 
 .team {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .team .team-member {
@@ -2834,7 +2834,7 @@ span.cookie-consent__message p {
 ---------------------------*/
 
 .user-dashboard-area {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .user-dashboard-area .card .card-header {
@@ -2896,7 +2896,7 @@ span.cookie-consent__message p {
 }
 
 .user-dashboard-area .user-menu ul li a:hover, .user-dashboard-area .user-menu ul li a.active {
-  color: #fff;
+  color: #1a385b;
 }
 
 .user-dashboard-area .user-menu ul li a:hover::after, .user-dashboard-area .user-menu ul li a.active::after {
@@ -3116,7 +3116,7 @@ span.cookie-consent__message p {
 /* Blog Page Grid Area Start */
 
 .blog-page {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .blog-page .single-blog {
@@ -3486,7 +3486,7 @@ Shop Area Start
 ===========================================*/
 
 .product-details-section {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .product-details-section .product-image img {
@@ -3618,7 +3618,7 @@ Shop Area Start
 ===========================================*/
 
 .cart-area {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .cart-area table .t-qty {
@@ -3685,7 +3685,7 @@ Shop Area Start
 ---------------------------*/
 
 .checkout-area {
-  padding: 120px 0px 120px;
+  padding: 100px 0px 100px;
 }
 
 .checkout-area .g-title {
