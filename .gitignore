@@ -1,3 +1,14 @@
-
-assets/admin/js
-
+assets/*
+core/storage
+core/node_modules
+core/public/hot
+core/public/storage
+core/storage/*.key
+core/vendor
+core/.env
+core/.env.backup
+core/.phpunit.result.cache
+core/Homestead.json
+core/Homestead.yaml
+core/npm-debug.log
+core/yarn-error.log
