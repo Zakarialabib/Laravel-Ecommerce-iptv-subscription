@@ -1,33 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Faq;
 use Session;
-use App\Language;
 use Illuminate\Http\Request;
-use Mews\Purifier\Facades\Purifier;
 use App\Http\Controllers\Controller;
 
 class FaqController extends Controller
 {
-    public $lang;
-    public function __construct()
-    {
-        $this->lang = Language::where('is_default',1)->first();
-    }
 
-    public function faq(Request $request){
-        $lang = Language::where('code', $request->language)->first()->id;
-     
-        $faqs = Faq::where('language_id', $lang)->orderBy('id', 'DESC')->get();
+
+    public function faq(Request $request){     
+        $faqs = Faq::where('status', $status)->orderBy('id', 'DESC')->get();
         
-        return view('admin.faq.index', compact('faqs'));
+        return view('pages.backend.faq.index', compact('faqs'));
     }
 
     // Add Faq
     public function add(){
-        return view('admin.faq.add');
+        return view('pages.backend.faq.add');
     }
 
     // Store Faq
@@ -39,10 +31,9 @@ class FaqController extends Controller
         ]);
 
         $faq = new Faq();
-        $faq->language_id = $request->language_id;
         $faq->status = $request->status;
         $faq->title = $request->title;
-        $faq->content = Purifier::clean($request->content);
+        $faq->content = $request->content;
         $faq->save();
        
         $notification = array(
@@ -79,17 +70,13 @@ class FaqController extends Controller
         ]);
 
         $faq = Faq::find($id);
-        $faq->language_id = $request->language_id;
         $faq->status = $request->status;
         $faq->title = $request->title;
-        $faq->content = Purifier::clean($request->content);
+        $faq->content = $request->content;
         $faq->save();
 
-        $notification = array(
-            'messege' => 'Faq Updated successfully!',
-            'alert' => 'success'
-        );
-        return redirect(route('admin.faq').'?language='.$this->lang->code)->with('notification', $notification);
+      
+        return redirect(route('admin.faq'));
     }
 
 
