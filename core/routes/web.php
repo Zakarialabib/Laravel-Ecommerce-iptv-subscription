@@ -532,6 +532,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::get('/sales/packages', 'Admin\SaleController@packages')->name('admin.sales.packages.index');
     Route::get('/sales/packages/create', 'Admin\SaleController@packageCreate')->name('admin.sales.packages.create');
     Route::post('/sales/packages', 'Admin\SaleController@packageStore')->name('admin.sales.packages.store');
+    Route::post('/sales/packages/renew', 'Admin\SaleController@packageRenew')->name('admin.sales.packages.renew');
     Route::get('/sales/packages/{id}', 'Admin\SaleController@packageShow')->name('admin.sales.packages.show');
     Route::put('/sales/packages/{id}', 'Admin\SaleController@packageUpdate')->name('admin.sales.packages.update');
     Route::get('/sales/packages/{id}/edit', 'Admin\SaleController@packageEdit')->name('admin.sales.packages.edit');
@@ -556,6 +557,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus',
     Route::put('/sales/products/{id}', 'Admin\SaleController@productUpdate')->name('admin.sales.products.update');
     Route::delete('/sales/products/{id}', 'Admin\SaleController@productDelete')->name('admin.sales.products.delete');
     Route::delete('/sales/products/file/{id}', 'Admin\SaleController@deleteSaleFile')->name('admin.sales.products.file.delete');
+
+    // clients Sales
+    Route::get('/sales/clients', 'Admin\SaleController@clients')->name('admin.sales.clients.index');
+    Route::get('/sales/clients/{id}', 'Admin\SaleController@clientShow')->name('admin.sales.clients.show');
 
      // Admin Suppliers
     Route::post('importsupplier', 'Admin\SupplierController@importSupplier')->name('supplier.import');

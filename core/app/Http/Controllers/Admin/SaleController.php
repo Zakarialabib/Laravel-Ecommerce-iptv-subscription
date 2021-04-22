@@ -21,6 +21,105 @@ use App\Plan;
 
 class SaleController extends Controller
 {
+    public function clients()
+    {
+        $clients = User::has('sales')
+        ->with(['sales' => function($query) {
+            $query->packages()->latest();
+        }])->get();
+
+        return view('admin.sales.clients.index', compact('clients'));
+    }
+
+    public function clientShow($id)
+    {
+        $user = User::where('id', $id)->with(['sales' => function($query){
+            $query->packages()->latest();
+        }])->first();
+
+        return view('admin.sales.clients.show', ['user' => $user]);
+    }
+
+    public function packageRenew(Request $request)
+    {
+        $data = $request->validate([
+            'sale_id' => '',
+            'plan' => '',
+        ]);
+
+        $sale = Sale::find($data['sale_id']);
+        //$sale = Sale::find(18);
+
+        if($sale)
+        {
+            if(Carbon::now()->lt($sale->packageOrder->end_date))
+            {
+                $startDate = $sale->packageOrder->end_date;
+            }
+            else
+            {
+                $startDate = Carbon::now();
+            }
+
+            $endDate = SaleController::calculateEndDate($startDate, $data['plan']);
+
+            $packagePlan = SaleController::getPackagePlan($sale, $data['plan']);
+
+            if(!$packagePlan)
+            {
+                $notification = array(
+                    'messege' => 'Plan not found',
+                    'alert' => 'error'
+                );
+            } 
+            else 
+            {
+                $packageCost = $packagePlan->price + $packagePlan->price * $sale->tax / 100;
+                
+                //handle sale payment
+                $payment = Auth::user()->payments()->create([
+                    'user_id' => $sale->user->id,
+                    'reference' => mt_rand(1000000000, 9999999999),
+                    'status' => Payment::STATUS_PAID,
+                    'method' => Payment::METHOD_CASH,
+                    'paid_amount' => $packageCost,
+                    'due' => 0,
+                    'note' => '',
+                ]);
+    
+                $newSale = Auth::user()->sales()->create([
+                    'user_id' => $sale->user->id,
+                    'payment_id' => $payment->id,
+                    'reference' => SaleController::generatePackageReference(),
+                    'subtotal' => $packagePlan->price,
+                    'tax' => $sale->tax,
+                    'total' => $packageCost,
+                    'note' => '',
+                    'document' => null,
+                    'is_product' => false,
+                ]);
+    
+                $newSale->packageOrder()->create([
+                    'plan_id' => $packagePlan->id,
+                    'package_id' => $sale->packageOrder->package->id,
+                    'user_id' => $newSale->user->id,
+                    'package_cost' => $packageCost,
+                    'start_date' => $startDate,
+                    'end_date' => $endDate,
+                    'package_status' => Packageorder::ACTIVE,
+                ]);
+    
+                $notification = array(
+                    'messege' => 'Package Renew Success',
+                    'alert' => 'success'
+                );
+            }
+
+        }
+
+        return redirect()->back()->with('notification', $notification);
+    }
+
     public function updateLock(Request $request)
     {
         try {
@@ -362,7 +461,6 @@ class SaleController extends Controller
 
     public function packageCreate(Request $request)
     {
-        SaleController::generatePackageReference();
 
         if($request->order) {
             $order = Packageorder::where('id', $request->order)->with('package', 'user', 'plan')->first();
@@ -624,16 +722,16 @@ class SaleController extends Controller
     {
         //dd(number_format($planType));
         switch (number_format($planType)) {
-            case 1:
+            case Plan::MONTHLY_PLAN:
                 $endDate = Carbon::parse($startDate)->addMonths(1);
                 break;
-            case 2:
+            case Plan::QUARTER_PLAN:
                 $endDate = Carbon::parse($startDate)->addMonths(3);
                 break;
-            case 3:
+            case Plan::SEMIANNUAL_PLAN:
                 $endDate = Carbon::parse($startDate)->addMonths(6);
                 break;
-            case 4:
+            case Plan::ANNUAL_PLAN:
                 $endDate = Carbon::parse($startDate)->addMonths(12);
                 break;
             
@@ -643,5 +741,16 @@ class SaleController extends Controller
         }
 
         return $endDate;
+    }
+
+    public static function getPackagePlan($sale, $planType)
+    {
+        $plans = $sale->packageOrder->package->plans;
+
+        $plan = $plans->filter(function ($plan) use($planType) {
+            return $plan->type == $planType;
+        });
+
+        return $plan->first();
     }
 }
