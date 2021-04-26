@@ -15,7 +15,6 @@ class CreateFaqsTable extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('language_id')->nullable();
             $table->string('status')->nullable();
             $table->string('title')->nullable();
             $table->text('content')->nullable();

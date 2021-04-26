@@ -118,6 +118,15 @@
                           <p>{{ __('Add New Bill') }}</p>
                         </a>
                       </li>
+                        <li class="">
+                          <a href="{{ route('admin.sales.clients.index') }}" class="nav-link
+                          @if(request()->routeIs('admin.sales.clients.index')) active 
+                          @endif
+                          ">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>{{ __("Clients") }}</p>
+                          </a>
+                        </li>
                     </ul>
                   </li>
                     <li class="">
