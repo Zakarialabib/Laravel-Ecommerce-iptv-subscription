@@ -609,6 +609,8 @@ class SaleController extends Controller
     public static function generatePackageReference()
     {
         $latest = Sale::packages()->latest()->first();
+        if(!$latest)
+            return "pack000001"; 
         $latest->reference++;
         return $latest->reference;
     }

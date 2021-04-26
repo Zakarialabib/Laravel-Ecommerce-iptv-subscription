@@ -40,6 +40,7 @@
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             {{ __('Gestion commercial') }}
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="flex flex-wrap list-none pl-0 mb-0 nav-treeview">
@@ -83,7 +84,50 @@
                             <p>{{ __("Purchases") }}</p>
                           </a>
                         </li>
+                        <li class="nav-item has-treeview
+                @if(request()->path() == 'admin/bill-pay') menu-open
+                @elseif(request()->path() == 'admin/add') menu-open
+                @elseif(request()->path() == 'admin/bill-add') menu-open
+                @endif
+                ">
+                    <a href="#" class="nav-link
+                    @if(request()->path() == 'admin/bill-pay') active 
+                    @elseif(request()->path() == 'admin/add') active
+                    @elseif(request()->path() == 'admin/bill-add') active
+                    @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                      <p>
+                        {{ __('Bill Pay') }}
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="flex flex-wrap list-none pl-0 mb-0 nav-treeview">
+                      <li class="">
+                        <a href="{{ route('admin.billpay')}}" class="nav-link @if(request()->path() == 'admin/bill-pay') active @endif">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>{{ __('Bill Pay') }}</p>
+                        </a>
+                      </li>
+                      <li class="">
+                        <a href="{{ route('admin.bill_add')}}" class="nav-link
+                        @if(request()->path() == 'admin/add') active 
+                        @elseif(request()->path() == 'admin/bill-add') active
+                        @endif
+                            ">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>{{ __('Add New Bill') }}</p>
+                        </a>
+                      </li>
                     </ul>
+                  </li>
+                    <li class="">
+                        <a href=""
+                        class="nav-link ">
+                        <i class="far fa-circle nav-icon"></i>
+                            <p>{{ __('Rapport') }}</p>
+                        </a>
+                    </li>
+                  </ul>
                 </li>
                 <li class="nav-item 
                 @if(request()->routeIs('admin.tickets.index')) menu-open
@@ -331,49 +375,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item has-treeview
-                @if(request()->path() == 'admin/bill-pay') menu-open
-                @elseif(request()->path() == 'admin/add') menu-open
-                @elseif(request()->path() == 'admin/bill-add') menu-open
-                @endif
-                ">
-                    <a href="#" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500 
-                    @if(request()->path() == 'admin/bill-pay') active 
-                    @elseif(request()->path() == 'admin/add') active
-                    @elseif(request()->path() == 'admin/bill-add') active
-                    @endif">
-                      <i class="nav-icon fas fa-money-bill"></i>
-                      <p>
-                        {{ __('Bill Pay') }}
-                        <i class="fas fa-angle-left right"></i>
-                      </p>
-                    </a>
-                    <ul class="flex flex-wrap list-none pl-0 mb-0 nav-treeview">
-                      <li class="">
-                        <a href="{{ route('admin.billpay')}}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500 @if(request()->path() == 'admin/bill-pay') active @endif">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>{{ __('Bill Pay') }}</p>
-                        </a>
-                      </li>
-                      <li class="">
-                        <a href="{{ route('admin.bill_add')}}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-                        @if(request()->path() == 'admin/add') active 
-                        @elseif(request()->path() == 'admin/bill-add') active
-                        @endif
-                            ">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>{{ __('Add New Bill') }}</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="">
-                    <a href=""
-                       class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>{{ __('Rapport') }}</p>
-                    </a>
                 </li>
                   <li class="nav-item has-treeview
                   @if(request()->path() == 'admin/slider') menu-open
