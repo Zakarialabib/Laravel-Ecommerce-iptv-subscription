@@ -27,6 +27,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "datatables.net": "^1.10.24",
+        "datatables.net-dt": "^1.10.24",
         "sweetalert": "^2.1.2",
         "vue-i18n": "^8.24.2"
     }

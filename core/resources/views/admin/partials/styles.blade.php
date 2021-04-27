@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/data-table/buttons.bootstrap4.min.css') }}">
+  
   @yield('style')
   <link rel="stylesheet" href="{{ asset('assets/admin/css/tailwind.css') }}">
   <!-- Theme Css -->

@@ -21,11 +21,12 @@
   @csrf
   <div class="container sm:px-4 max-w-full mx-auto">
     <div class="flex flex-wrap ">
-      <div class="w-full flex justify-end mb-4">
-        <a href="{{route('admin.sales.products.create')}}" class="rounded-md focus:outline-none bg-blue-500 hover:bg-blue-800 text-white text-md py-2 px-3">{{__('Add sale')}}</a>
-      </div>
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table class="w-full divide-y divide-gray-200">
+        <table id="js-clients-sales" class="w-full divide-y divide-gray-200">
+          <div class="flex py-3">
+            <button id="js-inactive" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">{{__('INACTIVE')}}</button>
+            <button id="js-near-end" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:shadow-outline-yellow">{{__('NEAR END')}}</button>
+          </div>
           <thead class="bg-gray-300">
             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
@@ -39,50 +40,51 @@
             </tr>
           </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          @foreach ($clients as $key => $client)
-          @if ($client->sales->count())  
+        @foreach ($clients as $key => $client)
+          @foreach ($client->sales as $sale)
+              
           <tr class="border-b border-gray-200 hover:bg-gray-100">
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              <span>{{ $key + 1 }}</span>
+              <span>{{ $sale->id }}</span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
               {{ $client->name }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              {{ $client->sales[0]->packageOrder->package->name }}
+              {{ $sale->packageOrder->package->name }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              @if($client->sales[0]->packageOrder->plan->type === \App\Plan::MONTHLY_PLAN)
+              @if($sale->packageOrder->plan->type === \App\Plan::MONTHLY_PLAN)
               {{__('MONTHLY PLAN')}}
-              @elseif($client->sales[0]->packageOrder->plan->type === \App\Plan::QUARTER_PLAN)
+              @elseif($sale->packageOrder->plan->type === \App\Plan::QUARTER_PLAN)
               {{__('QUARTER_PLAN')}}
-              @elseif($client->sales[0]->packageOrder->plan->type === \App\Plan::SEMIANNUAL_PLAN)
+              @elseif($sale->packageOrder->plan->type === \App\Plan::SEMIANNUAL_PLAN)
               {{__('SEMIANNUAL PLAN')}}
-              @elseif($client->sales[0]->packageOrder->plan->type === \App\Plan::ANNUAL_PLAN)
+              @elseif($sale->packageOrder->plan->type === \App\Plan::ANNUAL_PLAN)
               {{__('ANNUAL PLAN')}}
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              {{ $client->sales[0]->packageOrder->end_date }}
+              {{ $sale->packageOrder->end_date }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              @if ($client->sales[0]->packageOrder->package_status === \App\Packageorder::INACTIVE)
-              <span class="p-2 text-xs font-normal rounded-full bg-red-600 text-white"> {{__('INACTIVE')}}</span>
-              @elseif ($client->sales[0]->packageOrder->package_status === \App\Packageorder::ACTIVE)
+              @if ($sale->packageOrder->package_status === \App\Packageorder::INACTIVE)
+              <span class="p-2 text-xs font-normal rounded-full bg-red-600 text-white">{{__('INACTIVE')}}</span>
+              @elseif ($sale->packageOrder->package_status === \App\Packageorder::ACTIVE)
               <span class="p-2 text-xs font-normal rounded-full bg-green-600 text-white">{{__('ACTIVE')}}</span>
-              @elseif ($client->sales[0]->packageOrder->package_status === \App\Packageorder::NEAR_END)
+              @elseif ($sale->packageOrder->package_status === \App\Packageorder::NEAR_END)
               <span class="p-2 text-xs font-normal rounded-full bg-yellow-400 text-white">{{__('NEAR END')}}</span>
               @endif
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
-              <button href="#" data-id="{{ $client->sales[0]->id }}" data-plan ="{{ $client->sales[0]->packageOrder->plan->type }}" class="js-package-renew inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" data-toggle="modal" data-target="#package-renew">{{__('Renew')}}</button>
+              <button href="#" data-id="{{ $sale->id }}" data-plan ="{{ $sale->packageOrder->plan->type }}" class="js-package-renew inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" data-toggle="modal" data-target="#package-renew">{{__('Renew')}}</button>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center">
               <a href="{{route('admin.sales.clients.show', ['id' => $client->id])}}" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">{{__('Sales')}}</a>
             </td>
           </tr> 
-          @endif
-          @endforeach 
+          @endforeach
+        @endforeach 
         </tbody>
       </table>
       </div>
@@ -128,5 +130,5 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/admin/js/package-renew.js')}}"></script>
+<script src="{{asset('assets/admin/js/clients-sales.js')}}"></script>
 @endsection
