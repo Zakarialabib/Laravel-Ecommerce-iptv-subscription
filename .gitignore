@@ -1,5 +1,8 @@
-assets
-assets/*
+assets/admin/js/
+assets/admin/js/*
+assets/admin/css/
+assets/admin/css/*
+assets/front/css/style.css
 core/storage
 core/node_modules
 core/public/hot
