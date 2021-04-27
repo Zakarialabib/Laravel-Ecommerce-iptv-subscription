@@ -118,16 +118,16 @@
                           <p>{{ __('Add New Bill') }}</p>
                         </a>
                       </li>
-                        <li class="">
-                          <a href="{{ route('admin.sales.clients.index') }}" class="nav-link
-                          @if(request()->routeIs('admin.sales.clients.index')) active 
-                          @endif
-                          ">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>{{ __("Clients") }}</p>
-                          </a>
-                        </li>
                     </ul>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('admin.sales.clients.index') }}" class="nav-link
+                    @if(request()->routeIs('admin.sales.clients.index')) active 
+                    @endif
+                    ">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>{{ __("Clients") }}</p>
+                    </a>
                   </li>
                     <li class="">
                         <a href=""
@@ -236,18 +236,12 @@
                   </li>
                 <li class="nav-item has-treeview
               @if(request()->path() == 'admin/package/all-order') menu-open
-              @elseif(request()->path() == 'admin/package/pending-order') menu-open
-              @elseif(request()->path() == 'admin/package/inprogress-order') menu-open
-              @elseif(request()->path() == 'admin/package/compleated-order') menu-open
               @elseif(request()->path() == 'admin/package') menu-open
               @elseif(request()->path() == 'admin/package/add') menu-open
               @elseif(request()->is('admin/package/edit/*')) menu-open
               @endif">
                     <a href="#" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
                 @if(request()->path() == 'admin/package/all-order') active
-                @elseif(request()->path() == 'admin/package/pending-order') active
-                @elseif(request()->path() == 'admin/package/inprogress-order') active
-                @elseif(request()->path() == 'admin/package/compleated-order') active
                 @elseif(request()->path() == 'admin/package') active
                 @elseif(request()->path() == 'admin/package/add') active
                 @elseif(request()->is('admin/package/edit/*')) active
@@ -278,39 +272,12 @@
                                 <p>{{ __('All Order') }}</p>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="{{ route('admin.package.pendingorder') }}"
-                               class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500 @if(request()->path() == 'admin/package/pending-order') active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('Pending Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.package.inprogress') }}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-              @if(request()->path() == 'admin/package/inprogress-order') active
-              @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('In Progress Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.package.compleated') }}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-                  @if(request()->path() == 'admin/package/compleated-order') active
-                  @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('Completed Order') }}</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview
         @if(request()->path() == 'admin/product') menu-open
         @elseif(request()->path() == 'admin/product/add') menu-open
         @elseif(request()->path() == 'admin/product/all/orders') menu-open
-        @elseif(request()->path() == 'admin/product/pending/orders') menu-open
-        @elseif(request()->path() == 'admin/product/processing/orders') menu-open
-        @elseif(request()->path() == 'admin/product/completed/orders') menu-open
-        @elseif(request()->path() == 'admin/product/rejected/orders') menu-open
         @elseif(request()->is('admin/product/edit/*')) menu-open
         @elseif(request()->is('admin/product/orders/detais/*')) menu-open
 
@@ -319,10 +286,6 @@
           @if(request()->path() == 'admin/product') active
           @elseif(request()->path() == 'admin/product/add') active
           @elseif(request()->path() == 'admin/product/all/orders') active
-          @elseif(request()->path() == 'admin/product/pending/orders') active
-          @elseif(request()->path() == 'admin/product/processing/orders') active
-          @elseif(request()->path() == 'admin/product/completed/orders') active
-          @elseif(request()->path() == 'admin/product/rejected/orders') active
           @elseif(request()->is('admin/product/edit/*')) active
           @elseif(request()->is('admin/product/orders/detais/*')) active
           @endif">
@@ -350,37 +313,6 @@
                                class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500 @if(request()->path() == 'admin/product/all/orders') active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ __('All Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.pending.product.orders') }}"
-                               class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500 @if(request()->path() == 'admin/product/pending/orders') active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('Pending Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.processing.product.orders') }}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-            @if(request()->path() == 'admin/product/processing/orders') active
-            @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('In Progress Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.completed.product.orders') }}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-                @if(request()->path() == 'admin/product/completed/orders') active
-                @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('Completed Order') }}</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="{{ route('admin.rejected.product.orders') }}" class="nav-link block py-2 md:py-3 pl-1 align-middle hover:bg-purple-700 text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-500
-                @if(request()->path() == 'admin/product/rejected/orders') active
-                @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('Rejected Order') }}</p>
                             </a>
                         </li>
                     </ul>
