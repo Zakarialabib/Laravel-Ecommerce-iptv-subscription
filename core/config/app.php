@@ -166,6 +166,11 @@ return [
          * Package Service Providers...
          */
         KKomelin\TranslatableStringExporter\Providers\ExporterServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
+        \InfyOm\CoreUITemplates\CoreUITemplatesServiceProvider::class,
+    //    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,7 +235,10 @@ return [
         'Helper' => App\Helpers\Helper::class,
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'Form'         => Collective\Html\FormFacade::class,
+        'Html'         => Collective\Html\HtmlFacade::class,
+        'Image'        => Intervention\Image\Facades\Image::class,
+        'Socialite'    => \Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
