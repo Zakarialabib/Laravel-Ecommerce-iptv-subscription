@@ -94,14 +94,7 @@
 /***/ (function(module, exports) {
 
 function dataTableSearch(table, term) {
-  /*
-  table
-    .column(5)
-    .data()
-    .search(term)
-    .draw();
-    */
-  console.log(table.column(5).data().search(term));
+  table.column(5).data().search(term).draw();
 }
 
 $(document).ready(function () {

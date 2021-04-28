@@ -40,7 +40,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6 block w-full overflow-auto scrolling-touch">
-                    <table  class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped data_table">
+                    <table class="w-full max-w-full mb-4 bg-transparent table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>{{ __('#') }}</th>

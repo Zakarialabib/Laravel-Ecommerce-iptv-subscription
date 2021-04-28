@@ -1,15 +1,9 @@
 function dataTableSearch(table, term) {
-  /*
   table
     .column(5)
     .data()
     .search(term)
     .draw();
-    */
-   console.log(table
-    .column(5)
-    .data()
-    .search(term));
 }
 
 $(document).ready( function () {
