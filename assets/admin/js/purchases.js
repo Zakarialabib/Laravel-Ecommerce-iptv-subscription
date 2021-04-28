@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2368,7 +2368,7 @@ var messages = {
       inactive: 'inactive',
       price: 'price',
       quantity: 'quantity',
-      plan: 'plan',
+      plan: 'periode',
       actions: 'actions',
       sale_items: 'sale items',
       purchase_items: 'purchase items',
@@ -2400,10 +2400,10 @@ var messages = {
       document: 'document',
       product: 'produit',
       "package": 'abonnement',
-      monthly_plan: 'plan mensuelle',
-      quarter_plan: 'plan trimestre',
-      semiannual_plan: 'plan semi annuelle',
-      annual_plan: 'plan annuelle',
+      monthly_plan: 'periode mensuelle',
+      quarter_plan: 'periode trimestre',
+      semiannual_plan: 'periode semestrielle',
+      annual_plan: 'periode annuelle',
       start_date: 'date de debut',
       status: 'status',
       active: 'active',
@@ -2439,7 +2439,7 @@ var messages = {
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!*****************************************!*\
   !*** multi ./resources/js/purchases.js ***!
   \*****************************************/

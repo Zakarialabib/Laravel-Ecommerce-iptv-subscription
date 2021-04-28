@@ -27,7 +27,12 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6">
-                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table id="js-data-tables" class="table-auto mb-4 bg-transparent table-striped table-bordered">
+                        <div class="flex py-3">
+                            <button id="js-pending" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">{{ __('Pending') }}</button>
+                            <button id="js-inprogress" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:shadow-outline-yellow">{{ __('In Progress') }}</button>
+                            <button id="js-complete" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-400 hover:bg-green-500 focus:outline-none focus:shadow-outline-green">{{ __('Completed') }}</button>
+                        </div>
                         <thead>
                             <tr>
                                 <th>{{ __('#') }}</th>
@@ -59,11 +64,11 @@
                                     {{ $order->method }}
                                 </td>
                                 <td>
-                                    @if($order->status == 0)
+                                    @if($order->status === \App\Packageorder::PENDING)
                                         <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-indigo-600 text-white hover:bg-teal-600">{{ __('Pending') }}</span>
-                                    @elseif($order->status == 1)
-                                        <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-blue-500 text-white hover:bg-blue-600">{{ __('In Progress') }}</span>
-                                    @elseif($order->status == 2)
+                                    @elseif($order->status === \App\Packageorder::INPROGRESS)
+                                        <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-yellow-500 text-white hover:bg-yellow-600">{{ __('In Progress') }}</span>
+                                    @elseif($order->status == \App\Packageorder::COMPLETE)
                                         <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 text-white hover:green-600">{{ __('Completed') }}</span>
                                     @endif
                                 </td>
@@ -220,6 +225,8 @@
       </div>
     </div>
 </div>
+@endsection
 
-
+@section('script')
+<script src="{{asset('assets/admin/js/data-tables.js')}}"></script>
 @endsection

@@ -22,7 +22,7 @@
   <div class="container sm:px-4 max-w-full mx-auto">
     <div class="flex flex-wrap ">
       <div class="w-full overflow-hidden mb-4 border border-gray-200 sm:rounded-lg">
-        <table id="js-clients-sales" class="w-full divide-y divide-gray-200">
+        <table id="js-data-tables" class="w-full divide-y divide-gray-200">
           <div class="flex py-3">
             <button id="js-inactive" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">{{__('INACTIVE')}}</button>
             <button id="js-near-end" class="inline-flex justify-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:shadow-outline-yellow">{{__('NEAR END')}}</button>
@@ -131,4 +131,5 @@
 
 @section('script')
 <script src="{{asset('assets/admin/js/clients-sales.js')}}"></script>
+<script src="{{asset('assets/admin/js/data-tables.js')}}"></script>
 @endsection

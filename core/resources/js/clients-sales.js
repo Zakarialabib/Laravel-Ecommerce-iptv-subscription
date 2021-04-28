@@ -12,27 +12,3 @@ function setModal(event) {
   sale_id.value = event.target.dataset.id;
 
 }
-
-function dataTableSearch(table, term) {
-  table
-    .column(5)
-    .data()
-    .search(term)
-    .draw();
-}
-
-$(document).ready( function () {
-  let table = $('#js-clients-sales').DataTable();
-
-  $('#js-active').on( 'click', function (event) {
-    dataTableSearch(table, event.target.innerText);
-  });
-
-  $('#js-inactive').on( 'click', function (event) {
-    dataTableSearch(table, event.target.innerText);
-  });
-
-  $('#js-near-end').on( 'click', function (event) {
-    dataTableSearch(table, event.target.innerText);
-  });
-});

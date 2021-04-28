@@ -19,10 +19,11 @@ mix.setPublicPath(`../assets/`)
 .js('resources/js/sales.js', 'admin/js')
 .js('resources/js/sales-lock.js', 'admin/js')
 .js('resources/js/clients-sales.js', 'admin/js')
+.js('resources/js/data-tables.js', 'admin/js')
 .js('resources/js/purchases.js', 'admin/js')
 .js('resources/js/custom.js', 'admin/js')
 .sass('resources/sass/style.scss', 'front/css')
-.sass('resources/sass/tailwind.scss', 'admin/css')
+//.sass('resources/sass/tailwind.scss', 'admin/css')
 .options({
     processCssUrls: false,
     postCss: [ tailwindcss('./tailwind.config.js') ],

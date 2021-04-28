@@ -81,41 +81,61 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/clients-sales.js":
-/*!***************************************!*\
-  !*** ./resources/js/clients-sales.js ***!
-  \***************************************/
+/***/ "./resources/js/data-tables.js":
+/*!*************************************!*\
+  !*** ./resources/js/data-tables.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-document.querySelectorAll('.js-package-renew').forEach(function (el) {
-  el.addEventListener('click', function (event) {
-    setModal(event);
+function dataTableSearch(table, term) {
+  /*
+  table
+    .column(5)
+    .data()
+    .search(term)
+    .draw();
+    */
+  console.log(table.column(5).data().search(term));
+}
+
+$(document).ready(function () {
+  var table = $('#js-data-tables').DataTable();
+  $('#js-inactive').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
+  });
+  $('#js-near-end').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
+  });
+  $('#js-pending').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
+  });
+  $('#js-inprogress').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
+  });
+  $('#js-complete').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
+  });
+  $('#js-canceled').on('click', function (event) {
+    dataTableSearch(table, event.target.innerText);
   });
 });
 
-function setModal(event) {
-  var plan = document.querySelector('#plan');
-  plan.value = event.target.dataset.plan;
-  var sale_id = document.querySelector('#js-sale-id');
-  sale_id.value = event.target.dataset.id;
-}
-
 /***/ }),
 
-/***/ 3:
-/*!*********************************************!*\
-  !*** multi ./resources/js/clients-sales.js ***!
-  \*********************************************/
+/***/ 4:
+/*!*******************************************!*\
+  !*** multi ./resources/js/data-tables.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\laragon\www\chawad\core\resources\js\clients-sales.js */"./resources/js/clients-sales.js");
+module.exports = __webpack_require__(/*! c:\laragon\www\chawad\core\resources\js\data-tables.js */"./resources/js/data-tables.js");
 
 
 /***/ })

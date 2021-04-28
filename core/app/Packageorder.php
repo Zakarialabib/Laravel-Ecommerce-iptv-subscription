@@ -10,7 +10,12 @@ class Packageorder extends Model
     protected $guarded = [];
     protected $casts = [
         'package_status' => 'integer',
+        'status' => 'integer',
     ];
+
+    const PENDING = 0;
+    const INPROGRESS = 1;
+    const COMPLETE = 2;
 
     const INACTIVE = 1; 
     const NEAR_END = 2;
