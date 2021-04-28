@@ -31,7 +31,4 @@ $(document).ready( function () {
   $('#js-complete').on( 'click', function (event) {
     dataTableSearch(table, event.target.innerText);
   });
-  $('#js-canceled').on( 'click', function (event) {
-    dataTableSearch(table, event.target.innerText);
-  });
 });

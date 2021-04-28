@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class ProductOrder extends Model
 {
     protected $guarded = [];
+
+    const PENDING_STATUS = 'pending';
+    const PROCESSING_STATUS = 'processing';
+    const COMPLETED_STATUS = 'completed';
+    const REJECTED_STATUS = 'rejected';
     
     public function orderitems() {
         return $this->hasMany('App\OrderItem');

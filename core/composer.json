@@ -14,7 +14,7 @@
         "barryvdh/laravel-dompdf": "^0.9.0",
         "barryvdh/laravel-ide-helper": "2.8.2",
         "cartalyst/stripe-laravel": "12.0.*",
-        "embed/embed": "^4.3",
+        "embed/embed": "^3.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -37,6 +37,7 @@
     },
     "require-dev": {
         "awssat/tailwindo": "^3.0",
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",

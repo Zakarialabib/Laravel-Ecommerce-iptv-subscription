@@ -66,7 +66,13 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="flex-auto p-6">
-                    <table class="table-auto mb-4 bg-transparent table-striped table-bordered data_table">
+                    <table id="js-data-tables" class="table-auto mb-4 bg-transparent table-striped table-bordered">
+                        <div class="flex py-3">
+                            <a href="{{route('admin.all.product.orders', ['status' => 'rejected'])}}" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">{{ __('Rejected') }}</a>
+                            <a href="{{route('admin.all.product.orders', ['status' => 'pending'])}}" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:shadow-outline-yellow">{{ __('Pending') }}</a>
+                            <a href="{{route('admin.all.product.orders', ['status' => 'processing'])}}" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">{{ __('Processing') }}</a>
+                            <a href="{{route('admin.all.product.orders', ['status' => 'completed'])}}" class="inline-flex justify-center px-2 py-2 mr-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-green">{{ __('Completed') }}</a>
+                        </div>
                         <thead>
                             <tr>
                                 <th>{{ __('#') }}</th>
@@ -107,30 +113,25 @@
                                       </form>
                                 </td>
                                 <td class="px-1 py-2 border-b border-gray-200 text-sm">
-                                    <div class="dropdown relative">
-                                        <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded no-underline bg-indigo-600 text-white hover:bg-teal-600 py-2 px-4 leading-tight text-xs align border-b-0 border-t-1 border-r-1 border-l-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          {{ __('Actions') }}
+                                  <div class="dropdown relative">
+                                    <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded no-underline bg-indigo-600 text-white hover:bg-teal-600 py-2 px-4 leading-tight text-xs align border-b-0 border-t-1 border-r-1 border-l-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      {{ __('Actions') }}
+                                    </button>
+                                    <div class="dropdown-menu edit-options dropdown-menu-right dropdown-default" aria-labelledby="dropdownMenuButton">
+                                      <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">Details</a>
+                                      <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">Invoice</a>
+                                      <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" 
+                                      href="{{($order->sale) ? route('admin.sales.products.edit', ['id' => $order->sale->id]) : route('admin.sales.products.create', ['order' => $order->id])}}" 
+                                      >{{__('Sales')}}</a> 
+                                      <form  id="deleteform" class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" action="{{ route('admin.product.order.delete') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                        <button type="submit" id="delete">
+                                            {{ __('Delete') }}
                                         </button>
-                                        <div class="dropdown-menu edit-options dropdown-menu-right dropdown-default" aria-labelledby="dropdownMenuButton">
-<<<<<<< Updated upstream
-                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">Details</a>
-                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">Invoice</a>
-                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" 
-                                          href="{{($order->sale) ? route('admin.sales.products.edit', ['id' => $order->sale->id]) : route('admin.sales.products.create', ['order' => $order->id])}}" 
-                                          >{{__('Sales')}}</a> 
-=======
-                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{route('admin.product.details', $order->id)}}" target="_blank">{{ __('Details') }}</a>
-                                          <a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{{asset('assets/front/invoices/product/'.$order->invoice_number)}}" target="_blank">{{ __('Invoice') }}</a>
->>>>>>> Stashed changes
-                                          <form  id="deleteform" class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" action="{{ route('admin.product.order.delete') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="order_id" value="{{ $order->id }}">
-                                            <button type="submit" id="delete">
-                                                {{ __('Delete') }}
-                                            </button>
-                                          </form>
-                                        </div>
+                                      </form>
                                     </div>
+                                  </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -144,7 +145,8 @@
     </div>
     <!-- /.row -->
 </section>
+@endsection
 
-
-
+@section('script')
+<script src="{{asset('assets/admin/js/data-tables.js')}}"></script>
 @endsection

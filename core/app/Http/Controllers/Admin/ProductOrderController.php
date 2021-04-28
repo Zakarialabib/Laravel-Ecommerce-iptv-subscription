@@ -18,9 +18,36 @@ class ProductOrderController extends Controller
     public function all(Request $request)
     {
 
-        $data['orders'] = ProductOrder::orderBy('id', 'DESC')->get();
+        if($request->has('status'))
+        {
+            switch ($request->status) {
+                case ProductOrder::PENDING_STATUS:
+                    $orders = ProductOrder::where('order_status', ProductOrder::PENDING_STATUS)->latest()->get();
+                    break;
+                
+                case ProductOrder::PROCESSING_STATUS:
+                    $orders = ProductOrder::where('order_status', ProductOrder::PROCESSING_STATUS)->latest()->get();
+                    break;
+                
+                case ProductOrder::COMPLETED_STATUS:
+                    $orders = ProductOrder::where('order_status', ProductOrder::COMPLETED_STATUS)->latest()->get();
+                    break;
+                
+                case ProductOrder::REJECTED_STATUS:
+                    $orders = ProductOrder::where('order_status', ProductOrder::REJECTED_STATUS)->latest()->get();
+                    break;
+                
+                default:
+                    $orders = ProductOrder::orderBy('id', 'DESC')->get();
+                    break;
+            }
+        }
+        else
+        {
+            $orders = ProductOrder::orderBy('id', 'DESC')->get();
+        }
 
-        return view('admin.product.order.index', $data);
+        return view('admin.product.order.index', compact('orders'));
     }
 
     public function pending(Request $request)
