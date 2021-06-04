@@ -1,4 +1,4 @@
-<nav class="main-header relative flex flex-wrap items-center content-between py-3 px-4 flex-no-wrap content-start text-black navbar-white">
+<nav class="main-header relative flex flex-wrap items-center py-3 px-4 flex-no-wrap content-start text-black navbar-white">
     <!-- Left navbar links -->
     <ul class="flex flex-wrap list-reset pl-0 mb-0">
       <li class="">

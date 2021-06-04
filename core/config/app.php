@@ -170,7 +170,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\CoreUITemplates\CoreUITemplatesServiceProvider::class,
-    //    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+       Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
