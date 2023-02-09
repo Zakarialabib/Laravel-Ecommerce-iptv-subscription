@@ -10,7 +10,8 @@ use Session;
 
 class SliderController extends Controller
 {
-   public $lang;
+    public $lang;
+    
     public function __construct()
     {
         $this->lang = Language::where('is_default',1)->first();

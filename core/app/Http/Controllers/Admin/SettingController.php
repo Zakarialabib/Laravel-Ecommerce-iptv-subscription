@@ -75,7 +75,6 @@ class SettingController extends Controller
         $new_base_color = ltrim($request->base_color, '#');
         $commoninfo->base_color = $new_base_color;
 
-
         $commoninfo->save();
 
          $notification = array(
@@ -163,7 +162,6 @@ class SettingController extends Controller
       $scriptsettings->disqus = $request->disqus;
       $scriptsettings->tawk_to = $request->tawk_to;
 
-      
       
       if($request->is_tawk_to == 'on'){
          $scriptsettings->is_tawk_to = 1;

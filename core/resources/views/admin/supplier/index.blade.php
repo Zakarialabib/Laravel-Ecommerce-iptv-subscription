@@ -211,26 +211,26 @@
                     rows: ':visible',
                     stripHtml: false
                 },
-                customize: function (doc) {
-                    for (var i = 1; i < doc.content[1].table.body.length; i++) {
-                        if (doc.content[1].table.body[i][0].text.indexOf('<img src=') !== -1) {
-                            var imagehtml = doc.content[1].table.body[i][0].text;
-                            var regex = /<img.*?src=['"](.*?)['"]/;
-                            var src = regex.exec(imagehtml)[1];
-                            var tempImage = new Image();
-                            tempImage.src = src;
-                            var canvas = document.createElement("canvas");
-                            canvas.width = tempImage.width;
-                            canvas.height = tempImage.height;
-                            var ctx = canvas.getContext("2d");
-                            ctx.drawImage(tempImage, 0, 0);
-                            var imagedata = canvas.toDataURL("image/png");
-                            delete doc.content[1].table.body[i][0].text;
-                            doc.content[1].table.body[i][0].image = imagedata;
-                            doc.content[1].table.body[i][0].fit = [30, 30];
+                    customize: function (doc) {
+                        for (var i = 1; i < doc.content[1].table.body.length; i++) {
+                            if (doc.content[1].table.body[i][0].text.indexOf('<img src=') !== -1) {
+                                var imagehtml = doc.content[1].table.body[i][0].text;
+                                var regex = /<img.*?src=['"](.*?)['"]/;
+                                var src = regex.exec(imagehtml)[1];
+                                var tempImage = new Image();
+                                tempImage.src = src;
+                                var canvas = document.createElement("canvas");
+                                canvas.width = tempImage.width;
+                                canvas.height = tempImage.height;
+                                var ctx = canvas.getContext("2d");
+                                ctx.drawImage(tempImage, 0, 0);
+                                var imagedata = canvas.toDataURL("image/png");
+                                delete doc.content[1].table.body[i][0].text;
+                                doc.content[1].table.body[i][0].image = imagedata;
+                                doc.content[1].table.body[i][0].fit = [30, 30];
+                            }
                         }
-                    }
-                },
+                    },
             },
             {
                 extend: 'csv',

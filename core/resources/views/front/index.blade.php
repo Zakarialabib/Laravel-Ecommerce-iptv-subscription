@@ -378,11 +378,9 @@
 					</a>
 				</div>
 				@endforeach
-			
 			</div>
 		</div>
 	</section>
 	<!-- Blog Area End -->
 	@endif
-
 @endsection
